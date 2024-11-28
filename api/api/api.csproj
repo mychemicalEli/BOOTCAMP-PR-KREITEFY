@@ -12,4 +12,13 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Application\Dtos\" />
+      <Folder Include="Application\Mappers\" />
+      <Folder Include="Application\Services\Implementations\" />
+      <Folder Include="Application\Services\Interfaces\" />
+      <Folder Include="Domain\Persistence\" />
+      <Folder Include="Infrastructure\Rest\" />
+    </ItemGroup>
+
 </Project>
