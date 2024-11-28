@@ -8,5 +8,5 @@ public class Genre
 {
     public long Id { get; set; }
     [MinLength(3)] public required string Name { get; set; }
-    public ICollection<Song> Songs { get; set; } = new List<Song>();
+ 
 }

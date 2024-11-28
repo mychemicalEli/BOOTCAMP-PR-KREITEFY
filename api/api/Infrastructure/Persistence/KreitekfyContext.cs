@@ -37,7 +37,7 @@ public class KreitekfyContext : DbContext
 
         modelBuilder.Entity<Song>()
             .HasOne(i => i.Genre)
-            .WithMany(g => g.Songs)
+            .WithMany()
             .HasForeignKey(i => i.GenreId)
             .IsRequired();
 

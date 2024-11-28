@@ -4,6 +4,7 @@ using api.Application.Services.Interfaces;
 using api.Domain.Persistence;
 using api.Infrastructure.Persistence;
 using framework.Domain.Persistence;
+using framework.Infrastructure.Specs;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,20 +14,24 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
+builder.Services.AddScoped<ISongService, SongService>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<ISongRepository, SongRepository>();
 
 builder.Services.AddAutoMapper(typeof(RoleMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserMapperProfile));
 builder.Services.AddAutoMapper(typeof(ArtistMapperProfile));
 builder.Services.AddAutoMapper(typeof(GenreMapperProfile));
 builder.Services.AddAutoMapper(typeof(AlbumMapperProfile));
+builder.Services.AddAutoMapper(typeof(SongMapperProfile));
 
 builder.Services.AddScoped<IImageVerifier, ImageVerifier>();
+builder.Services.AddScoped(typeof(ISpecificationParser<>), typeof(SpecificationParser<>));
 
 builder.Services.AddControllers();
 builder.Services.AddLogging();
