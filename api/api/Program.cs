@@ -10,12 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+
 builder.Services.AddAutoMapper(typeof(RoleMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserMapperProfile));
 builder.Services.AddAutoMapper(typeof(ArtistMapperProfile));
+builder.Services.AddAutoMapper(typeof(GenreMapperProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddLogging();
