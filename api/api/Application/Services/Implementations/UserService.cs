@@ -20,4 +20,11 @@ public class UserService : GenericService<User, UserDto>, IUserService
     {
         return _repository.GetAllUsersWithRoleName();
     }
+
+    public UserDto RegisterUser(UserDto userDto)
+    {
+        var user = _mapper.Map<User>(userDto);
+        var newUser = _repository.Insert(user);
+        return _mapper.Map<UserDto>(newUser);
+    }
 }
