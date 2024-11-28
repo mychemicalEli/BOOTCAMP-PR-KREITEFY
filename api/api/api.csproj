@@ -13,13 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Services\Implementations\" />
-      <Folder Include="Application\Services\Interfaces\" />
-      <Folder Include="Domain\Persistence\" />
-      <Folder Include="Infrastructure\Rest\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\..\BOOTCAMP-PR-KREITEKFY\api\framework\framework.csproj" />
     </ItemGroup>
 

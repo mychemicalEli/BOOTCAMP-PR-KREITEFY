@@ -1,9 +1,15 @@
+using api.Application.Mappers;
+using api.Application.Services.Implementations;
+using api.Application.Services.Interfaces;
+using api.Domain.Persistence;
 using api.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddAutoMapper(typeof(RoleMapperProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddLogging();
