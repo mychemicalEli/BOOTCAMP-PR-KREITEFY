@@ -3,27 +3,31 @@
     min-height: 100vh;
     padding: 0;
     margin: 0;
-    font-family: 'Lato', sans-serif;
 
     .custom-card {
         background-color: #333333;
-        color: white;
         padding: 30px;
         margin: 30px;
         border-radius: 30px;
 
         .custom-header {
-            color: #17a645;
-            font-weight: bold;
+            color: whitesmoke;
+            font-weight: 100;
+            font-family: 'Lato', sans-serif;
+
+            .here {
+                color: #17a645;
+            }
         }
 
         .custom-btn {
             background-color: #17a645;
-            color: #191414;
+            color: whitesmoke;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             border-radius: 10px;
+            font-family: 'Lato', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, transform 0.2s ease;
 
             &:hover {
@@ -32,20 +36,9 @@
         }
     }
 
-    input.form-control {
-        background-color: #444444;
-        color: white;
-        border: 1px solid #1DB954;
-        font-size: 1.2rem;
-
-        &:focus {
-            box-shadow: 0 0 5px #1DB954;
-            border-color: #1DB954;
-        }
-
-        &::placeholder {
-            color: #191414;
-        }
+    .form-floating .form-control:focus {
+        border-color: #1DB954 !important;
+        box-shadow: 0 0 5px #1DB954;
     }
 
     .text-error {
