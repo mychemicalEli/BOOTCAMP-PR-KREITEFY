@@ -148,12 +148,12 @@ public class DataLoader
         {
             new User
             {
-                Name = "Elizabeth", LastName = "Blanco", Email = "elizabeth.blanco@example.com",
+                Name = "Elizabeth", LastName = "Blanco", Email = "admin@example.com",
                 Password = "SecurePass123", RoleId = 1
             },
             new User
             {
-                Name = "Ángel", LastName = "Hernández", Email = "angel.hernandez@example.com",
+                Name = "Ángel", LastName = "Hernández", Email = "user@example.com",
                 Password = "SecurePass123", RoleId = 2
             }
         };
