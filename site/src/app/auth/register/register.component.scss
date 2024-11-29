@@ -13,9 +13,7 @@
         border-radius: 30px;
 
         .custom-header {
-            background-color: #1DB954;
-            color: #191414;
-            border-radius: 30px;
+            color: #17a645;
             font-weight: bold;
         }
 
@@ -43,6 +41,10 @@
         &:focus {
             box-shadow: 0 0 5px #1DB954;
             border-color: #1DB954;
+        }
+
+        &::placeholder {
+            color: #191414;
         }
     }
 

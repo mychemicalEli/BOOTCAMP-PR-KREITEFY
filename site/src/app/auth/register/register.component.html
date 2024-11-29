@@ -1,102 +1,89 @@
 <div class="container-fluid register">
     <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card custom-card">
-          <div class="card-header text-center custom-header">
-            <h3>¡REGÍSTRATE!</h3>
-          </div>
-          <div class="card-body">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-              <!-- Nombre -->
-              <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input
-                  type="text"
-                  id="name"
-                  formControlName="name"
-                  class="form-control"
-                  placeholder="Ingrese su nombre"
-                />
-                <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-error">
-                  <small *ngIf="registerForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
-                  <small *ngIf="registerForm.get('name')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+        <div class="col-md-6">
+            <div class="card custom-card">
+                <div class="card-header text-center custom-header">
+                    <h3>REGÍSTRATE AQUÍ</h3>
                 </div>
-              </div>
-  
-              <!-- Apellidos -->
-              <div class="mb-3">
-                <label for="lastName" class="form-label">Apellidos</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  formControlName="lastName"
-                  class="form-control"
-                  placeholder="Ingrese sus apellidos"
-                />
-                <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid" class="text-error">
-                  <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Los apellidos son obligatorios.</small>
-                  <small *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" id="name" formControlName="name" class="form-control"
+                                placeholder="Ingrese su nombre" />
+                            <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
+                                class="text-error">
+                                <small *ngIf="registerForm.get('name')?.errors?.['required']">El nombre es
+                                    obligatorio.</small>
+                                <small *ngIf="registerForm.get('name')?.errors?.['minlength']">Debe tener al menos 2
+                                    caracteres.</small>
+                            </div>
+                        </div>
+
+                        <!-- Apellidos -->
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Apellidos</label>
+                            <input type="text" id="lastName" formControlName="lastName" class="form-control"
+                                placeholder="Ingrese sus apellidos" />
+                            <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid"
+                                class="text-error">
+                                <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Los apellidos son
+                                    obligatorios.</small>
+                                <small *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 2
+                                    caracteres.</small>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" formControlName="email" class="form-control"
+                                placeholder="Ingrese su email" />
+                            <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+                                class="text-error">
+                                <small *ngIf="registerForm.get('email')?.errors?.['required']">El email es
+                                    obligatorio.</small>
+                                <small *ngIf="registerForm.get('email')?.errors?.['email']">El email no es
+                                    válido.</small>
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" id="password" formControlName="password" class="form-control"
+                                placeholder="Ingrese su contraseña" />
+                            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
+                                class="text-error">
+                                <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es
+                                    obligatoria.</small>
+                                <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Debe tener al menos 8
+                                    caracteres.</small>
+                            </div>
+                        </div>
+
+                        <!-- Repetir Contraseña -->
+                        <div class="mb-3">
+                            <label for="repeatPassword" class="form-label">Repetir Contraseña</label>
+                            <input type="password" id="repeatPassword" formControlName="repeatPassword"
+                                class="form-control" placeholder="Repita su contraseña" />
+                            <div *ngIf="registerForm.get('repeatPassword')?.touched && !passwordsMatch"
+                                class="text-error">
+                                <small>Las contraseñas no coinciden.</small>
+                            </div>
+                        </div>
+                        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                            {{ errorMessage }}
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn custom-btn">Enviar</button>
+                        </div>
+                    </form>
                 </div>
-              </div>
-  
-              <!-- Email -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  formControlName="email"
-                  class="form-control"
-                  placeholder="Ingrese su email"
-                />
-                <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-error">
-                  <small *ngIf="registerForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
-                  <small *ngIf="registerForm.get('email')?.errors?.['email']">El email no es válido.</small>
-                </div>
-              </div>
-  
-              <!-- Contraseña -->
-              <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input
-                  type="password"
-                  id="password"
-                  formControlName="password"
-                  class="form-control"
-                  placeholder="Ingrese su contraseña"
-                />
-                <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-error">
-                  <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
-                  <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Debe tener al menos 8 caracteres.</small>
-                </div>
-              </div>
-  
-              <!-- Repetir Contraseña -->
-              <div class="mb-3">
-                <label for="repeatPassword" class="form-label">Repetir Contraseña</label>
-                <input
-                  type="password"
-                  id="repeatPassword"
-                  formControlName="repeatPassword"
-                  class="form-control"
-                  placeholder="Repita su contraseña"
-                />
-                <div *ngIf="registerForm.get('repeatPassword')?.touched && !passwordsMatch" class="text-error">
-                  <small>Las contraseñas no coinciden.</small>
-                </div>
-              </div>
-              <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-                {{ errorMessage }}
-              </div>
-  
-              <!-- Botón Enviar -->
-              <div class="d-grid">
-                <button type="submit" class="btn custom-btn">Enviar</button>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  
+</div>
