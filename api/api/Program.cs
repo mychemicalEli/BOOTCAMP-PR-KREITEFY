@@ -9,6 +9,15 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
@@ -48,6 +57,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 ConfigureExceptionhandler(app);
+app.UseCors("AllowAll");
 
 if (builder.Environment.IsDevelopment())
 {
