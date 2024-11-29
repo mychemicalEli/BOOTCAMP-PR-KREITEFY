@@ -1,0 +1,55 @@
+.register {
+    background-color: #191414;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+
+    .custom-card {
+        background-color: #333333;
+        color: white;
+        padding: 30px;
+        margin: 30px;
+        border-radius: 30px;
+
+        .custom-header {
+            background-color: #1DB954;
+            color: #191414;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .custom-btn {
+            background-color: #17a645;
+            color: #191414;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    input.form-control {
+        background-color: #444444;
+        color: white;
+        border: 1px solid #1DB954;
+        font-size: 1.2rem;
+
+        &:focus {
+            box-shadow: 0 0 5px #1DB954;
+            border-color: #1DB954;
+        }
+    }
+
+    .text-error {
+        color: #1DB954;
+        font-size: 1.1rem;
+        margin-top: 0.25rem;
+    }
+
+}
