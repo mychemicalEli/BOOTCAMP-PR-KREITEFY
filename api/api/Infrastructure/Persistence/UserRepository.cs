@@ -63,7 +63,18 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     public User? GetUserByEmail(string email)
     {
         return _context.Users
-            .Include(u => u.Role) 
-            .FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            .Where(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
+            .Select(u => new User
+            {
+                Id = u.Id,
+                Name = u.Name,
+                LastName = u.LastName,
+                Email = u.Email,
+                Password = u.Password,
+                RoleId = u.RoleId,
+            })
+            .FirstOrDefault();
     }
+
+
 }
