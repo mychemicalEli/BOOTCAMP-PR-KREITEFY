@@ -23,4 +23,9 @@ public class SongService : GenericService<Song, SongDto>, ISongService
         var songs = _repository.GetSongsByCriteriaPaged(filter, paginationParameters);
         return songs;
     }
+    
+    public IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5)
+    {
+        return _repository.GetLatestSongs(count);
+    }
 }

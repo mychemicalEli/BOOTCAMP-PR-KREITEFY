@@ -27,4 +27,10 @@ public class UserService : GenericService<User, UserDto>, IUserService
         var newUser = _repository.Insert(user);
         return _mapper.Map<UserDto>(newUser);
     }
+    
+    public UserDto GetUserByEmail(string email)
+    {
+        var user = _repository.GetUserByEmail(email);  
+        return _mapper.Map<UserDto>(user); 
+    }
 }

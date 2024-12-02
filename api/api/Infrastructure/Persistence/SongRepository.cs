@@ -6,6 +6,7 @@ using framework.Application;
 using framework.Infrastructure.Persistence;
 using framework.Infrastructure.Specs;
 using framework.Domain.Persistence;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence
@@ -90,6 +91,27 @@ namespace api.Infrastructure.Persistence
             _context.Entry(song).Reference(i => i.Album).Load();
             _context.Entry(song).Reference(i => i.Artist).Load();
             return song;
+        }
+
+
+        public IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5)
+        {
+            var songs = _context.Songs
+                .OrderByDescending(song => song.AddedAt)
+                .Take(count)
+                .Select(i => new LatestSongsRequest()
+                {
+                    Id = i.Id,
+                    Title = i.Title,
+                    AlbumId = i.AlbumId,
+                    AlbumCover = Convert.ToBase64String(i.Album.Cover),
+                    ArtistId = i.ArtistId,
+                    ArtistName = i.Artist.Name,
+                    GenreId = i.GenreId,
+                    GenreName = i.Genre.Name,
+                    AddedAt = i.AddedAt
+                });
+            return songs;
         }
     }
 }
