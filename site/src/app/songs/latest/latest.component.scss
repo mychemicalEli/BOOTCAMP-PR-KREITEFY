@@ -1,0 +1,46 @@
+.title {
+    color: rgba(245, 245, 245, 0.798);
+}
+
+.card {
+    background-color: #333333;
+    color: rgba(245, 245, 245, 0.798);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    height: 360px;
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    .card-title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-text {
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: rgba(245, 245, 245, 0.686);
+    }
+
+    .card-img-top {
+        height: 200px;
+        min-height: 200px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .added {
+        color: rgba(166, 165, 165, 0.798);
+        padding-bottom: 20px;
+        padding-left: 20px;
+    }
+}

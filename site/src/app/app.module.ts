@@ -9,6 +9,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
+import { LatestComponent } from './songs/latest/latest.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoginComponent } from './auth/login/login.component';
     NavbarComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    LatestComponent
   ],
   imports: [
     BrowserModule,
