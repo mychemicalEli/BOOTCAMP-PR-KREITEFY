@@ -3,15 +3,15 @@
         <div class="col-md-6">
             <div class="card custom-card">
                 <div class="card-header text-center custom-header">
-                    <h3>REGÍSTRATE AQUÍ</h3>
+                    <h3>Regístrate <span class="here">aquí.</span></h3>
                 </div>
                 <div class="card-body">
                     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                         <!-- Nombre -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
+                        <div class="form-floating mb-3">
                             <input type="text" id="name" formControlName="name" class="form-control"
                                 placeholder="Ingrese su nombre" />
+                            <label for="name" class="form-label">Nombre</label>
                             <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
                                 class="text-error">
                                 <small *ngIf="registerForm.get('name')?.errors?.['required']">El nombre es
@@ -22,10 +22,10 @@
                         </div>
 
                         <!-- Apellidos -->
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Apellidos</label>
+                        <div class="form-floating mb-3">
                             <input type="text" id="lastName" formControlName="lastName" class="form-control"
                                 placeholder="Ingrese sus apellidos" />
+                            <label for="lastName" class="form-label">Apellidos</label>
                             <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid"
                                 class="text-error">
                                 <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Los apellidos son
@@ -36,10 +36,10 @@
                         </div>
 
                         <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                        <div class="form-floating mb-3">
                             <input type="email" id="email" formControlName="email" class="form-control"
                                 placeholder="Ingrese su email" />
+                            <label for="email" class="form-label">Email</label>
                             <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
                                 class="text-error">
                                 <small *ngIf="registerForm.get('email')?.errors?.['required']">El email es
@@ -50,10 +50,10 @@
                         </div>
 
                         <!-- Contraseña -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
+                        <div class="form-floating mb-3">
                             <input type="password" id="password" formControlName="password" class="form-control"
                                 placeholder="Ingrese su contraseña" />
+                            <label for="password" class="form-label">Contraseña</label>
                             <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
                                 class="text-error">
                                 <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es
@@ -64,10 +64,10 @@
                         </div>
 
                         <!-- Repetir Contraseña -->
-                        <div class="mb-3">
-                            <label for="repeatPassword" class="form-label">Repetir Contraseña</label>
+                        <div class="form-floating mb-3">
                             <input type="password" id="repeatPassword" formControlName="repeatPassword"
                                 class="form-control" placeholder="Repita su contraseña" />
+                            <label for="repeatPassword" class="form-label">Repetir Contraseña</label>
                             <div *ngIf="registerForm.get('repeatPassword')?.touched && !passwordsMatch"
                                 class="text-error">
                                 <small>Las contraseñas no coinciden.</small>
@@ -79,7 +79,7 @@
 
                         <!-- Botón Enviar -->
                         <div class="d-grid">
-                            <button type="submit" class="btn custom-btn">Enviar</button>
+                            <button type="submit" class="btn custom-btn">ENVIAR</button>
                         </div>
                     </form>
                 </div>

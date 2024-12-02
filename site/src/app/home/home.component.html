@@ -1,13 +1,12 @@
 <div class="container-fluid" *ngIf="!isLoggedIn; else loggedIn">
-    <div class="background-container">
-      <img class="background" src="../background.png" width="100%" height="auto">
-      <img class="logo" src="../logowhite.png" alt="Logo">
-    </div>
+  <div class="background-container">
+    <img class="background" src="../background.png" width="100%" height="auto">
+    <img class="logo" src="../logowhite.png" alt="Logo">
   </div>
-  
-  <ng-template #loggedIn>
-    <div class="container-fluid logged">
-      <h1 class="try">¡Estás logeado!!!</h1>
-    </div>
-  </ng-template>
-  
+</div>
+
+<ng-template #loggedIn>
+  <div class="container-fluid logged">
+    <h1 class="try">¡Estás logeado!!!</h1>
+  </div>
+</ng-template>

@@ -1,4 +1,4 @@
-.register {
+.login {
     background-color: #191414;
     min-height: 100vh;
     padding: 0;
@@ -45,6 +45,15 @@
         color: #1DB954;
         font-size: 1.1rem;
         margin-top: 0.25rem;
+    }
+
+    .register {
+        color: whitesmoke;
+
+        a {
+            color: #1DB954;
+            text-decoration: none;
+        }
     }
 
 }

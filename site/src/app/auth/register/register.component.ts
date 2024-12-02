@@ -14,8 +14,8 @@ export class RegisterComponent {
   errorMessage: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     private route: Router
   ) {
     this.initializeForm();
@@ -33,7 +33,7 @@ export class RegisterComponent {
 
   onSubmit(): void {
     this.markFormAsTouched();
-    if (this.registerForm.valid && this.passwordsMatch) {
+    if (this.registerForm.valid && this.passwordsMatch()) {
       this.saveUser(this.createFromForm());
     } else {
       console.error('Formulario inválido');
@@ -44,7 +44,7 @@ export class RegisterComponent {
     Object.values(this.registerForm.controls).forEach(control => control.markAsTouched());
   }
 
-  get passwordsMatch(): boolean {
+  passwordsMatch(): boolean {
     const { password, repeatPassword } = this.registerForm.value;
     return password === repeatPassword;
   }
@@ -59,20 +59,25 @@ export class RegisterComponent {
       password,
       roleId: 2,
       roleName: '',
+      token: '',
     };
   }
 
   private handleError(error: any): void {
     console.log(error);
-    this.errorMessage = error.status === 400
-      ? error.error?.message || "Ya existe un usuario con este email. ¡Prueba con otro!"
-      : "Ocurrió un error inesperado. Inténtalo de nuevo.";
+    if (error.status === 400) {
+      this.errorMessage = error.error?.message || "Ya existe un usuario con este email. ¡Prueba con otro!";
+    } else {
+      this.errorMessage = "Ocurrió un error inesperado. Inténtalo de nuevo.";
+    }
   }
 
   private saveUser(userToSave: RegisterRequest): void {
     this.authService.register(userToSave).subscribe({
       next: (response) => {
-        console.log('Usuario registrado con éxito:', response);
+        // Guarda el token, el nombre de usuario y el username en localStorage
+        this.authService.saveToken(response.token, response.name);
+        localStorage.setItem('username', response.name);
         this.route.navigate(['/']);
       },
       error: (err) => {

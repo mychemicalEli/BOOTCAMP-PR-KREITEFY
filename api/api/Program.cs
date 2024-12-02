@@ -1,3 +1,4 @@
+using System.Text;
 using api.Application.Mappers;
 using api.Application.Services.Implementations;
 using api.Application.Services.Interfaces;
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowFrontEnd", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
+
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
@@ -57,7 +59,7 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 ConfigureExceptionhandler(app);
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontEnd");
 
 if (builder.Environment.IsDevelopment())
 {
