@@ -1,0 +1,59 @@
+.login {
+    background-color: #191414;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+
+    .custom-card {
+        background-color: #333333;
+        padding: 30px;
+        margin: 30px;
+        border-radius: 30px;
+
+        .custom-header {
+            color: whitesmoke;
+            font-weight: 100;
+            font-family: 'Lato', sans-serif;
+
+            .here {
+                color: #17a645;
+            }
+        }
+
+        .custom-btn {
+            background-color: #17a645;
+            color: whitesmoke;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            font-family: 'Lato', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .form-floating .form-control:focus {
+        border-color: #1DB954 !important;
+        box-shadow: 0 0 5px #1DB954;
+    }
+
+    .text-error {
+        color: #1DB954;
+        font-size: 1.1rem;
+        margin-top: 0.25rem;
+    }
+
+    .register {
+        color: whitesmoke;
+
+        a {
+            color: #1DB954;
+            text-decoration: none;
+        }
+    }
+
+}

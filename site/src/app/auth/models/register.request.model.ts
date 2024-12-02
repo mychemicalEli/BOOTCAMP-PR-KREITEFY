@@ -8,4 +8,5 @@ export interface RegisterRequest {
     password: string;
     roleId: number;
     roleName: string | undefined;
+    token: string;
 }

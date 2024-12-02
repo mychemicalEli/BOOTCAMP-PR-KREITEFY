@@ -1,0 +1,58 @@
+<div class="container-fluid login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card custom-card">
+                <div class="card-header text-center custom-header">
+                    <h3>Inicia sesión <span class="here">aquí.</span></h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <input type="email" id="email" formControlName="email" class="form-control"
+                                placeholder="Ingrese su email" />
+                            <label for="email" class="form-label">Email</label>
+                            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                                class="text-error">
+                                <small *ngIf="loginForm.get('email')?.errors?.['required']">El email es
+                                    obligatorio.</small>
+                                <small *ngIf="loginForm.get('email')?.errors?.['email']">El email no es
+                                    válido.</small>
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="form-floating mb-3">
+                            <input type="password" id="password" formControlName="password" class="form-control"
+                                placeholder="Ingrese su contraseña" />
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                                class="text-error">
+                                <small *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es
+                                    obligatoria.</small>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de error -->
+                        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                            {{ errorMessage }}
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn custom-btn">LOGIN</button>
+                        </div>
+
+                        <!-- Enlace a registro -->
+                        <div class="text-center register">
+                            <p>¿No tienes cuenta?
+                                <a [routerLink]="['/auth/register']" class="register-link">Regístrate aquí</a>.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
