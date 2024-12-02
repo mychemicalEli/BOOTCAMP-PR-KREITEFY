@@ -91,5 +91,32 @@ namespace api.Infrastructure.Persistence
             _context.Entry(song).Reference(i => i.Artist).Load();
             return song;
         }
+
+
+        public IEnumerable<SongDto> GetLatestSongs(int count = 5)
+        {
+            var songs = _context.Songs
+                .OrderByDescending(song => song.AddedAt) // Ordena por fecha de añadido, de más reciente a más antiguo
+                .Take(count) // Limita el número de resultados
+                .Select(i => new SongDto
+                {
+                    Id = i.Id,
+                    Title = i.Title,
+                    AlbumId = i.AlbumId,
+                    AlbumName = i.Album.Title,
+                    AlbumCover = Convert.ToBase64String(i.Album.Cover),
+                    ArtistId = i.ArtistId,
+                    ArtistName = i.Artist.Name,
+                    GenreId = i.GenreId,
+                    GenreName = i.Genre.Name,
+                    Duration = TimeSpanConverter.ToString(i.Duration),
+                    Streams = i.Streams,
+                    MediaRating = i.MediaRating,
+                    AddedAt = i.AddedAt
+                })
+                .ToList(); // Evalúa y materializa la lista para devolverla como una lista en memoria
+
+            return songs;
+        }
     }
 }
