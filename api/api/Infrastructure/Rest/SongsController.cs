@@ -46,7 +46,7 @@ public class SongsController : GenericCrudController<SongDto>
             return BadRequest();
         }
     }
-    
+
     [HttpGet("latest")]
     [Produces("application/json")]
     public ActionResult<IEnumerable<SongDto>> GetLatestSongs([FromQuery] int count = 5)
@@ -58,7 +58,7 @@ public class SongsController : GenericCrudController<SongDto>
         }
         catch (Exception ex)
         {
-            return StatusCode(500, "Internal server error");
+            return BadRequest("Error fetching latest songs: " + ex.Message);
         }
     }
 }
