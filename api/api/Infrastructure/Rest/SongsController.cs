@@ -53,7 +53,7 @@ public class SongsController : GenericCrudController<SongDto>
     {
         try
         {
-            var songs = _service.GetLatestSongs(count);
+            var songs = _service.GetLatestSongs(count).ToList();
             return Ok(songs);
         }
         catch (Exception ex)
@@ -61,4 +61,5 @@ public class SongsController : GenericCrudController<SongDto>
             return BadRequest("Error fetching latest songs: " + ex.Message);
         }
     }
+
 }

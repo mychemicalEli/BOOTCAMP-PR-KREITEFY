@@ -6,6 +6,7 @@ using framework.Application;
 using framework.Infrastructure.Persistence;
 using framework.Infrastructure.Specs;
 using framework.Domain.Persistence;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence
@@ -96,8 +97,8 @@ namespace api.Infrastructure.Persistence
         public IEnumerable<SongDto> GetLatestSongs(int count = 5)
         {
             var songs = _context.Songs
-                .OrderByDescending(song => song.AddedAt) // Ordena por fecha de añadido, de más reciente a más antiguo
-                .Take(count) // Limita el número de resultados
+                .OrderByDescending(song => song.AddedAt)
+                .Take(count)
                 .Select(i => new SongDto
                 {
                     Id = i.Id,
@@ -114,8 +115,7 @@ namespace api.Infrastructure.Persistence
                     MediaRating = i.MediaRating,
                     AddedAt = i.AddedAt
                 })
-                .ToList(); // Evalúa y materializa la lista para devolverla como una lista en memoria
-
+                .ToList();
             return songs;
         }
     }

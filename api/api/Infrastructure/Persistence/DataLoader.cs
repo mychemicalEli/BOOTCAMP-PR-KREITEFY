@@ -194,7 +194,7 @@ public class DataLoader
             new Artist { Name = "Damiano David" },
             new Artist { Name = "Harry Styles" },
             new Artist { Name = "One Direction" },
-            new Artist { Name = "Lala Love You" },
+            new Artist { Name = "La La Love You" },
             new Artist { Name = "Arde Bogotá" },
         };
         foreach (Artist artist in artists)
