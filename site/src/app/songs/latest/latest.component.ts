@@ -13,6 +13,8 @@ export class LatestComponent {
   artists: ArtistDto[] = [];
   albums: AlbumDto[] = [];
   latestSongs: LatestSongs[] = [];
+  errorMessage: string | null = null;
+
   constructor(private songsService: SongService) { }
 
   ngOnInit(): void {
@@ -22,10 +24,12 @@ export class LatestComponent {
   private getLatestSongs(): void {
     this.songsService.getLatestSongs().subscribe({
       next: (response: LatestSongs[]) => {
-        this.latestSongs = response; // Ajuste aquí: No necesitas acceder a `.data`
+        this.latestSongs = response;
+        this.errorMessage = null;
       },
       error: (err) => {
         console.error('Error obteniendo canciones más recientes', err);
+        this.errorMessage = 'No se pudieron cargar las canciones más recientes. Por favor, inténtelo de nuevo.';
       },
     });
   }
@@ -35,7 +39,9 @@ export class LatestComponent {
       next: (artists) => {
         this.artists = artists;
       },
-      error: (err) => { console.log("Error obteniendo artistas") }
+      error: (err) => {
+        console.log("Error obteniendo artistas", err);
+      }
     });
   }
 
@@ -43,10 +49,11 @@ export class LatestComponent {
     this.songsService.getAlbums().subscribe({
       next: (albums) => {
         this.albums = albums;
+      
       },
-      error: (err) => { console.log("Error obteniendo albums") }
+      error: (err) => {
+        console.log("Error obteniendo albums", err);
+      }
     });
   }
 }
-
-
