@@ -22,7 +22,7 @@ namespace api.Infrastructure.Rest
 
         [HttpPost("register")]
         [Produces("application/json")]
-        public ActionResult<UserDto> Register([FromBody] UserDto userDto)
+        public ActionResult Register([FromBody] UserDto userDto)
         {
             if (!ModelState.IsValid)
             {
@@ -37,14 +37,26 @@ namespace api.Infrastructure.Rest
                     return BadRequest("El correo electrónico ya está registrado.");
                 }
 
+                // Registra al nuevo usuario
                 var newUser = _userService.RegisterUser(userDto);
-                return newUser;
+
+                // Genera el token para el usuario registrado
+                var token = GenerateJwtToken(newUser);
+
+                // Devuelve el usuario, el token y el nombre
+                return Ok(new
+                {
+                    User = newUser,
+                    Token = token,
+                    UserName = newUser.Name
+                });
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost("login")]
         [Produces("application/json")]
@@ -53,16 +65,17 @@ namespace api.Infrastructure.Rest
             var user = _userService.GetAllUsersWithRoleName()
                 .FirstOrDefault(u => u.Email.Equals(loginDto.Email, StringComparison.OrdinalIgnoreCase));
 
-            // Si el usuario no existe o la contraseña no coincide, devuelve un Unauthorized
             if (user == null || user.Password != loginDto.Password)
             {
                 return Unauthorized("Invalid email or password.");
             }
 
-            // Si las credenciales son correctas, generamos el token
             var token = GenerateJwtToken(user);
-            return Ok(new { Token = token });
+
+            // Devolver el token junto con el nombre de usuario
+            return Ok(new { Token = token, UserName = user.Name });
         }
+
 
         private string GenerateJwtToken(UserDto user)
         {
