@@ -94,28 +94,23 @@ namespace api.Infrastructure.Persistence
         }
 
 
-        public IEnumerable<SongDto> GetLatestSongs(int count = 5)
+        public IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5)
         {
             var songs = _context.Songs
                 .OrderByDescending(song => song.AddedAt)
                 .Take(count)
-                .Select(i => new SongDto
+                .Select(i => new LatestSongsRequest()
                 {
                     Id = i.Id,
                     Title = i.Title,
                     AlbumId = i.AlbumId,
-                    AlbumName = i.Album.Title,
                     AlbumCover = Convert.ToBase64String(i.Album.Cover),
                     ArtistId = i.ArtistId,
                     ArtistName = i.Artist.Name,
                     GenreId = i.GenreId,
                     GenreName = i.Genre.Name,
-                    Duration = TimeSpanConverter.ToString(i.Duration),
-                    Streams = i.Streams,
-                    MediaRating = i.MediaRating,
                     AddedAt = i.AddedAt
-                })
-                .ToList();
+                });
             return songs;
         }
     }

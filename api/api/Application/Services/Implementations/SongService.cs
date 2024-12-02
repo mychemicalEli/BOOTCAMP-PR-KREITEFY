@@ -24,7 +24,7 @@ public class SongService : GenericService<Song, SongDto>, ISongService
         return songs;
     }
     
-    public IEnumerable<SongDto> GetLatestSongs(int count = 5)
+    public IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5)
     {
         return _repository.GetLatestSongs(count);
     }

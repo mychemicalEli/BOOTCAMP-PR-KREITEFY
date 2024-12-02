@@ -7,5 +7,5 @@ namespace api.Application.Services.Interfaces;
 public interface ISongService : IGenericService<SongDto>
 {
     PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters);
-    IEnumerable<SongDto> GetLatestSongs(int count = 5);
+    IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5);
 }
