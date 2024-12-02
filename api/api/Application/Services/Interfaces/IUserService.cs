@@ -7,4 +7,5 @@ public interface IUserService : IGenericService<UserDto>
 {
     List<UserDto> GetAllUsersWithRoleName();
     UserDto RegisterUser(UserDto userDto);
+    UserDto GetUserByEmail(string email);
 }

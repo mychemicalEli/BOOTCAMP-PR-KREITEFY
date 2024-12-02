@@ -59,4 +59,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         _context.Entry(user).Reference(i => i.Role).Load();
         return user;
     }
+    
+    public User? GetUserByEmail(string email)
+    {
+        return _context.Users
+            .Include(u => u.Role) 
+            .FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+    }
 }
