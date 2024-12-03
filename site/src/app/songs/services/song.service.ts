@@ -4,6 +4,7 @@ import { ArtistDto } from '../models/artists.model';
 import { Observable } from 'rxjs';
 import { AlbumDto } from '../models/album.model';
 import { LatestSongs } from '../models/latest.model';
+import { SongDto } from '../models/song.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,13 @@ export class SongService {
     return this.http.get<AlbumDto[]>(urlEndPoint);
   }
 
-  public getLatestSongs(): Observable<LatestSongs[]>{
+  public getLatestSongs(): Observable<LatestSongs[]> {
     const urlEndPoint = `${this.apiUrl}/songs/latest`;
     return this.http.get<LatestSongs[]>(urlEndPoint);
+  }
+
+  public getSongById(songId: number): Observable<SongDto> {
+    const urlEndPoint = `${this.apiUrl}/songs/${songId}`;
+    return this.http.get<SongDto>(urlEndPoint);
   }
 }

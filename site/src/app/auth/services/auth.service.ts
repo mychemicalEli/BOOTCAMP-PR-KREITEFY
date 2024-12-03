@@ -55,8 +55,8 @@ export class AuthService {
     if (token) {
       try {
         const payload = token.split('.')[1];
-        const decodedPayload = JSON.parse(atob(payload));
-        return decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null; // Acceder al claim correcto
+        const decodedPayload = JSON.parse(decodeURIComponent(atob(payload)));
+        return decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null;
       } catch (e) {
         console.error('Error decoding token:', e);
         return null;
@@ -64,6 +64,7 @@ export class AuthService {
     }
     return null;
   }
+
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {

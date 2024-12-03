@@ -7,7 +7,7 @@
     </div>
     <div class="row row-cols-1 row-cols-md-5 g-4">
       <div class="col" *ngFor="let song of latestSongs">
-        <div class="card">
+        <div class="card" [routerLink]="['/songs', song.id]">
           <img [src]="'data:image/png;base64,' + song.albumCover" class="card-img-top" alt="Album Cover">
           <div class="card-body">
             <h5 class="card-title">{{ song.title }}</h5>
