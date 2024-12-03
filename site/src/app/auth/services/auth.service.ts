@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { RegisterRequest } from "../models/register.request.model";
 
 @Injectable({
@@ -9,27 +9,38 @@ import { RegisterRequest } from "../models/register.request.model";
 export class AuthService {
   private apiUrl = 'http://localhost:5282/api';
   private loggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
-  private userNameSubject = new BehaviorSubject<string>(this.getUserName() || '');
+  private userNameSubject = new BehaviorSubject<string>(this.getDecodedUserName() || '');
 
   constructor(private http: HttpClient) { }
 
   // Registro de usuario
   public register(user: RegisterRequest): Observable<RegisterRequest> {
-    return this.http.post<RegisterRequest>(`${this.apiUrl}/auth/register`, user);
+    return this.http.post<RegisterRequest>(`${this.apiUrl}/auth/register`, user).pipe(
+      tap((response: any) => {
+        const token = response.token;
+        this.saveToken(token);
+      })
+    );
   }
 
   // Login de usuario
   public login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials).pipe(
+      tap((response: any) => {
+        const token = response.token;
+        this.saveToken(token);
+      })
+    );
   }
 
-  // Guardar token y nombre de usuario en el localStorage
-  saveToken(token: string, name: string): void {
+  // Guardar token en el localStorage y actualizar el nombre de usuario decodificado
+  saveToken(token: string): void {
     if (this.isBrowser()) {
       localStorage.setItem('authToken', token);
-      localStorage.setItem('username', name);
+      const userName = this.getDecodedUserName();
+      localStorage.setItem('username', userName || '');
       this.loggedInSubject.next(true);
-      this.userNameSubject.next(name);
+      this.userNameSubject.next(userName || '');
     }
   }
 
@@ -38,9 +49,20 @@ export class AuthService {
     return this.isBrowser() ? localStorage.getItem('authToken') : null;
   }
 
-  // Obtener nombre de usuario desde el localStorage
-  getUserName(): string | null {
-    return this.isBrowser() ? localStorage.getItem('username') : null;
+  // Obtener el nombre de usuario decodificando el token
+  private getDecodedUserName(): string | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const payload = token.split('.')[1];
+        const decodedPayload = JSON.parse(atob(payload));
+        return decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null; // Acceder al claim correcto
+      } catch (e) {
+        console.error('Error decoding token:', e);
+        return null;
+      }
+    }
+    return null;
   }
 
   // Verificar si el usuario está autenticado
@@ -52,7 +74,6 @@ export class AuthService {
   logout(): void {
     if (this.isBrowser()) {
       localStorage.removeItem('authToken');
-      localStorage.removeItem('username');
       this.loggedInSubject.next(false);
       this.userNameSubject.next('');
     }

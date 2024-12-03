@@ -30,9 +30,9 @@ export class NavbarComponent implements OnInit {
 
   handleLoginLogout(): void {
     if (this.isLoggedIn) {
-      this.logout(); // Si está logueado, hacemos logout
+      this.logout(); 
     } else {
-      this.router.navigate(['/auth/login']); // Si no está logueado, redirigimos a Login
+      this.router.navigate(['/auth/login']);
     }
   }
 }

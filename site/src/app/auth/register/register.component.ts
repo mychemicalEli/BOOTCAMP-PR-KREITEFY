@@ -75,8 +75,7 @@ export class RegisterComponent {
   private saveUser(userToSave: RegisterRequest): void {
     this.authService.register(userToSave).subscribe({
       next: (response) => {
-        // Guarda el token, el nombre de usuario y el username en localStorage
-        this.authService.saveToken(response.token, response.name);
+        this.authService.saveToken(response.token);
         localStorage.setItem('username', response.name);
         this.route.navigate(['/']);
       },
