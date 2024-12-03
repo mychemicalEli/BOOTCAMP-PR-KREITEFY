@@ -7,12 +7,12 @@ namespace api.Application.Services.Implementations;
 public class AuthService : IAuthService
 {
     private readonly IUserService _userService;
-    private readonly IJwtToken _token;
+    private readonly IJwtTokenService _tokenService;
 
-    public AuthService(IUserService userService, IJwtToken jwtToken)
+    public AuthService(IUserService userService, IJwtTokenService jwtTokenService)
     {
         _userService = userService;
-        _token = jwtToken;
+        _tokenService = jwtTokenService;
     }
 
     public AuthResponseDto Register(UserDto userDto)
@@ -24,12 +24,11 @@ public class AuthService : IAuthService
         }
 
         var newUser = _userService.RegisterUser(userDto);
-        var token = _token.GenerateToken(newUser);
+        var token = _tokenService.GenerateToken(newUser);
 
         return new AuthResponseDto
         {
-            Token = token,
-            UserName = _token.ExtractUserNameFromToken(token)
+            Token = token
         };
     }
 
@@ -41,12 +40,11 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Invalid email or password.");
         }
 
-        var token = _token.GenerateToken(user);
+        var token = _tokenService.GenerateToken(user);
 
         return new AuthResponseDto
         {
-            Token = token,
-            UserName = _token.ExtractUserNameFromToken(token)
+            Token = token
         };
     }
 }

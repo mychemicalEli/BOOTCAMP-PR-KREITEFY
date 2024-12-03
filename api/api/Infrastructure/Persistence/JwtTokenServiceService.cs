@@ -8,7 +8,7 @@ using JwtSecurityToken = System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
 
 namespace api.Infrastructure.Persistence;
 
-public class JwtToken: IJwtToken
+public class JwtTokenServiceService: IJwtTokenService
 {
     public string GenerateToken(UserDto user)
     {
@@ -30,13 +30,5 @@ public class JwtToken: IJwtToken
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-    
-    public string ExtractUserNameFromToken(string token)
-    {
-        var handler = new JwtSecurityTokenHandler();
-        var jwtToken = handler.ReadJwtToken(token);
-        var nameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-        return nameClaim?.Value ?? string.Empty;
     }
 }
