@@ -28,7 +28,8 @@ builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<ISongService, SongService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserSongsService, UserSongsService>();
-builder.Services.AddScoped<IUserSongsRepository, UserSongsRepository>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -37,6 +38,8 @@ builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
+builder.Services.AddScoped<IUserSongsRepository, UserSongsRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IDateHumanizer, DateHumanizer>();
 
 builder.Services.AddAutoMapper(typeof(RoleMapperProfile));

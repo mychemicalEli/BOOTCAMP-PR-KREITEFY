@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LatestSongs } from '../models/latest.model';
 import { SongDto } from '../models/song.model';
+import { RatingDto } from '../models/rating.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class SongService {
     const urlEndPoint = `${this.apiUrl}/play`;
     return this.http.post(urlEndPoint, null);
   }
-  
+
+  public addRating(ratingDto: RatingDto): Observable<any> {
+    const urlEndPoint = `${this.apiUrl}/rating`;
+    return this.http.post(urlEndPoint, ratingDto);
+  }
 }

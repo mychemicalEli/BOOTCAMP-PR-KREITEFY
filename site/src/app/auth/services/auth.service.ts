@@ -9,8 +9,8 @@ import { RegisterRequest } from "../models/register.request.model";
 export class AuthService {
   private apiUrl = 'http://localhost:5282/api';
   private loggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
-  private userNameSubject = new BehaviorSubject<string>(this.getDecodedUserName() || '');
-
+  private userNameSubject = new BehaviorSubject<string>(this.getDecodedUserInfo().userName || '');
+  private userIdSubject = new BehaviorSubject<string | null>(this.getDecodedUserInfo().userId);
   constructor(private http: HttpClient) { }
 
   // Registro de usuario
@@ -33,38 +33,49 @@ export class AuthService {
     );
   }
 
-  // Guardar token en el localStorage y actualizar el nombre de usuario decodificado
+  // Guardar token en el localStorage y actualizar el usuario decodificado
   saveToken(token: string): void {
     if (this.isBrowser()) {
       localStorage.setItem('authToken', token);
-      const userName = this.getDecodedUserName();
+      
+      // Obtener tanto el userName como el userId desde el token decodificado
+      const { userName, userId } = this.getDecodedUserInfo();
+      
+      // Guardar los valores en localStorage
       localStorage.setItem('username', userName || '');
+      localStorage.setItem('userId', userId || '');
+      
+      // Actualizar los BehaviorSubjects
       this.loggedInSubject.next(true);
       this.userNameSubject.next(userName || '');
+      this.userIdSubject.next(userId || null);
     }
   }
-
+  
   // Obtener token desde el localStorage
   getToken(): string | null {
     return this.isBrowser() ? localStorage.getItem('authToken') : null;
   }
 
-  // Obtener el nombre de usuario decodificando el token
-  private getDecodedUserName(): string | null {
+  // Obtener el nombre de usuario y el id decodificando el token
+  public getDecodedUserInfo(): { userId: string | null, userName: string | null } {
     const token = this.getToken();
     if (token) {
       try {
         const payload = token.split('.')[1];
         const decodedPayload = JSON.parse(decodeURIComponent(atob(payload)));
-        return decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null;
+  
+        const userName = decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null;
+        const userId = decodedPayload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+  
+        return { userId, userName };
       } catch (e) {
         console.error('Error decoding token:', e);
-        return null;
+        return { userId: null, userName: null };
       }
     }
-    return null;
+    return { userId: null, userName: null };
   }
-
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {

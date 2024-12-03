@@ -247,63 +247,63 @@ public class DataLoader
             new Song
             {
                 Title = "So Far Away", ArtistId = 1, AlbumId = 1,
-                GenreId = 1, Duration = new TimeSpan(0, 5, 12), MediaRating = 4.2m, Streams = 100,
+                GenreId = 1, Duration = new TimeSpan(0, 5, 12), MediaRating = 4, Streams = 100,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Nightmare", ArtistId = 1, AlbumId = 1,
-                GenreId = 1, Duration = new TimeSpan(0, 6, 16), MediaRating = 4m, Streams = 72,
+                GenreId = 1, Duration = new TimeSpan(0, 6, 16), MediaRating = 4, Streams = 72,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "Bat Country", ArtistId = 1, AlbumId = 2,
-                GenreId = 1, Duration = new TimeSpan(0, 5, 14), MediaRating = 3.6m, Streams = 80,
+                GenreId = 1, Duration = new TimeSpan(0, 5, 14), MediaRating = 3, Streams = 80,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Beast and the Harlot", ArtistId = 1, AlbumId = 2,
-                GenreId = 1, Duration = new TimeSpan(0, 5, 41), MediaRating = 3.9m, Streams = 50,
+                GenreId = 1, Duration = new TimeSpan(0, 5, 41), MediaRating = 3, Streams = 50,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "Popular Monster", ArtistId = 2, AlbumId = 3,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 30), MediaRating = 2.8m, Streams = 35,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 30), MediaRating = 2, Streams = 35,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "The Drug in Me is You", ArtistId = 2, AlbumId = 4,
-                GenreId = 1, Duration = new TimeSpan(0, 4, 00), MediaRating = 3.2m, Streams = 40,
+                GenreId = 1, Duration = new TimeSpan(0, 4, 00), MediaRating = 3, Streams = 40,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "I'm not a Vampire", ArtistId = 2, AlbumId = 4,
-                GenreId = 1, Duration = new TimeSpan(0, 4, 02), MediaRating = 4m, Streams = 32,
+                GenreId = 1, Duration = new TimeSpan(0, 4, 02), MediaRating = 4, Streams = 32,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "In the End", ArtistId = 3, AlbumId = 5,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 36), MediaRating = 4m, Streams = 10,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 36), MediaRating = 4, Streams = 10,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Crawling", ArtistId = 3, AlbumId = 6,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 29), MediaRating = 2.4m, Streams = 90,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 29), MediaRating = 2, Streams = 90,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Numb", ArtistId = 3, AlbumId = 6,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 06), MediaRating = 3.3m, Streams = 95,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 06), MediaRating = 3, Streams = 95,
                 AddedAt = DateTime.UtcNow
             },
 
@@ -312,63 +312,63 @@ public class DataLoader
             new Song
             {
                 Title = "I Think I'm OKAY", ArtistId = 4, AlbumId = 7,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 49), MediaRating = 4m, Streams = 55,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 49), MediaRating = 4, Streams = 55,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Bloody Valentine", ArtistId = 4, AlbumId = 8,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 40), MediaRating = 3.6m, Streams = 80,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 40), MediaRating = 3, Streams = 80,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "My Ex's Best Friend", ArtistId = 4, AlbumId = 8,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4m, Streams = 70,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4, Streams = 70,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Concert for Aliens", ArtistId = 4, AlbumId = 8,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 58), MediaRating = 2.6m, Streams = 60,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 58), MediaRating = 2, Streams = 60,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "All the Small Things", ArtistId = 5, AlbumId = 9,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 51), MediaRating = 2.9m, Streams = 95,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 51), MediaRating = 2, Streams = 95,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "What's My Age Again?", ArtistId = 5, AlbumId = 9,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 23), MediaRating = 3.9m, Streams = 90,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 23), MediaRating = 3, Streams = 90,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Dammit", ArtistId = 5, AlbumId = 10,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4m, Streams = 75,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4, Streams = 75,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Weightless", ArtistId = 6, AlbumId = 11,
-                GenreId = 2, Duration = new TimeSpan(0, 3, 01), MediaRating = 2.7m, Streams = 72,
+                GenreId = 2, Duration = new TimeSpan(0, 3, 01), MediaRating = 2, Streams = 72,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Dear Maria, Count Me In", ArtistId = 6, AlbumId = 12,
-                GenreId = 2, Duration = new TimeSpan(0, 3, 03), MediaRating = 2.9m, Streams = 82,
+                GenreId = 2, Duration = new TimeSpan(0, 3, 03), MediaRating = 2, Streams = 82,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Poppin' Champagne", ArtistId = 6, AlbumId = 12,
-                GenreId = 2, Duration = new TimeSpan(0, 3, 25), MediaRating = 4m, Streams = 69,
+                GenreId = 2, Duration = new TimeSpan(0, 3, 25), MediaRating = 4, Streams = 69,
                 AddedAt = DateTime.UtcNow
             },
 
@@ -377,62 +377,62 @@ public class DataLoader
             new Song
             {
                 Title = "Basket Case", ArtistId = 7, AlbumId = 13,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 03), MediaRating = 3m, Streams = 10,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 03), MediaRating = 3, Streams = 10,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Basket Case", ArtistId = 7, AlbumId = 13,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 03), MediaRating = 4m, Streams = 100,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 03), MediaRating = 4, Streams = 100,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Know Your Enemy", ArtistId = 7, AlbumId = 14,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 12), MediaRating = 3.2m, Streams = 90,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 12), MediaRating = 3, Streams = 90,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Helena", ArtistId = 8, AlbumId = 15,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 22), MediaRating = 4m, Streams = 11,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 22), MediaRating = 4, Streams = 11,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Welcome to the Black Parade", ArtistId = 8, AlbumId = 15,
-                GenreId = 3, Duration = new TimeSpan(0, 5, 11), MediaRating = 4m, Streams = 13,
+                GenreId = 3, Duration = new TimeSpan(0, 5, 11), MediaRating = 4, Streams = 13,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "SING", ArtistId = 8, AlbumId = 16,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 10), MediaRating = 3.8m, Streams = 80,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 10), MediaRating = 3, Streams = 80,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Na Na Na (Na Na Na Na Na Na Na Na Na)", ArtistId = 8, AlbumId = 16,
-                GenreId = 3, Duration = new TimeSpan(0, 4, 06), MediaRating = 3.3m, Streams = 105,
+                GenreId = 3, Duration = new TimeSpan(0, 4, 06), MediaRating = 3, Streams = 105,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "Torna A Casa", ArtistId = 9, AlbumId = 17,
-                GenreId = 3, Duration = new TimeSpan(0, 4, 25), MediaRating = 2.2m, Streams = 85,
+                GenreId = 3, Duration = new TimeSpan(0, 4, 25), MediaRating = 2, Streams = 85,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Zitti E Buoni", ArtistId = 9, AlbumId = 17,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 28), MediaRating = 4m, Streams = 15,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 28), MediaRating = 4, Streams = 15,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Mamma Mia", ArtistId = 9, AlbumId = 18,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 30), MediaRating = 4m, Streams = 95,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 30), MediaRating = 4, Streams = 95,
                 AddedAt = DateTime.UtcNow
             },
 
@@ -442,57 +442,57 @@ public class DataLoader
             new Song
             {
                 Title = "Born With a Broken Heart", ArtistId = 10, AlbumId = 19,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 15), MediaRating = 4m, Streams = 50,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 15), MediaRating = 2, Streams = 50,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Silverlines", ArtistId = 10, AlbumId = 20,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 04), MediaRating = 4m, Streams = 42,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 04), MediaRating = 4, Streams = 42,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Watermelon Sugar", ArtistId = 11, AlbumId = 21,
-                GenreId = 4, Duration = new TimeSpan(0, 2, 54), MediaRating = 3.9m, Streams = 75,
+                GenreId = 4, Duration = new TimeSpan(0, 2, 54), MediaRating = 3, Streams = 75,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Adore You", ArtistId = 11, AlbumId = 21,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 27), MediaRating = 2.3m, Streams = 55,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 27), MediaRating = 2, Streams = 55,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Sign of the Times", ArtistId = 11, AlbumId = 22,
-                GenreId = 4, Duration = new TimeSpan(0, 4, 00), MediaRating = 2.8m, Streams = 70,
+                GenreId = 4, Duration = new TimeSpan(0, 4, 00), MediaRating = 2, Streams = 70,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "Story of My Life", ArtistId = 12, AlbumId = 23,
-                GenreId = 4, Duration = new TimeSpan(0, 4, 05), MediaRating = 4m, Streams = 65,
+                GenreId = 4, Duration = new TimeSpan(0, 4, 05), MediaRating = 4, Streams = 65,
                 AddedAt = DateTime.UtcNow
             },
 
             new Song
             {
                 Title = "Quédate Conmigo", ArtistId = 13, AlbumId = 24,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 30), MediaRating = 2.3m, Streams = 30,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 30), MediaRating = 2, Streams = 30,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Fin del Mundo", ArtistId = 13, AlbumId = 24,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 12), MediaRating = 3m, Streams = 35,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 12), MediaRating = 3, Streams = 35,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Cowboys de la A3", ArtistId = 14, AlbumId = 25,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 45), MediaRating = 2.8m, Streams = 25,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 45), MediaRating = 2, Streams = 25,
                 AddedAt = DateTime.UtcNow
             }
         };
