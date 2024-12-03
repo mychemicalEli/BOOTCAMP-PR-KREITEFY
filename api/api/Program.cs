@@ -34,6 +34,8 @@ builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
+builder.Services.AddScoped<IJwtToken, JwtToken>();
+builder.Services.AddScoped<IDateHumanizer, DateHumanizer>();
 
 builder.Services.AddAutoMapper(typeof(RoleMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserMapperProfile));

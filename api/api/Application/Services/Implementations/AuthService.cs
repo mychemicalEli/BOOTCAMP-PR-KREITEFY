@@ -1,19 +1,18 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
 using api.Application.Dtos;
 using api.Application.Services.Interfaces;
-using Microsoft.IdentityModel.Tokens;
+using api.Domain.Persistence;
 
 namespace api.Application.Services.Implementations;
 
 public class AuthService : IAuthService
 {
     private readonly IUserService _userService;
+    private readonly IJwtToken _token;
 
-    public AuthService(IUserService userService)
+    public AuthService(IUserService userService, IJwtToken jwtToken)
     {
         _userService = userService;
+        _token = jwtToken;
     }
 
     public AuthResponseDto Register(UserDto userDto)
@@ -25,12 +24,12 @@ public class AuthService : IAuthService
         }
 
         var newUser = _userService.RegisterUser(userDto);
-        var token = GenerateJwtToken(newUser);
+        var token = _token.GenerateToken(newUser);
 
         return new AuthResponseDto
         {
             Token = token,
-            UserName = newUser.Name
+            UserName = _token.ExtractUserNameFromToken(token)
         };
     }
 
@@ -42,35 +41,12 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Invalid email or password.");
         }
 
-        var token = GenerateJwtToken(user);
+        var token = _token.GenerateToken(user);
 
         return new AuthResponseDto
         {
             Token = token,
-            UserName = user.Name
+            UserName = _token.ExtractUserNameFromToken(token)
         };
-    }
-
-    public string GenerateJwtToken(UserDto user)
-    {
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Name, user.Name),
-        };
-
-        var key = new SymmetricSecurityKey(RandomNumberGenerator.GetBytes(32));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: "your_issuer",
-            audience: "your_audience",
-            claims: claims,
-            expires: DateTime.Now.AddHours(1),
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

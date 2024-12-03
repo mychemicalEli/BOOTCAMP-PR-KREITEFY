@@ -49,7 +49,7 @@ public class SongsController : GenericCrudController<SongDto>
 
     [HttpGet("latest")]
     [Produces("application/json")]
-    public ActionResult<IEnumerable<LatestSongsRequest>> GetLatestSongs([FromQuery] int count = 5)
+    public ActionResult<IEnumerable<LatestSongsResponse>> GetLatestSongs([FromQuery] int count = 5)
     {
         try
         {

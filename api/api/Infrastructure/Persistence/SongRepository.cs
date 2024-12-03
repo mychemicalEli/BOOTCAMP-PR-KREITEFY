@@ -94,12 +94,12 @@ namespace api.Infrastructure.Persistence
         }
 
 
-        public IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5)
+        public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5)
         {
             var songs = _context.Songs
                 .OrderByDescending(song => song.AddedAt)
                 .Take(count)
-                .Select(i => new LatestSongsRequest()
+                .Select(i => new LatestSongsResponse()
                 {
                     Id = i.Id,
                     Title = i.Title,

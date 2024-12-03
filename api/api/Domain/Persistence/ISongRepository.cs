@@ -8,5 +8,5 @@ namespace api.Domain.Persistence;
 public interface ISongRepository : IGenericRepository<Song>
 {
     PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters);
-    IEnumerable<LatestSongsRequest> GetLatestSongs(int count = 5);
+    IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5);
 }
