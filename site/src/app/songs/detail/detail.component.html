@@ -1,1 +1,33 @@
-<p>song detail works! {{songId}}</p>
+<div class="card-container">
+    <div class="card" *ngIf="song">
+        <div class="image">
+            <img [src]="'data:image/jpeg;base64,' + song.albumCover" alt="Album Cover" />
+        </div>
+
+        <div class="details">
+            <p class="title">
+                {{ song.title }}
+                <span class="play-button">
+                    <button (click)="playSong()">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </span>
+            </p>
+            <p class="artist">{{ song.artistName }} · <span class="album">{{ song.albumName }}</span></p>
+            <p class="duration"><i class="fa-regular fa-clock"></i>{{ song.duration }}</p>
+
+            <p class="streams"><i class="fa-solid fa-retweet"></i>{{ song.streams }} reproducciones</p>
+            <p class="genre"><strong>Género:</strong> {{ song.genreName }}</p>
+
+            <div class="rating">
+                <p class="rating"><strong>Rating:</strong> {{ song.mediaRating }}/4</p>
+                <div class="stars">
+                    <span *ngFor="let star of [1, 2, 3, 4]" class="star"
+                        [ngClass]="{ 'filled': star <= song.mediaRating }" (click)="rateSong(star)">
+                        <i class="fas fa-star"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

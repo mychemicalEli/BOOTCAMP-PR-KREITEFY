@@ -30,4 +30,18 @@ export class DetailComponent implements OnInit {
       error: (err) => { console.error(err); }
     });
   }
+
+  rateSong(star: number) {
+    if (this.song) {
+      this.song.mediaRating = star;
+      // Aquí puedes enviar la actualización al backend si es necesario
+    }
+  }
+
+  playSong() {
+    if (this.song) {
+      this.song.streams += 1;
+      // Aquí puedes enviar la actualización al backend si es necesario
+    }
+  }
 }
