@@ -38,7 +38,6 @@ export class DetailComponent implements OnInit {
   rateSong(star: number) {
     if (this.song) {
       this.song.mediaRating = star;
-      // Aquí puedes enviar la actualización al backend si es necesario
     }
   }
 
