@@ -8,7 +8,7 @@ using JwtSecurityToken = System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
 
 namespace api.Infrastructure.Persistence;
 
-public class JwtTokenServiceService: IJwtTokenService
+public class JwtTokenService: IJwtTokenService
 {
     public string GenerateToken(UserDto user)
     {
@@ -16,7 +16,7 @@ public class JwtTokenServiceService: IJwtTokenService
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimTypes.Name, Uri.EscapeDataString(user.Name)),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
 
