@@ -57,14 +57,13 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         const token = response.token;
-        const userName = response.userName;
-        this.authService.saveToken(token, userName);
+        this.authService.saveToken(token);
         this.router.navigate(['/']);
       },
       error: (err) => {
         this.handleError(err);
       }
     });
-  }
+  }  
 
 }
