@@ -103,11 +103,8 @@ namespace api.Infrastructure.Persistence
                 {
                     Id = i.Id,
                     Title = i.Title,
-                    AlbumId = i.AlbumId,
                     AlbumCover = Convert.ToBase64String(i.Album.Cover),
-                    ArtistId = i.ArtistId,
                     ArtistName = i.Artist.Name,
-                    GenreId = i.GenreId,
                     GenreName = i.Genre.Name,
                     AddedAt = i.AddedAt
                 });

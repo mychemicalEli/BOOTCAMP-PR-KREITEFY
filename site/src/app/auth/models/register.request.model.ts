@@ -1,6 +1,4 @@
 export interface RegisterRequest {
-
-}export interface RegisterRequest {
     id: number | undefined;
     name: string;
     lastName: string;

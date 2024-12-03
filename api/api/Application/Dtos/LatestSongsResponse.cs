@@ -7,11 +7,8 @@ public class LatestSongsResponse
 {
     public long Id { get; set; }
     public required string Title { get; set; }
-    public required long ArtistId { get; set; }
     public required string ArtistName { get; set; }
-    public required long AlbumId { get; set; }
     public required string AlbumCover { get; set; }
-    public required long GenreId { get; set; }
     public required string GenreName { get; set; }
     public required DateTime AddedAt { get; set; }
     public string? HumanizedAddedAt { get; set; }
