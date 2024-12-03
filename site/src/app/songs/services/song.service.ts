@@ -32,4 +32,10 @@ export class SongService {
     const urlEndPoint = `${this.apiUrl}/songs/${songId}`;
     return this.http.get<SongDto>(urlEndPoint);
   }
+
+  public incrementStreams(songId: number): Observable<any> {
+    const urlEndPoint = `${this.apiUrl}/songs/${songId}/play`;
+    return this.http.post(urlEndPoint, null);
+  }
+  
 }

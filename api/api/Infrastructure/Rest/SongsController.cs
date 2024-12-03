@@ -62,4 +62,18 @@ public class SongsController : GenericCrudController<SongDto>
         }
     }
 
+    [HttpPost("{id}/play")]
+    [Produces("application/json")]
+    public IActionResult IncrementStreams(long id)
+    {
+        try
+        {
+            _service.IncrementStreams(id);
+            return Ok(new { Message = "Streams incremented correctly." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "Error incrementing streams." });
+        }
+    }
 }

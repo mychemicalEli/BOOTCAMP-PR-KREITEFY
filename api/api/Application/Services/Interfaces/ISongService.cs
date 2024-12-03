@@ -8,4 +8,5 @@ public interface ISongService : IGenericService<SongDto>
 {
     PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters);
     IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5);
+    void IncrementStreams(long songId);
 }

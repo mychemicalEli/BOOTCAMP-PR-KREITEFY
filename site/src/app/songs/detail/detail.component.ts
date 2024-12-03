@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class DetailComponent implements OnInit {
   songId?: number;
   song?: SongDto;
+  errorMessage: string | null = null;
 
   constructor(private songsService: SongService, private route: ActivatedRoute) { }
 
@@ -27,7 +28,10 @@ export class DetailComponent implements OnInit {
       next: (songRequest) => {
         this.song = songRequest;
       },
-      error: (err) => { console.error(err); }
+      error: (err) => {
+        console.error('Error obteniendo el detalle de la canción', err);
+        this.errorMessage = 'No se pudo cargar el detalle de esta canción. Por favor, inténtelo de nuevo.';
+      }
     });
   }
 
@@ -40,8 +44,14 @@ export class DetailComponent implements OnInit {
 
   playSong() {
     if (this.song) {
-      this.song.streams += 1;
-      // Aquí puedes enviar la actualización al backend si es necesario
+      this.songsService.incrementStreams(this.song.id).subscribe({
+        next: () => {
+          this.song!.streams += 1;
+        },
+        error: (err) => {
+          console.error('Error incrementando las reproducciones', err);
+        }
+      });
     }
-  }
+  }  
 }

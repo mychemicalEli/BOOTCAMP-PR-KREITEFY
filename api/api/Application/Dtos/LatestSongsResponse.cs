@@ -9,7 +9,6 @@ public class LatestSongsResponse
     public required string Title { get; set; }
     public required string ArtistName { get; set; }
     public required string AlbumCover { get; set; }
-    public required string GenreName { get; set; }
     public required DateTime AddedAt { get; set; }
     public string? HumanizedAddedAt { get; set; }
 }

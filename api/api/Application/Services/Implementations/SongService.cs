@@ -5,6 +5,7 @@ using api.Domain.Persistence;
 using AutoMapper;
 using framework.Application;
 using framework.Application.Services;
+using framework.Domain.Persistence;
 
 namespace api.Application.Services.Implementations;
 
@@ -36,4 +37,15 @@ public class SongService : GenericService<Song, SongDto>, ISongService
         });
     }
 
+    public void IncrementStreams(long songId)
+    {
+        var song = _repository.GetById(songId);
+        if (song == null)
+        {
+            throw new ElementNotFoundException($"The song with id {songId} was not found.");
+        }
+
+        song.Streams += 1;
+        _repository.Update(song);
+    }
 }

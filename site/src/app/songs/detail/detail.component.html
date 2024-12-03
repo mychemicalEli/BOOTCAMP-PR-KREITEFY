@@ -1,4 +1,7 @@
 <div class="card-container">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
     <div class="card" *ngIf="song">
         <div class="image">
             <img [src]="'data:image/jpeg;base64,' + song.albumCover" alt="Album Cover" />
