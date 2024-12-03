@@ -53,7 +53,7 @@ public class SongsController : GenericCrudController<SongDto>
     {
         try
         {
-            var songs = _service.GetLatestSongs(count).ToList();
+            var songs = _service.GetLatestSongs(count);
             return Ok(songs);
         }
         catch (Exception ex)
