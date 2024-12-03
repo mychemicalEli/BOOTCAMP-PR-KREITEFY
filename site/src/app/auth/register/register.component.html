@@ -18,6 +18,8 @@
                                     obligatorio.</small>
                                 <small *ngIf="registerForm.get('name')?.errors?.['minlength']">Debe tener al menos 2
                                     caracteres.</small>
+                                <small *ngIf="registerForm.get('name')?.errors?.['maxlength']">No puede tener más de 50
+                                    caracteres.</small>
                             </div>
                         </div>
 
@@ -32,6 +34,8 @@
                                     obligatorios.</small>
                                 <small *ngIf="registerForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 2
                                     caracteres.</small>
+                                <small *ngIf="registerForm.get('lastName')?.errors?.['maxlength']">No puede tener más de
+                                    50 caracteres.</small>
                             </div>
                         </div>
 
@@ -46,6 +50,8 @@
                                     obligatorio.</small>
                                 <small *ngIf="registerForm.get('email')?.errors?.['email']">El email no es
                                     válido.</small>
+                                <small *ngIf="registerForm.get('email')?.errors?.['maxlength']">No puede tener más de
+                                    50 caracteres.</small>
                             </div>
                         </div>
 

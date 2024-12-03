@@ -22,7 +22,7 @@ export class LoginComponent {
 
   private initializeForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       password: ['', [Validators.required]],
     });
   }

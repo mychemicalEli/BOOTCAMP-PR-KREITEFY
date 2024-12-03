@@ -19,6 +19,8 @@
                                     obligatorio.</small>
                                 <small *ngIf="loginForm.get('email')?.errors?.['email']">El email no es
                                     válido.</small>
+                                <small *ngIf="loginForm.get('email')?.errors?.['maxlength']">No puede tener más de 50
+                                    caracteres.</small>
                             </div>
                         </div>
 

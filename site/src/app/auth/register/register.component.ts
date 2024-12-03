@@ -23,9 +23,9 @@ export class RegisterComponent {
 
   private initializeForm(): void {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', Validators.required],
     });
@@ -76,7 +76,6 @@ export class RegisterComponent {
     this.authService.register(userToSave).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
-        localStorage.setItem('username', response.name);
         this.route.navigate(['/']);
       },
       error: (err) => {

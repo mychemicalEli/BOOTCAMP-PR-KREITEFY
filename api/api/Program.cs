@@ -27,6 +27,8 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<ISongService, SongService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserSongsService, UserSongsService>();
+builder.Services.AddScoped<IUserSongsRepository, UserSongsRepository>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();

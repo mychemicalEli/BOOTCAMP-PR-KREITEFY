@@ -22,7 +22,7 @@ export class SongService {
   }
 
   public incrementStreams(songId: number): Observable<any> {
-    const urlEndPoint = `${this.apiUrl}/songs/${songId}/play`;
+    const urlEndPoint = `${this.apiUrl}/play`;
     return this.http.post(urlEndPoint, null);
   }
   

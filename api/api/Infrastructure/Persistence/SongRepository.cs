@@ -6,7 +6,6 @@ using framework.Application;
 using framework.Infrastructure.Persistence;
 using framework.Infrastructure.Specs;
 using framework.Domain.Persistence;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence
