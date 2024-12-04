@@ -53,11 +53,11 @@ public class SongsController : GenericCrudController<SongDto>
     [HttpGet("latest")]
     [Produces("application/json")]
     [Authorize]
-    public ActionResult<IEnumerable<LatestSongsResponse>> GetLatestSongs([FromQuery] int count = 5)
+    public ActionResult<IEnumerable<LatestSongsResponse>> GetLatestSongs([FromQuery] int count = 5, [FromQuery] long? genreId = null)
     {
         try
         {
-            var songs = _service.GetLatestSongs(count);
+            var songs = _service.GetLatestSongs(count, genreId);
             return Ok(songs);
         }
         catch (Exception ex)
@@ -65,5 +65,4 @@ public class SongsController : GenericCrudController<SongDto>
             return BadRequest("Error fetching latest songs: " + ex.Message);
         }
     }
-
 }

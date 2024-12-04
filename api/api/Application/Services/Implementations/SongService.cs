@@ -26,12 +26,12 @@ public class SongService : GenericService<Song, SongDto>, ISongService
         return songs;
     }
     
-    public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5)
+    public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5, long? genreId = null)
     {
-        var latestSongs = _songRepository.GetLatestSongs(count);
+        var latestSongs = _songRepository.GetLatestSongs(count, genreId);
         return latestSongs.Select(song =>
         {
-            song.HumanizedAddedAt = _dateHumanizer.HumanizeDate(song.AddedAt);
+            song.HumanizedAddedAt = _dateHumanizer.HumanizeDate(song.AddedAt); 
             return song;
         });
     }
