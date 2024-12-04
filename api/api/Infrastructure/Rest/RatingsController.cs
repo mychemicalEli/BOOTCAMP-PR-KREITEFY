@@ -1,11 +1,13 @@
 using api.Application.Dtos;
 using api.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class RatingController : ControllerBase
 {
     private readonly IRatingService _ratingService;
@@ -17,6 +19,7 @@ public class RatingController : ControllerBase
 
     [HttpPost]
     [Produces("application/json")]
+    [Authorize]
     public IActionResult AddRating([FromBody] RatingDto ratingDto)
     {
         try

@@ -2,12 +2,14 @@ using api.Application.Dtos;
 using api.Application.Services.Interfaces;
 using framework.Application;
 using framework.Infrastructure.Rest;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class SongsController : GenericCrudController<SongDto>
 {
     private ISongService _service;
@@ -25,6 +27,7 @@ public class SongsController : GenericCrudController<SongDto>
 
     [HttpGet]
     [Produces("application/json")]
+    [Authorize]
     public ActionResult<PagedResponse<SongDto>> Get([FromQuery] string? filter,
         [FromQuery] PaginationParameters paginationParameters)
     {
@@ -49,6 +52,7 @@ public class SongsController : GenericCrudController<SongDto>
 
     [HttpGet("latest")]
     [Produces("application/json")]
+    [Authorize]
     public ActionResult<IEnumerable<LatestSongsResponse>> GetLatestSongs([FromQuery] int count = 5)
     {
         try

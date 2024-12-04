@@ -1,6 +1,6 @@
 using api.Application.Dtos;
 
-namespace api.Domain.Persistence;
+namespace api.Application.Services.Interfaces;
 
 public interface IJwtTokenService
 {

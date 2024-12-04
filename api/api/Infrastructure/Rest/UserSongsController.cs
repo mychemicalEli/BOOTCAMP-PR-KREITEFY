@@ -1,7 +1,9 @@
 using api.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
+
 
 public class UserSongsController:ControllerBase
 {
@@ -11,6 +13,8 @@ public class UserSongsController:ControllerBase
         _userSongsService = userSongsService;
     }
     [HttpPost("api/play")]
+    [Produces("application/json")]
+    [Authorize]
     public IActionResult IncrementStreams([FromQuery] long userId, [FromQuery] long songId)
     {
         try
