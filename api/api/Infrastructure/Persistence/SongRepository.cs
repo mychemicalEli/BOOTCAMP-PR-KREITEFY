@@ -93,12 +93,13 @@ namespace api.Infrastructure.Persistence
         }
 
 
-        public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5)
+        public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5, long? genreId = null)
         {
             var songs = _context.Songs
+                .Where(song => !genreId.HasValue || song.GenreId == genreId)
                 .OrderByDescending(song => song.AddedAt)
                 .Take(count)
-                .Select(i => new LatestSongsResponse()
+                .Select(i => new LatestSongsResponse
                 {
                     Id = i.Id,
                     Title = i.Title,
@@ -106,7 +107,9 @@ namespace api.Infrastructure.Persistence
                     ArtistName = i.Artist.Name,
                     AddedAt = i.AddedAt
                 });
+
             return songs;
         }
+
     }
 }

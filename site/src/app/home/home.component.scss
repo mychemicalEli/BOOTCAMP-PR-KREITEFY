@@ -28,9 +28,39 @@
     }
 }
 
-
 .logged {
     background-color: #121212;
     min-height: 100vh;
     padding: 100px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+
+    .genre-select {
+        max-width: 200px;
+        padding: 15px 20px;
+        font-size: 1.1rem;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #444;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        margin-right: 10px;
+
+        option {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        &:focus {
+            border-color: #1db954;
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 8px rgba(29, 185, 84, 0.4);
+        }
+    }
 }

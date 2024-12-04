@@ -22,23 +22,38 @@ export class SongService {
     });
   }
 
-  public getLatestSongs(): Observable<LatestSongs[]> {
-    const urlEndPoint = `${this.apiUrl}/songs/latest`;
+  public getLatestSongs(genreId?: number): Observable<LatestSongs[]> {
+    let urlEndPoint = `${this.apiUrl}/songs/latest`;
+    if (genreId !== undefined) {
+      urlEndPoint += `?genreId=${genreId}`;
+    }
     return this.http.get<LatestSongs[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
+  
 
   public getSongById(songId: number): Observable<SongDto> {
     const urlEndPoint = `${this.apiUrl}/songs/${songId}`;
     return this.http.get<SongDto>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
 
-  public incrementStreams(songId: number): Observable<any> {
+  public incrementStreams(songId: number, userId: number): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/play`;
-    return this.http.post(urlEndPoint, songId, { headers: this.getAuthHeaders() });
+    // Enviar el songId y userId como parámetros de consulta
+    return this.http.post(urlEndPoint, null, { 
+      headers: this.getAuthHeaders(),
+      params: { songId: songId.toString(), userId: userId.toString() }
+    });
   }
+  
 
   public addRating(ratingDto: RatingDto): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/rating`;
     return this.http.post(urlEndPoint, ratingDto, { headers: this.getAuthHeaders() });
   }
+
+  public getGenres(): Observable<{ id: number; name: string }[]> {
+    const urlEndPoint = `${this.apiUrl}/genres`;
+    return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+  
 }

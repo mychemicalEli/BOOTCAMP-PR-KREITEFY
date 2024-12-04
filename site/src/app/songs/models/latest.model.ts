@@ -3,5 +3,6 @@ export interface LatestSongs {
     title: string;
     albumCover: string;
     artistName: string;
+    genreId: number;
     humanizedAddedAt: string;
 }

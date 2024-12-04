@@ -7,6 +7,17 @@
 
 <ng-template #loggedIn>
   <div class="container-fluid logged">
-    <app-latest></app-latest>
+    <div class="filter-container">
+      <select
+        id="genreFilter"
+        (change)="onGenreChange($event)"
+        class="form-select genre-select"
+        [value]="selectedGenre"
+      >
+        <option value="">Género</option>
+        <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+      </select>
+    </div>
+    <app-latest [genreId]="selectedGenre"></app-latest>
   </div>
 </ng-template>
