@@ -1,4 +1,5 @@
 using framework.Application.Dtos;
+
 namespace api.Application.Dtos;
 
 public class SongDto : IDto
@@ -13,7 +14,7 @@ public class SongDto : IDto
     public required long GenreId { get; set; }
     public required string GenreName { get; set; }
     public required string Duration { get; set; }
-    public required decimal MediaRating { get; set; }
+    public required int MediaRating { get; set; }
     public required long Streams { get; set; }
     public required DateTime AddedAt { get; set; }
 }

@@ -6,7 +6,6 @@ using framework.Application;
 using framework.Infrastructure.Persistence;
 using framework.Infrastructure.Specs;
 using framework.Domain.Persistence;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence
@@ -105,7 +104,6 @@ namespace api.Infrastructure.Persistence
                     Title = i.Title,
                     AlbumCover = Convert.ToBase64String(i.Album.Cover),
                     ArtistName = i.Artist.Name,
-                    GenreName = i.Genre.Name,
                     AddedAt = i.AddedAt
                 });
             return songs;

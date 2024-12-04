@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { LatestSongs } from '../models/latest.model';
 import { SongService } from '../services/song.service';
-import { ArtistDto } from '../models/artists.model';
-import { AlbumDto } from '../models/album.model';
+
 
 @Component({
   selector: 'app-latest',
@@ -10,8 +9,6 @@ import { AlbumDto } from '../models/album.model';
   styleUrl: './latest.component.scss'
 })
 export class LatestComponent {
-  artists: ArtistDto[] = [];
-  albums: AlbumDto[] = [];
   latestSongs: LatestSongs[] = [];
   errorMessage: string | null = null;
 
@@ -33,27 +30,5 @@ export class LatestComponent {
       },
     });
   }
-
-  public getArtists(): void {
-    this.songsService.getArtist().subscribe({
-      next: (artists) => {
-        this.artists = artists;
-      },
-      error: (err) => {
-        console.log("Error obteniendo artistas", err);
-      }
-    });
-  }
-
-  public getAlbums(): void {
-    this.songsService.getAlbums().subscribe({
-      next: (albums) => {
-        this.albums = albums;
-      
-      },
-      error: (err) => {
-        console.log("Error obteniendo albums", err);
-      }
-    });
-  }
+  
 }

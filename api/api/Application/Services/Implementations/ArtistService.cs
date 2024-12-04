@@ -9,7 +9,7 @@ namespace api.Application.Services.Implementations;
 
 public class ArtistService : GenericService<Artist, ArtistDto>, IArtistService
 {
-    public ArtistService(IArtistRepository repository, IMapper mapper) : base(repository, mapper)
+    public ArtistService(IArtistRepository songRepository, IMapper mapper) : base(songRepository, mapper)
     {
     }
 }

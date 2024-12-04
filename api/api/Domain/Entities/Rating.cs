@@ -11,5 +11,5 @@ public class Rating
     public User User { get; set; }
     public required long SongId { get; set; }
     public Song Song { get; set; }
-    [Range(1, 4)] public required decimal Stars { get; set; }
+    [Range(1, 4)] public required int Stars { get; set; }
 }

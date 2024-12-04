@@ -10,30 +10,29 @@ namespace api.Application.Services.Implementations;
 
 public class SongService : GenericService<Song, SongDto>, ISongService
 {
-    private readonly ISongRepository _repository;
+    private readonly ISongRepository _songRepository;
     private readonly IDateHumanizer _dateHumanizer;
 
-    public SongService(ISongRepository repository, IMapper mapper, IDateHumanizer dateHumanizer) : base(repository,
+    public SongService(ISongRepository songRepository, IMapper mapper, IDateHumanizer dateHumanizer) : base(songRepository,
         mapper)
     {
-        _repository = repository;
+        _songRepository = songRepository;
         _dateHumanizer = dateHumanizer;
     }
 
     public PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters)
     {
-        var songs = _repository.GetSongsByCriteriaPaged(filter, paginationParameters);
+        var songs = _songRepository.GetSongsByCriteriaPaged(filter, paginationParameters);
         return songs;
     }
     
     public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5)
     {
-        var latestSongs = _repository.GetLatestSongs(count);
+        var latestSongs = _songRepository.GetLatestSongs(count);
         return latestSongs.Select(song =>
         {
             song.HumanizedAddedAt = _dateHumanizer.HumanizeDate(song.AddedAt);
             return song;
         });
     }
-
 }

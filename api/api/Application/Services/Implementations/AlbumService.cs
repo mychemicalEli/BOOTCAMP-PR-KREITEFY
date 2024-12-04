@@ -12,7 +12,7 @@ public class AlbumService : GenericService<Album, AlbumDto>, IAlbumService
 {
     private readonly IImageVerifier _imageVerifier;
 
-    public AlbumService(IAlbumRepository repository, IMapper mapper, IImageVerifier imageVerifier) : base(repository,
+    public AlbumService(IAlbumRepository songRepository, IMapper mapper, IImageVerifier imageVerifier) : base(songRepository,
         mapper)
     {
         _imageVerifier = imageVerifier;

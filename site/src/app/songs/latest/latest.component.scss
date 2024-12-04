@@ -3,11 +3,13 @@
 }
 
 .card {
-    background-color: #333333;
+    background-color: #1c1c1c;
     color: rgba(245, 245, 245, 0.798);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     transition: transform 0.3s ease;
     cursor: pointer;
     height: 360px;
+
     &:hover {
         transform: scale(1.05);
     }

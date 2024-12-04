@@ -6,4 +6,5 @@ public interface IAuthService
 {
     AuthResponseDto Register(UserDto userDto);
     AuthResponseDto Login(LoginDto loginDto);
+    UserDtoResponse GetMe();
 }

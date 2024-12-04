@@ -5,10 +5,10 @@ namespace api.Application.Dtos;
 public class UserDto : IDto
 {
     public long Id { get; set; }
-    public required string Name { get; set; }
-    public required string LastName { get; set; }
-    public required string Email { get; set; }
-    public required string Password { get; set; }
-    public required long RoleId { get; set; }
-    public required string RoleName { get; set; }
+    public string Name { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public long RoleId { get; set; }
+    public string RoleName { get; set; }
 }

@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { LatestComponent } from './songs/latest/latest.component';
+import { DetailComponent } from './songs/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LatestComponent } from './songs/latest/latest.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    LatestComponent
+    LatestComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@ namespace api.Application.Services.Implementations;
 
 public class GenreService : GenericService<Genre, GenreDto>, IGenreService
 {
-    public GenreService(IGenreRepository repository, IMapper mapper) : base(repository, mapper)
+    public GenreService(IGenreRepository songRepository, IMapper mapper) : base(songRepository, mapper)
     {
     }
 }

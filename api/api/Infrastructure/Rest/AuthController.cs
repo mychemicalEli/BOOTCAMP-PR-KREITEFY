@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using api.Application.Dtos;
 using api.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
@@ -17,6 +19,7 @@ public class AuthController : ControllerBase
 
     [HttpPost("register")]
     [Produces("application/json")]
+    [AllowAnonymous]
     public ActionResult<AuthResponseDto> Register([FromBody] UserDto userDto)
     {
         try
@@ -32,6 +35,7 @@ public class AuthController : ControllerBase
 
     [HttpPost("login")]
     [Produces("application/json")]
+    [AllowAnonymous]
     public ActionResult<AuthResponseDto> Login([FromBody] LoginDto loginDto)
     {
         try
@@ -48,4 +52,21 @@ public class AuthController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("me")]
+    [Produces("application/json")]
+    [Authorize]
+    public ActionResult<UserDtoResponse> GetMe()
+    {
+        try
+        {
+            var user = _authService.GetMe();
+            return Ok(user);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+    }
+
 }

@@ -9,7 +9,7 @@ namespace api.Application.Services.Implementations;
 
 public class RoleService : GenericService<Role, RoleDto>, IRoleService
 {
-    public RoleService(IRoleRepository repository, IMapper mapper) : base(repository, mapper)
+    public RoleService(IRoleRepository songRepository, IMapper mapper) : base(songRepository, mapper)
     {
     }
 }
