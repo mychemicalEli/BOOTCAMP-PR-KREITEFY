@@ -36,10 +36,15 @@ export class SongService {
     return this.http.get<SongDto>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
 
-  public incrementStreams(songId: number): Observable<any> {
+  public incrementStreams(songId: number, userId: number): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/play`;
-    return this.http.post(urlEndPoint, songId, { headers: this.getAuthHeaders() });
+    // Enviar el songId y userId como parámetros de consulta
+    return this.http.post(urlEndPoint, null, { 
+      headers: this.getAuthHeaders(),
+      params: { songId: songId.toString(), userId: userId.toString() }
+    });
   }
+  
 
   public addRating(ratingDto: RatingDto): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/rating`;

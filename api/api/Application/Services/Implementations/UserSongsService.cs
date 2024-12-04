@@ -10,15 +10,27 @@ namespace api.Application.Services.Implementations;
 public class UserSongsService : GenericService<UserSongs, UserSongsDto>, IUserSongsService
 {
     private IUserSongsRepository _userSongsRepository;
+    private ISongRepository _songRepository;
 
-    public UserSongsService(IUserSongsRepository userSongsRepository, IMapper mapper) : base(userSongsRepository,
+    public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository, IMapper mapper) : base(userSongsRepository,
         mapper)
     {
         _userSongsRepository = userSongsRepository;
+        _songRepository = songRepository;
     }
     
     public void IncrementStreams(long userId, long songId)
     {
+        var song = _songRepository.GetById(songId);
+    
+        if (song == null)
+        {
+            throw new Exception("Song not found");
+        }
+        
+        song.Streams += 1;
+        _songRepository.Update(song);
+        
         var userSong = _userSongsRepository.GetByUserIdAndSongId(userId, songId);
         if (userSong != null)
         {

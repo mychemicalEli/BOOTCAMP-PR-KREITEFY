@@ -70,8 +70,8 @@ export class DetailComponent implements OnInit {
   }
   
   playSong() {
-    if (this.song) {
-      this.songsService.incrementStreams(this.song.id).subscribe({
+    if (this.song && this.userId) {
+      this.songsService.incrementStreams(this.song.id, this.userId).subscribe({
         next: () => {
           this.song!.streams += 1;
         },
@@ -80,5 +80,5 @@ export class DetailComponent implements OnInit {
         }
       });
     }
-  }  
+  }
 }
