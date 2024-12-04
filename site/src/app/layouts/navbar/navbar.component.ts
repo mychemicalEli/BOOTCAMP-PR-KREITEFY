@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../auth/services/auth.service";
 import { Router } from "@angular/router";
+import { UserDtoResponse } from "../../auth/models/userdto.response";
 
 @Component({
   selector: 'app-navbar',
@@ -16,11 +17,23 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getLoggedInStatus().subscribe(status => {
       this.isLoggedIn = status;
+      if (this.isLoggedIn) {
+        this.loadUserData();
+      } else {
+        this.userName = '';
+      }
     });
+  }
 
-    this.authService.getUserNameObservable().subscribe(name => {
-      this.userName = name;
-    });
+  loadUserData(): void {
+    this.authService.getMe().subscribe(
+      (user: UserDtoResponse) => {
+        this.userName = user.name;
+      },
+      (error) => {
+        console.error('Error al obtener los datos del usuario:', error);
+      }
+    );
   }
 
   logout(): void {
@@ -30,7 +43,7 @@ export class NavbarComponent implements OnInit {
 
   handleLoginLogout(): void {
     if (this.isLoggedIn) {
-      this.logout(); 
+      this.logout();
     } else {
       this.router.navigate(['/auth/login']);
     }

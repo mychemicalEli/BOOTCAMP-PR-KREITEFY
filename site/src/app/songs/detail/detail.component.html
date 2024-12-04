@@ -20,14 +20,13 @@
             <p class="genre"><strong>Género:</strong> {{ song.genreName }}</p>
 
             <div class="rating">
-                <p class="rating"><strong>Rating:</strong> {{ song.mediaRating }}/4</p>
+                <p class="rating"><strong>Rating:</strong> {{ song.mediaRating }}/4</p> 
                 <div class="stars">
                     <span *ngFor="let star of [1, 2, 3, 4]" class="star"
                         [ngClass]="{ 'filled': star <= song.mediaRating }" (click)="rateSong(star)">
                         <i class="fas fa-star"></i>
                     </span>
                 </div>
-
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { SongDto } from '../models/song.model';
 import { SongService } from '../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
-import { RatingDto } from '../models/rating.model';
+import { UserDtoResponse } from '../../auth/models/userdto.response'; 
 
 @Component({
   selector: 'app-detail',
@@ -14,6 +14,7 @@ export class DetailComponent implements OnInit {
   songId?: number;
   song?: SongDto;
   errorMessage: string | null = null;
+  userId?: number;
 
   constructor(
     private songsService: SongService, 
@@ -26,6 +27,15 @@ export class DetailComponent implements OnInit {
       this.songId = +entryParam;
       this.getSongById(this.songId);
     }
+
+    this.authService.getMe().subscribe({
+      next: (user: UserDtoResponse) => {
+        this.userId = user.id; 
+      },
+      error: (err) => {
+        console.error('Error al obtener los datos del usuario', err);
+      }
+    });
   }
 
   private getSongById(songId: number) {
@@ -41,19 +51,13 @@ export class DetailComponent implements OnInit {
   }
 
   rateSong(star: number) {
-    if (this.song) {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        console.error('No se puede añadir valoración: usuario no autenticado.');
-        return;
-      }
-  
+    if (this.song && this.userId) {
       const ratingDto = {
-        userId: +userId,
+        userId: this.userId,
         songId: this.song.id,
         stars: star
       };
-  
+
       this.songsService.addRating(ratingDto).subscribe({
         next: () => {
           this.getSongById(this.song!.id);
