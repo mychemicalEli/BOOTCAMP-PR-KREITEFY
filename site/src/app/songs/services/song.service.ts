@@ -22,10 +22,14 @@ export class SongService {
     });
   }
 
-  public getLatestSongs(): Observable<LatestSongs[]> {
-    const urlEndPoint = `${this.apiUrl}/songs/latest`;
+  public getLatestSongs(genreId?: number): Observable<LatestSongs[]> {
+    let urlEndPoint = `${this.apiUrl}/songs/latest`;
+    if (genreId !== undefined) {
+      urlEndPoint += `?genreId=${genreId}`;
+    }
     return this.http.get<LatestSongs[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
+  
 
   public getSongById(songId: number): Observable<SongDto> {
     const urlEndPoint = `${this.apiUrl}/songs/${songId}`;
@@ -41,4 +45,10 @@ export class SongService {
     const urlEndPoint = `${this.apiUrl}/rating`;
     return this.http.post(urlEndPoint, ratingDto, { headers: this.getAuthHeaders() });
   }
+
+  public getGenres(): Observable<{ id: number; name: string }[]> {
+    const urlEndPoint = `${this.apiUrl}/genres`;
+    return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+  
 }
