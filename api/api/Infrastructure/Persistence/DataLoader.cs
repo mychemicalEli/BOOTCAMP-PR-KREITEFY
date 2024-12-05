@@ -1,3 +1,4 @@
+using api.Application.Services.Interfaces;
 using api.Domain.Entities;
 
 namespace api.Infrastructure.Persistence;
@@ -100,10 +101,6 @@ public class DataLoader
             },
             () =>
             {
-                if (!_kreitekfyContext.Users.Any()) LoadUsers();
-            },
-            () =>
-            {
                 if (!_kreitekfyContext.Genres.Any()) LoadGenres();
             },
             () =>
@@ -118,6 +115,10 @@ public class DataLoader
             () =>
             {
                 if (!_kreitekfyContext.Songs.Any()) LoadSongs();
+            },
+            () =>
+            {
+                if (!_kreitekfyContext.Users.Any()) LoadUsers();
             }
         };
 
@@ -157,10 +158,34 @@ public class DataLoader
                 Password = "SecurePass123", RoleId = 2
             }
         };
+
         foreach (User user in users)
         {
             _kreitekfyContext.Users.Add(user);
         }
+
+        _kreitekfyContext.SaveChanges();
+
+        var allSongIds = _kreitekfyContext.Songs.Select(s => s.Id).ToList();
+
+        foreach (User user in users)
+        {
+            var randomSongIds = allSongIds.OrderBy(x => Guid.NewGuid()).Take(39).ToList();
+
+            foreach (var songId in randomSongIds)
+            {
+                var userSong = new UserSongs
+                {
+                    UserId = user.Id,
+                    SongId = songId,
+                    LastPlayedAt = DateTime.UtcNow.AddDays(-new Random().Next(1, 30)),
+                    TotalStreams = new Random().Next(1, 50)
+                };
+                _kreitekfyContext.UserSongs.Add(userSong);
+            }
+        }
+
+        _kreitekfyContext.SaveChanges();
     }
 
     public void LoadGenres()

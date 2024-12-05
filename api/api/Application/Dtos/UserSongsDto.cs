@@ -9,4 +9,5 @@ public class UserSongsDto : IDto
     public required long SongId { get; set; }
     public DateTime? LastPlayedAt { get; set; }
     public required long TotalStreams { get; set; }
+    public UserSelectedSongsDto Song { get; set; }
 }

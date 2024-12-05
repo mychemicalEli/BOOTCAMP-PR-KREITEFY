@@ -99,7 +99,8 @@ builder.Services.AddAutoMapper(typeof(ArtistMapperProfile));
 builder.Services.AddAutoMapper(typeof(GenreMapperProfile));
 builder.Services.AddAutoMapper(typeof(AlbumMapperProfile));
 builder.Services.AddAutoMapper(typeof(SongMapperProfile));
-
+builder.Services.AddAutoMapper(typeof(UserSongsMapperProfile));
+builder.Services.AddAutoMapper(typeof(UserSelectedSongsMapperProfile));
 builder.Services.AddScoped<IImageVerifier, ImageVerifier>();
 builder.Services.AddScoped(typeof(ISpecificationParser<>), typeof(SpecificationParser<>));
 

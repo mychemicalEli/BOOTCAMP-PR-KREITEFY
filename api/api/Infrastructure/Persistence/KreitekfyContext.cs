@@ -44,13 +44,13 @@ public class KreitekfyContext : DbContext
 
         modelBuilder.Entity<UserSongs>()
             .HasOne<User>(i => i.User)
-            .WithOne(u => u.UserSongs)
-            .HasForeignKey<UserSongs>(us => us.UserId)
+            .WithMany(u => u.UserSongs) 
+            .HasForeignKey(us => us.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserSongs>()
             .HasOne<Song>(i => i.Song)
-            .WithMany(us => us.UserSongs)
+            .WithMany(s => s.UserSongs) 
             .HasForeignKey(us => us.SongId)
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -73,6 +73,6 @@ public class KreitekfyContext : DbContext
     public DbSet<Artist> Artists { get; set; }
     public DbSet<Album> Albums { get; set; }
     public DbSet<Song> Songs { get; set; }
-    public DbSet<UserSongs> UserSongsHistories { get; set; }
+    public DbSet<UserSongs> UserSongs { get; set; }
     public DbSet<Rating> Ratings { get; set; }
 }

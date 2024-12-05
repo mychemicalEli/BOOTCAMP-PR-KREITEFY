@@ -27,4 +27,26 @@ public class UserSongsController:ControllerBase
             return BadRequest(new { Message = ex.Message });
         }
     }
+    
+    [HttpGet("user/{userId}")]
+    [Produces("application/json")]
+    [AllowAnonymous]
+    public IActionResult GetUserSongs([FromRoute] long userId)
+    {
+        try
+        {
+            var userSongs = _userSongsService.GetUserSongs(userId);
+            if (userSongs == null || !userSongs.Any())
+            {
+                return NotFound(new { Message = "No songs found for this user." });
+            }
+
+            return Ok(userSongs); 
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { Message = ex.Message });
+        }
+    }
+
 }
