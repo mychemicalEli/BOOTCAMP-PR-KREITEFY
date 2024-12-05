@@ -14,7 +14,7 @@ public class UserSongsController:ControllerBase
     }
     [HttpPost("api/play")]
     [Produces("application/json")]
-    [AllowAnonymous]
+    [Authorize]
     public IActionResult IncrementStreams([FromQuery] long userId, [FromQuery] long songId)
     {
         try
@@ -30,7 +30,7 @@ public class UserSongsController:ControllerBase
 
     [HttpGet("user/{userId}/songsforyou")]
     [Produces("application/json")]
-    [AllowAnonymous]
+    [Authorize]
     public IActionResult GetSongsForYou([FromRoute] long userId)
     {
         try
