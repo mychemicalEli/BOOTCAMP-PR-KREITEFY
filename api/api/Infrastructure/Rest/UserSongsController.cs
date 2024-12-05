@@ -12,7 +12,7 @@ public class UserSongsController:ControllerBase
     {
         _userSongsService = userSongsService;
     }
-    [HttpPost("api/play")]
+    [HttpPost("play")]
     [Produces("application/json")]
     [Authorize]
     public IActionResult IncrementStreams([FromQuery] long userId, [FromQuery] long songId)
