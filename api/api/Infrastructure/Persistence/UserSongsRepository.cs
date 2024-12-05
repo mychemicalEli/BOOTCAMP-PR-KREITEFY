@@ -1,9 +1,7 @@
 using api.Application.Dtos;
 using api.Domain.Entities;
 using api.Domain.Persistence;
-using framework.Domain.Persistence;
 using framework.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence;
 
@@ -18,46 +16,63 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
 
     public UserSongs? GetByUserIdAndSongId(long userId, long songId)
     {
-        return _context.Set<UserSongs>().FirstOrDefault(us => us.UserId == userId && us.SongId == songId);
-    }
-
-    public override UserSongs GetById(long id)
-    {
-        var userSong = _context.UserSongs
-            .Include(us => us.User)
-            .Include(us => us.Song)
-            .SingleOrDefault(us => us.Id == id);
-
-        if (userSong == null)
-        {
-            throw new ElementNotFoundException();
-        }
-
-        return userSong;
-    }
-
-    public IEnumerable<UserSongsDto> GetUserSongsWithSong(long userId)
-    {
         return _context.Set<UserSongs>()
+            .SingleOrDefault(us => us.UserId == userId && us.SongId == songId);
+    }
+    
+    public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
+    {
+        var userSongs = _context.Set<UserSongs>()
             .Where(us => us.UserId == userId)
-            .Select(us => new UserSongsDto
+            .Select(us => new
             {
-                Id = us.UserId,
-                UserId = us.UserId,
-                SongId = us.SongId,
-                LastPlayedAt = us.LastPlayedAt,
-                TotalStreams = us.TotalStreams,
-                Song = new UserSelectedSongsDto
-                {
-                    Id = us.Song.Id,
-                    Title = us.Song.Title,
-                    ArtistName = us.Song.Artist.Name,
-                    AlbumCover = Convert.ToBase64String(us.Song.Album.Cover),
-                    GenreName = us.Song.Genre.Name,
-                    Streams = us.Song.Streams,
-                    MediaRating = us.Song.MediaRating
-                }
+                us.Song.Id,
+                us.Song.Title,
+                us.Song.Artist.Name,
+                GenreName = us.Song.Genre.Name,
+                us.Song.Streams,
+                us.Song.MediaRating,
+                us.TotalStreams,
+                AlbumCover = Convert.ToBase64String(us.Song.Album.Cover)
+            })
+            .ToList();
+
+        // Obtener los 2 géneros más escuchados
+        var topGenres = userSongs
+            .GroupBy(us => us.GenreName)
+            .Select(g => new
+            {
+                g.Key,
+                TotalStreams = g.Sum(us => us.TotalStreams)
+            })
+            .OrderByDescending(g => g.TotalStreams)
+            .Take(2)
+            .Select(g => g.Key)
+            .ToList();
+
+        // Filtrar y agrupar canciones por género y calificación media
+        return userSongs
+            .Where(us => topGenres.Contains(us.GenreName) && us.MediaRating >= 3)
+            .GroupBy(us => us.GenreName)
+            .Select(g => new SongsForYouDto
+            {
+                GenreName = g.Key,
+                TopSongs = g
+                    .OrderByDescending(us => us.Streams)
+                    .Take(5)
+                    .Select(us => new UserSelectedSongsDto
+                    {
+                        Id = us.Id,
+                        Title = us.Title,
+                        ArtistName = us.Name,
+                        AlbumCover = us.AlbumCover,
+                        GenreName = us.GenreName,
+                        Streams = us.Streams,
+                        MediaRating = us.MediaRating
+                    })
+                    .ToList()
             })
             .ToList();
     }
+
 }

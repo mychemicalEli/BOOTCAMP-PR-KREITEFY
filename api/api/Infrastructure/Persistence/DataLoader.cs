@@ -381,7 +381,7 @@ public class DataLoader
             new Song
             {
                 Title = "Weightless", ArtistId = 6, AlbumId = 11,
-                GenreId = 2, Duration = new TimeSpan(0, 3, 01), MediaRating = 2, Streams = 72,
+                GenreId = 2, Duration = new TimeSpan(0, 3, 01), MediaRating = 3, Streams = 72,
                 AddedAt = DateTime.UtcNow
             },
             new Song
@@ -485,7 +485,7 @@ public class DataLoader
             new Song
             {
                 Title = "Adore You", ArtistId = 11, AlbumId = 21,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 27), MediaRating = 2, Streams = 55,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 27), MediaRating = 4, Streams = 55,
                 AddedAt = DateTime.UtcNow
             },
             new Song
@@ -517,7 +517,7 @@ public class DataLoader
             new Song
             {
                 Title = "Cowboys de la A3", ArtistId = 14, AlbumId = 25,
-                GenreId = 4, Duration = new TimeSpan(0, 3, 45), MediaRating = 2, Streams = 25,
+                GenreId = 4, Duration = new TimeSpan(0, 3, 45), MediaRating = 3, Streams = 25,
                 AddedAt = DateTime.UtcNow
             }
         };

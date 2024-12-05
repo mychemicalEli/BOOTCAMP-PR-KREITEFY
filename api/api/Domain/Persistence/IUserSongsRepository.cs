@@ -7,5 +7,5 @@ namespace api.Domain.Persistence;
 public interface IUserSongsRepository : IGenericRepository<UserSongs>
 {
     UserSongs? GetByUserIdAndSongId(long userId, long songId);
-    IEnumerable<UserSongsDto> GetUserSongsWithSong(long userId);
+    IEnumerable<SongsForYouDto> GetSongsForYou(long userId);
 }

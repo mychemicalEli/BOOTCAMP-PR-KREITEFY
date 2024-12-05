@@ -14,18 +14,12 @@ namespace api.Application.Services.Implementations
         private IUserSongsRepository _userSongsRepository;
         private ISongRepository _songRepository;
 
-        public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository, IMapper mapper) 
+        public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository,
+            IMapper mapper)
             : base(userSongsRepository, mapper)
         {
             _userSongsRepository = userSongsRepository;
             _songRepository = songRepository;
-        }
-
-        public IEnumerable<UserSongsDto> GetUserSongs(long userId)
-        {
-            var userSongs = _userSongsRepository.GetUserSongsWithSong(userId);
-            var userSongsDto = _mapper.Map<IEnumerable<UserSongsDto>>(userSongs);
-            return userSongsDto;
         }
 
         public void IncrementStreams(long userId, long songId)
@@ -58,6 +52,11 @@ namespace api.Application.Services.Implementations
                 };
                 _userSongsRepository.Insert(newUserSong);
             }
+        }
+
+        public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
+        {
+            return _userSongsRepository.GetSongsForYou(userId);
         }
     }
 }

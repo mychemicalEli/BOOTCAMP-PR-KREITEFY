@@ -6,5 +6,5 @@ namespace api.Application.Services.Interfaces;
 public interface IUserSongsService: IGenericService<UserSongsDto>
 {
     void IncrementStreams(long userId, long songId);
-    IEnumerable<UserSongsDto> GetUserSongs(long userId);
+    IEnumerable<SongsForYouDto> GetSongsForYou(long userId); 
 }

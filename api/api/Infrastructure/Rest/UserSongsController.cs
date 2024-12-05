@@ -14,7 +14,7 @@ public class UserSongsController:ControllerBase
     }
     [HttpPost("api/play")]
     [Produces("application/json")]
-    [Authorize]
+    [AllowAnonymous]
     public IActionResult IncrementStreams([FromQuery] long userId, [FromQuery] long songId)
     {
         try
@@ -27,26 +27,25 @@ public class UserSongsController:ControllerBase
             return BadRequest(new { Message = ex.Message });
         }
     }
-    
-    [HttpGet("user/{userId}")]
+
+    [HttpGet("user/{userId}/songsforyou")]
     [Produces("application/json")]
     [AllowAnonymous]
-    public IActionResult GetUserSongs([FromRoute] long userId)
+    public IActionResult GetSongsForYou([FromRoute] long userId)
     {
         try
         {
-            var userSongs = _userSongsService.GetUserSongs(userId);
-            if (userSongs == null || !userSongs.Any())
+            var songsForYou = _userSongsService.GetSongsForYou(userId);
+            if (songsForYou == null || !songsForYou.Any())
             {
-                return NotFound(new { Message = "No songs found for this user." });
+                return NotFound(new { Message = "No personalized songs found for this user." });
             }
 
-            return Ok(userSongs); 
+            return Ok(songsForYou);
         }
         catch (Exception ex)
         {
             return BadRequest(new { Message = ex.Message });
         }
     }
-
 }
