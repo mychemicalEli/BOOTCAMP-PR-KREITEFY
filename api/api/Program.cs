@@ -68,7 +68,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
-
+//Services
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
@@ -76,13 +76,11 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<ISongService, SongService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IUserSongsService, UserSongsService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 
-builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-
+//Repositories
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
@@ -91,18 +89,23 @@ builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<ISongRepository, SongRepository>();
 builder.Services.AddScoped<IUserSongsRepository, UserSongsRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
-builder.Services.AddScoped<IDateHumanizer, DateHumanizer>();
 
+//Mappers
 builder.Services.AddAutoMapper(typeof(RoleMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserMapperProfile));
 builder.Services.AddAutoMapper(typeof(ArtistMapperProfile));
 builder.Services.AddAutoMapper(typeof(GenreMapperProfile));
 builder.Services.AddAutoMapper(typeof(AlbumMapperProfile));
 builder.Services.AddAutoMapper(typeof(SongMapperProfile));
+builder.Services.AddAutoMapper(typeof(UserSongsMapperProfile));
+builder.Services.AddAutoMapper(typeof(UserSelectedSongsMapperProfile));
 
 builder.Services.AddScoped<IImageVerifier, ImageVerifier>();
+builder.Services.AddScoped<IDateHumanizer, DateHumanizer>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped(typeof(ISpecificationParser<>), typeof(SpecificationParser<>));
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);

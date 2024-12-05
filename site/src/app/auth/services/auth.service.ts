@@ -7,7 +7,7 @@ import { UserDtoResponse } from '../models/userdto.response';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5282/api';
+  private apiUrl = 'http://localhost:5282';
   private loggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   private userSubject = new BehaviorSubject<UserDtoResponse | null>(null);
 

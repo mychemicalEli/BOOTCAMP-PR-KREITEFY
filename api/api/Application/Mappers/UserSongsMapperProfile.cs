@@ -8,6 +8,7 @@ public class UserSongsMapperProfile : Profile
 {
     public UserSongsMapperProfile()
     {
-        CreateMap<UserSongs, UserSongsDto>().ReverseMap();
+        CreateMap<UserSongs, UserSongsDto>()
+            .ForMember(dest => dest.SongForYou, opt => opt.MapFrom(src => src.Song));
     }
 }

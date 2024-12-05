@@ -4,50 +4,59 @@ using api.Domain.Entities;
 using api.Domain.Persistence;
 using AutoMapper;
 using framework.Application.Services;
+using System.Linq;
+using System.Collections.Generic;
 
-namespace api.Application.Services.Implementations;
-
-public class UserSongsService : GenericService<UserSongs, UserSongsDto>, IUserSongsService
+namespace api.Application.Services.Implementations
 {
-    private IUserSongsRepository _userSongsRepository;
-    private ISongRepository _songRepository;
+    public class UserSongsService : GenericService<UserSongs, UserSongsDto>, IUserSongsService
+    {
+        private IUserSongsRepository _userSongsRepository;
+        private ISongRepository _songRepository;
 
-    public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository, IMapper mapper) : base(userSongsRepository,
-        mapper)
-    {
-        _userSongsRepository = userSongsRepository;
-        _songRepository = songRepository;
-    }
-    
-    public void IncrementStreams(long userId, long songId)
-    {
-        var song = _songRepository.GetById(songId);
-    
-        if (song == null)
+        public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository,
+            IMapper mapper)
+            : base(userSongsRepository, mapper)
         {
-            throw new Exception("Song not found");
+            _userSongsRepository = userSongsRepository;
+            _songRepository = songRepository;
         }
-        
-        song.Streams += 1;
-        _songRepository.Update(song);
-        
-        var userSong = _userSongsRepository.GetByUserIdAndSongId(userId, songId);
-        if (userSong != null)
+
+        public void IncrementStreams(long userId, long songId)
         {
-            userSong.TotalStreams += 1;
-            userSong.LastPlayedAt = DateTime.Now;
-            _userSongsRepository.Update(userSong);
-        }
-        else
-        {
-            var newUserSong = new UserSongs
+            var song = _songRepository.GetById(songId);
+
+            if (song == null)
             {
-                UserId = userId,
-                SongId = songId,
-                TotalStreams = 1,
-                LastPlayedAt = DateTime.Now
-            };
-            _userSongsRepository.Insert(newUserSong);
+                throw new Exception("Song not found");
+            }
+
+            song.Streams += 1;
+            _songRepository.Update(song);
+
+            var userSong = _userSongsRepository.GetByUserIdAndSongId(userId, songId);
+            if (userSong != null)
+            {
+                userSong.TotalStreams += 1;
+                userSong.LastPlayedAt = DateTime.Now;
+                _userSongsRepository.Update(userSong);
+            }
+            else
+            {
+                var newUserSong = new UserSongs
+                {
+                    UserId = userId,
+                    SongId = songId,
+                    TotalStreams = 1,
+                    LastPlayedAt = DateTime.Now
+                };
+                _userSongsRepository.Insert(newUserSong);
+            }
+        }
+
+        public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
+        {
+            return _userSongsRepository.GetSongsForYou(userId);
         }
     }
 }

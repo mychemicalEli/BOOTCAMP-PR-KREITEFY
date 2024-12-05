@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SongDto } from '../models/song.model';
+import { SongDetailDto } from '../models/song-detail.model';
 import { SongService } from '../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
@@ -12,7 +12,7 @@ import { UserDtoResponse } from '../../auth/models/userdto.response';
 })
 export class DetailComponent implements OnInit {
   songId?: number;
-  song?: SongDto;
+  song?: SongDetailDto;
   errorMessage: string | null = null;
   userId?: number;
 

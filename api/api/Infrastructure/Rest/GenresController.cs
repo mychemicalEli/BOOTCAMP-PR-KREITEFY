@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 [Authorize]
 public class GenresController:GenericCrudController<GenreDto>
