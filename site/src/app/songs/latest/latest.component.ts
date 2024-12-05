@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SongService } from '../services/song.service';
-import { LatestSongs } from '../models/latest.model';
+import { LatestSongsDto } from '../models/lastest.model';
 
 @Component({
   selector: 'app-latest',
@@ -9,7 +9,7 @@ import { LatestSongs } from '../models/latest.model';
 })
 export class LatestComponent implements OnChanges {
   @Input() genreId: number | undefined = undefined;
-  latestSongs: LatestSongs[] = [];
+  latestSongs: LatestSongsDto[] = [];
   errorMessage: string | null = null;
 
   constructor(private songsService: SongService) {}
@@ -23,7 +23,7 @@ export class LatestComponent implements OnChanges {
 
   private getLatestSongs(): void {
     this.songsService.getLatestSongs(this.genreId).subscribe({
-      next: (response: LatestSongs[]) => {
+      next: (response: LatestSongsDto[]) => {
         this.latestSongs = response;
         this.errorMessage = null;
       },

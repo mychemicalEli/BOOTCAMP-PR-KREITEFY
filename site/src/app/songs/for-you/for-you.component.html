@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
+    <div class="title" *ngIf="!errorMessage">
+        <h3>Para ti</h3>
+    </div>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" *ngFor="let song of forYouSongs">
+            <div class="card" [routerLink]="['/songs', song.id]">
+                <img [src]="'data:image/png;base64,' + song.albumCover" class="card-img-top" alt="Album Cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{ song.title }}</h5>
+                    <p class="card-text">{{ song.artistName }}</p>
+
+                </div>
+                <small class="streams">
+                    <span class="genre-name">{{song.genreName}}</span>&nbsp; · &nbsp;
+                    <span><i class="fa-solid fa-retweet"></i>&nbsp;{{song.streams}}&nbsp;streams</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>

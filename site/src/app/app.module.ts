@@ -11,6 +11,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { LatestComponent } from './songs/latest/latest.component';
 import { DetailComponent } from './songs/detail/detail.component';
+import { ForYouComponent } from './songs/for-you/for-you.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DetailComponent } from './songs/detail/detail.component';
     RegisterComponent,
     LoginComponent,
     LatestComponent,
-    DetailComponent
+    DetailComponent,
+    ForYouComponent
   ],
   imports: [
     BrowserModule,

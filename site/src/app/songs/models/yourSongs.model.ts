@@ -1,8 +1,8 @@
-export interface LatestSongs {
+export interface YourSongsDto {
     id: number;
     title: string;
     albumCover: string;
     artistName: string;
-    genreId: number;
-    humanizedAddedAt: string;
+    genreName: string;
+    streams: number;
 }
