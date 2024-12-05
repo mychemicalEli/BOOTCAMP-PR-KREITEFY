@@ -11,7 +11,7 @@ import { YourSongsDto } from '../models/yourSongs.model';
   providedIn: 'root'
 })
 export class SongService {
-  private apiUrl = 'http://localhost:5282/api';
+  private apiUrl = 'http://localhost:5282';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
