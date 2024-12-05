@@ -7,7 +7,7 @@
 
 <ng-template #loggedIn>
   <div class="container-fluid logged">
-    <div class="filter-container">
+    <div class="filter-container" *ngIf="data">
       <select
         id="genreFilter"
         (change)="onGenreChange($event)"
