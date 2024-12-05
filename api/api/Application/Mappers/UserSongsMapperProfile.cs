@@ -9,6 +9,6 @@ public class UserSongsMapperProfile : Profile
     public UserSongsMapperProfile()
     {
         CreateMap<UserSongs, UserSongsDto>()
-            .ForMember(dest => dest.Song, opt => opt.MapFrom(src => src.Song));
+            .ForMember(dest => dest.SongForYou, opt => opt.MapFrom(src => src.Song));
     }
 }

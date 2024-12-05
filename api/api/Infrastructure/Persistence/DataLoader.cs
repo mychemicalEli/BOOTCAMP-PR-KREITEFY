@@ -285,7 +285,7 @@ public class DataLoader
             new Song
             {
                 Title = "Bat Country", ArtistId = 1, AlbumId = 2,
-                GenreId = 1, Duration = new TimeSpan(0, 5, 14), MediaRating = 3, Streams = 80,
+                GenreId = 1, Duration = new TimeSpan(0, 5, 14), MediaRating = 3, Streams = 90,
                 AddedAt = DateTime.UtcNow
             },
             new Song
@@ -322,13 +322,13 @@ public class DataLoader
             new Song
             {
                 Title = "Crawling", ArtistId = 3, AlbumId = 6,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 29), MediaRating = 2, Streams = 90,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 29), MediaRating = 2, Streams = 4,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Numb", ArtistId = 3, AlbumId = 6,
-                GenreId = 1, Duration = new TimeSpan(0, 3, 06), MediaRating = 3, Streams = 95,
+                GenreId = 1, Duration = new TimeSpan(0, 3, 06), MediaRating = 3, Streams = 94,
                 AddedAt = DateTime.UtcNow
             },
 
@@ -369,13 +369,13 @@ public class DataLoader
             new Song
             {
                 Title = "What's My Age Again?", ArtistId = 5, AlbumId = 9,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 23), MediaRating = 3, Streams = 90,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 23), MediaRating = 3, Streams = 88,
                 AddedAt = DateTime.UtcNow
             },
             new Song
             {
                 Title = "Dammit", ArtistId = 5, AlbumId = 10,
-                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4, Streams = 75,
+                GenreId = 2, Duration = new TimeSpan(0, 2, 45), MediaRating = 4, Streams = 43,
                 AddedAt = DateTime.UtcNow
             },
             new Song
@@ -414,7 +414,7 @@ public class DataLoader
             new Song
             {
                 Title = "Know Your Enemy", ArtistId = 7, AlbumId = 14,
-                GenreId = 3, Duration = new TimeSpan(0, 3, 12), MediaRating = 3, Streams = 90,
+                GenreId = 3, Duration = new TimeSpan(0, 3, 12), MediaRating = 3, Streams = 92,
                 AddedAt = DateTime.UtcNow
             },
             new Song

@@ -22,57 +22,39 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
     
     public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
     {
-        var userSongs = _context.Set<UserSongs>()
+        // 1. Obtener los géneros más escuchados por el usuario
+        var topGenres = _context.UserSongs
             .Where(us => us.UserId == userId)
-            .Select(us => new
-            {
-                us.Song.Id,
-                us.Song.Title,
-                us.Song.Artist.Name,
-                GenreName = us.Song.Genre.Name,
-                us.Song.Streams,
-                us.Song.MediaRating,
-                us.TotalStreams,
-                AlbumCover = Convert.ToBase64String(us.Song.Album.Cover)
-            })
-            .ToList();
-
-        // Obtener los 2 géneros más escuchados
-        var topGenres = userSongs
-            .GroupBy(us => us.GenreName)
+            .GroupBy(us => us.Song.Genre.Name)
             .Select(g => new
             {
-                g.Key,
-                TotalStreams = g.Sum(us => us.TotalStreams)
+                GenreName = g.Key,
+                TotalStreams = g.Sum(us => us.TotalStreams) 
             })
             .OrderByDescending(g => g.TotalStreams)
-            .Take(2)
-            .Select(g => g.Key)
+            .Take(2) 
+            .Select(g => g.GenreName)
             .ToList();
 
-        // Filtrar y agrupar canciones por género y calificación media
-        return userSongs
-            .Where(us => topGenres.Contains(us.GenreName) && us.MediaRating >= 3)
-            .GroupBy(us => us.GenreName)
-            .Select(g => new SongsForYouDto
+        // 2. Filtrar canciones por las más escuchadas con calificación >= 3
+        var filteredSongs = _context.UserSongs
+            .Where(us => us.UserId == userId && topGenres.Contains(us.Song.Genre.Name) && us.Song.MediaRating >= 3)
+            .OrderByDescending(us => us.Song.Streams)
+            .Take(5) 
+            .Select(us => new SongsForYouDto
             {
-                GenreName = g.Key,
-                TopSongs = g
-                    .OrderByDescending(us => us.Streams)
-                    .Take(5)
-                    .Select(us => new UserSelectedSongsDto
-                    {
-                        Id = us.Id,
-                        Title = us.Title,
-                        ArtistName = us.Name,
-                        AlbumCover = us.AlbumCover,
-                        GenreName = us.GenreName,
-                        Streams = us.Streams,
-                        MediaRating = us.MediaRating
-                    })
-                    .ToList()
+                Id = us.Song.Id,
+                Title = us.Song.Title,
+                ArtistName = us.Song.Artist.Name,
+                AlbumCover = Convert.ToBase64String(us.Song.Album.Cover),
+                GenreName = us.Song.Genre.Name,
+                Streams = us.Song.Streams,
+                MediaRating = us.Song.MediaRating
             })
             .ToList();
+
+        return filteredSongs;
     }
 
+    
 }

@@ -8,10 +8,10 @@ public class UserSelectedSongsMapperProfile :Profile
 {
     public UserSelectedSongsMapperProfile()
     {
-        CreateMap<Song, UserSelectedSongsDto>()
+        CreateMap<Song, SongsForYouDto>()
             .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
             .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.Name))
             .ForMember(dest => dest.AlbumCover, opt => opt.MapFrom(src => Convert.ToBase64String(src.Album.Cover)));
-        CreateMap<UserSelectedSongsDto, Song>();
+        CreateMap<SongsForYouDto, Song>();
     }
 }
