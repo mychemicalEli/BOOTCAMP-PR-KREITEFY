@@ -24,7 +24,7 @@ export class ForYouComponent {
       },
       error: (err) => {
         console.error('Error obteniendo canciones para ti', err);
-        this.errorMessage = 'No se pudieron cargar tus canciones. Por favor, inténtelo de nuevo.';
+        this.errorMessage = 'No se pudieron cargar tus canciones.';
       }
     });
   }

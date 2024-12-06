@@ -111,5 +111,23 @@ namespace api.Infrastructure.Persistence
             return songs;
         }
 
+        public IEnumerable<MostPlayedSongsDto> GetMostPlayedSongs(int count = 5, long? genreId = null)
+        {
+            var songs = _context.Songs
+                .Where(song => !genreId.HasValue || song.GenreId == genreId)
+                .OrderByDescending(song => song.Streams)
+                .Take(count)
+                .Select(i => new MostPlayedSongsDto
+                {
+                    Id = i.Id,
+                    Title = i.Title,
+                    AlbumCover = Convert.ToBase64String(i.Album.Cover),
+                    ArtistName = i.Artist.Name,
+                    Streams = i.Streams
+                });
+
+            return songs;
+        }
+
     }
 }

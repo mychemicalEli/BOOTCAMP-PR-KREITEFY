@@ -9,4 +9,5 @@ public interface ISongRepository : IGenericRepository<Song>
 {
     PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters);
     IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5, long? genreId = null);
+    IEnumerable<MostPlayedSongsDto> GetMostPlayedSongs(int count = 5, long? genreId = null);
 }

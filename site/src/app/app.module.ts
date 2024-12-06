@@ -12,6 +12,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { LatestComponent } from './songs/latest/latest.component';
 import { DetailComponent } from './songs/detail/detail.component';
 import { ForYouComponent } from './songs/for-you/for-you.component';
+import { MostPlayedComponent } from './songs/most-played/most-played.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ForYouComponent } from './songs/for-you/for-you.component';
     LoginComponent,
     LatestComponent,
     DetailComponent,
-    ForYouComponent
+    ForYouComponent,
+    MostPlayedComponent
   ],
   imports: [
     BrowserModule,

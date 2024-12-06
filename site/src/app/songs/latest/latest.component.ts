@@ -29,7 +29,7 @@ export class LatestComponent implements OnChanges {
       },
       error: (err) => {
         console.error('Error obteniendo canciones más recientes', err);
-        this.errorMessage = 'No se pudieron cargar las canciones más recientes. Por favor, inténtelo de nuevo.';
+        this.errorMessage = 'No se pudieron cargar las canciones más recientes.';
       }
     });
   }
