@@ -6,6 +6,7 @@ import { SongDetailDto } from '../models/song-detail.model';
 import { RatingDto } from '../models/rating.model';
 import { AuthService } from '../../auth/services/auth.service';
 import { YourSongsDto } from '../models/yourSongs.model';
+import { MostPlayedSongsDto } from '../models/most-played.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class SongService {
       urlEndPoint += `?genreId=${genreId}`;
     }
     return this.http.get<LatestSongsDto[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+
+  public getMostPlayedSongs(genreId?: number): Observable<MostPlayedSongsDto[]> {
+    let urlEndPoint = `${this.apiUrl}/songs/most-played`;
+    if (genreId !== undefined) {
+      urlEndPoint += `?genreId=${genreId}`;
+    }
+    return this.http.get<MostPlayedSongsDto[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
 
   public getForYouSongs(): Observable<YourSongsDto[]> {
