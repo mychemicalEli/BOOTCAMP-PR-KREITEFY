@@ -35,4 +35,10 @@ public class SongService : GenericService<Song, SongDto>, ISongService
             return song;
         });
     }
+    
+    public IEnumerable<MostPlayedSongsDto> GetMostPlayedSongs(int count = 5, long? genreId = null)
+    {
+        var mostPlayedSongs = _songRepository.GetMostPlayedSongs(count, genreId);
+        return mostPlayedSongs;
+    }
 }

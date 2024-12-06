@@ -65,4 +65,20 @@ public class SongsController : GenericCrudController<SongDto>
             return BadRequest("Error fetching latest songs: " + ex.Message);
         }
     }
+    
+    [HttpGet("most-played")]
+    [Produces("application/json")]
+    [Authorize]
+    public ActionResult<IEnumerable<MostPlayedSongsDto>> GetMostPlayedSongs([FromQuery] int count = 5, [FromQuery] long? genreId = null)
+    {
+        try
+        {
+            var songs = _service.GetMostPlayedSongs(count, genreId);
+            return Ok(songs);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Error fetching most played songs: " + ex.Message);
+        }
+    }
 }
