@@ -5,7 +5,7 @@
       <img src="../icon.png" alt="Kreitekfy icon" class="icon d-md-none" width="auto" height="50">
     </a>
     <div class="d-flex align-items-center" role="search">
-      <span *ngIf="isLoggedIn" class="user-name me-3">Hola, {{ userName }}!</span>
+      <span *ngIf="isLoggedIn" class="user-name me-3">Hola {{ userName }}!</span>
       <button class="btn btn-lg btn-outline-success" (click)="handleLoginLogout()">
         {{ isLoggedIn ? 'Logout' : 'Login' }}
       </button>

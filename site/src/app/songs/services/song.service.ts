@@ -7,6 +7,8 @@ import { RatingDto } from '../models/rating.model';
 import { AuthService } from '../../auth/services/auth.service';
 import { YourSongsDto } from '../models/yourSongs.model';
 import { MostPlayedSongsDto } from '../models/most-played.model';
+import { SongListComponent } from '../song-list/song-list.component';
+import { PaginatedResponse, SongListDto } from '../models/all-songs.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,21 +59,38 @@ export class SongService {
   public incrementStreams(songId: number, userId: number): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/play`;
     // Enviar el songId y userId como parámetros de consulta
-    return this.http.post(urlEndPoint, null, { 
+    return this.http.post(urlEndPoint, null, {
       headers: this.getAuthHeaders(),
       params: { songId: songId.toString(), userId: userId.toString() }
     });
   }
-  
 
   public addRating(ratingDto: RatingDto): Observable<any> {
     const urlEndPoint = `${this.apiUrl}/rating`;
     return this.http.post(urlEndPoint, ratingDto, { headers: this.getAuthHeaders() });
   }
 
+  public getAllSongs(page: number, size: number, filters?: string): Observable<PaginatedResponse<SongListDto>> {
+    let urlEndPoint = `${this.apiUrl}/songs?PageNumber=${page}&PageSize=${size}`;
+    if (filters) {
+      urlEndPoint += `&filter=${filters}`;
+    }
+    return this.http.get<PaginatedResponse<SongListDto>>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+
   public getGenres(): Observable<{ id: number; name: string }[]> {
     const urlEndPoint = `${this.apiUrl}/genres`;
     return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
-  
+
+  public getAlbums(): Observable<{ id: number; name: string }[]> {
+    const urlEndPoint = `${this.apiUrl}/albums`;
+    return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+
+  public getArtists(): Observable<{ id: number; name: string }[]> {
+    const urlEndPoint = `${this.apiUrl}/artists`;
+    return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+  }
+
 }

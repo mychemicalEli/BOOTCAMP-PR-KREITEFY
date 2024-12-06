@@ -4,6 +4,7 @@
 </div>
     <div class="title" *ngIf="!errorMessage">
       <h3>Novedades</h3>
+      <span class="show-all"[routerLink]="['/songs']">Mostrar todas</span>
     </div>
     <div class="row row-cols-1 row-cols-md-5 g-4">
       <div class="col" *ngFor="let song of latestSongs">

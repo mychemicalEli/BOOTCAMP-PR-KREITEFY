@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
+    <div class="title" *ngIf="!errorMessage">
+    </div>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" *ngFor="let song of songs">
+            <div class="card" [routerLink]="['/songs', song.id]">
+                <img [src]="'data:image/png;base64,' + song.albumCover" class="card-img-top" alt="Album Cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{ song.title }}</h5>
+                    <p class="card-text">{{ song.artistName }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paginationButtons text-center" *ngIf="songs.length > 0">
+        <button [disabled]="currentPage === 1" class="btn btn-secondary btnPagination"
+            (click)="previousPage()"><i class="fa-solid fa-chevron-left"></i></button>
+        <span *ngIf="currentPage && totalPages" class="paginationText">Página {{currentPage}} de {{totalPages}} -
+            Elementos totales: {{totalCount}}</span>
+        <button [disabled]="currentPage === totalPages" class="btn btn-secondary btnPagination"
+            (click)="nextPage()"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+</div>
