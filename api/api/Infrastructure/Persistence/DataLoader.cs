@@ -195,7 +195,7 @@ public class DataLoader
             new Genre { Name = "Metal" },
             new Genre { Name = "PopPunk" },
             new Genre { Name = "Rock" },
-            new Genre { Name = "Pop" }
+            new Genre { Name = "Indie" }
         };
         foreach (Genre genre in genres)
         {

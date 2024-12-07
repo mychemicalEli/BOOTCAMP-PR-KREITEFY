@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <form class="d-flex flex-wrap align-items-center gap-3 w-100" (ngSubmit)="searchByFilters()">
+        <!-- Title -->
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="floatingTitle" name="title" placeholder="Título"
+                [(ngModel)]="titleFilter" />
+            <label for="floatingTitle">Título</label>
+        </div>
+        <!-- Artist -->
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="floatingArtist" name="artist" placeholder="Artista"
+                [(ngModel)]="artistFilter" />
+            <label for="floatingArtist"><i class="fa-solid fa-user icon"></i>Artista</label>
+        </div>
+        <!-- Album -->
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="floatingAlbum" name="album" placeholder="Álbum"
+                [(ngModel)]="albumFilter" />
+            <label for="floatingAlbum"><i class="fa-solid fa-compact-disc icon"></i>Álbum</label>
+        </div>
+        <!-- Genre -->
+        <div class="form-floating flex-fill">
+            <select class="form-select" id="floatingGenre" name="genre" [(ngModel)]="genreFilter"
+                (change)="searchByFilters()">
+                <option value="" selected>Seleccione un género</option>
+                <option *ngFor="let genre of genres" [value]="genre.name">
+                    {{ genre.name }}
+                </option>
+            </select>
+            <label for="floatingGenre"><i class="fa-solid fa-music icon"></i>Género</label>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end gap-2 flex-fill">
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-filter"></i> Filtrar
+            </button>
+            <button type="button" class="btn btn-danger" (click)="resetFilters()">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+        </div>
+    </form>
+
+    <div *ngIf="noResultsFound" class="alert alert-danger" role="alert">
+        No se encontraron canciones que coincidan con los filtros de búsqueda.
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
+
+    <div class="title" *ngIf="!errorMessage">
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" *ngFor="let song of songs">
+            <div class="card" [routerLink]="['/songs', song.id]">
+                <img [src]="'data:image/png;base64,' + song.albumCover" class="card-img-top" alt="Album Cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{ song.title }}</h5>
+                    <h6 class="card-text"><span><i class="fa-solid fa-user"></i></span><strong>{{ song.artistName
+                            }}</strong></h6>
+                    <h6 class="card-text"><span><i class="fa-solid fa-compact-disc"></i></span>{{ song.albumName }}</h6>
+                    <h6 class="card-text"><span><i class="fa-solid fa-music"></i></span>{{ song.genreName }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paginationButtons text-center" *ngIf="songs.length > 0">
+        <button [disabled]="currentPage === 1" class="btn btn-secondary btnPagination" (click)="previousPage()"><i
+                class="fa-solid fa-chevron-left"></i></button>
+        <span *ngIf="currentPage && totalPages" class="paginationText">Página {{currentPage}} de {{totalPages}} -
+            Elementos totales: {{totalCount}}</span>
+        <button [disabled]="currentPage === totalPages" class="btn btn-secondary btnPagination" (click)="nextPage()"><i
+                class="fa-solid fa-chevron-right"></i></button>
+    </div>
+</div>
