@@ -18,15 +18,18 @@ export class SongListComponent {
   loadError: boolean = false;
 
   titleFilter?: string;
-  artistFilter?: string;
-  albumFilter?: string;
+  artistFilter?: string = '';
+  albumFilter?: string = '';
   genreFilter?: string = '';
   genres: { id: number; name: string }[] = [];
-
+  albums: { id: number; title: string }[] = [];
+  artists: { id: number; name: string }[] = [];
   constructor(private songsService: SongService) { }
   ngOnInit(): void {
     this.getAllSongs();
     this.fetchGenres();
+    this.fetchAlbums();
+    this.fetchArtists();
   }
 
   private getAllSongs(): void {
@@ -62,6 +65,27 @@ export class SongListComponent {
     });
   }
 
+  fetchAlbums(): void {
+    this.songsService.getAlbums().subscribe({
+      next: (response) => {
+        this.albums = response;
+      },
+      error: (err) => {
+        console.error('Error al obtener álbums', err);
+      }
+    });
+  }
+
+  fetchArtists(): void {
+    this.songsService.getArtists().subscribe({
+      next: (response) => {
+        this.artists = response;
+      },
+      error: (err) => {
+        console.error('Error al obtener álbums', err);
+      }
+    });
+  }
 
   private buildFilters(): string | undefined {
     const filters: string[] = [];
