@@ -6,8 +6,37 @@
     padding: 100px;
     margin: 0;
 
+    form {
+        margin-bottom: 30px;
+
+        i{
+            margin-right: 10px;
+        }
+
+        .btn-success {
+            background-color: #1DB954;
+
+            &:hover {
+                background-color: #2ba857;
+            }
+        }
+    }
+
     .card {
-        height: 320px;
+        height: 420px;
+
+        i {
+            margin-right: 10px;
+            color: #1DB954;
+        }
+
+        .card-title {
+            margin-bottom: 20px;
+        }
+
+        .card-text {
+            font-weight: lighter;
+        }
     }
 
     .paginationButtons {

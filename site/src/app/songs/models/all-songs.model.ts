@@ -9,9 +9,8 @@ export interface PaginatedResponse<SongListDto> {
 export interface SongListDto {
     id: number;
     title: string;
-    albumId: number;
+    albumName: string;
     albumCover: string;
-    artistId: number;
     artistName: string;
-    genreId: number;
+    genreName: string;
 }
