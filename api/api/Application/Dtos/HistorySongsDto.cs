@@ -6,4 +6,5 @@ public class HistorySongsDto
     public string HumanizedPlayedAt { get; set; }
     public long SongId { get; set; }
     public string Title { get; set; }
+    public string Artist { get; set; }
 }
