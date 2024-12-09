@@ -23,6 +23,11 @@ export class NavbarComponent implements OnInit {
         this.userName = '';
       }
     });
+    this.authService.getUserObservable().subscribe(user => {
+      if (user) {
+        this.userName = user.name;
+      }
+    });
   }
 
   loadUserData(): void {
