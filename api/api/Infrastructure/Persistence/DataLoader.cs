@@ -143,50 +143,54 @@ public class DataLoader
         }
     }
 
-    public void LoadUsers()
+   public void LoadUsers()
+{
+    var users = new User[]
     {
-        var users = new User[]
+        new User
         {
-            new User
-            {
-                Name = "Elizabeth", LastName = "Blanco", Email = "admin@example.com",
-                Password = "SecurePass123", RoleId = 1
-            },
-            new User
-            {
-                Name = "Ángel", LastName = "Hernández", Email = "user@example.com",
-                Password = "SecurePass123", RoleId = 2
-            }
-        };
-
-        foreach (User user in users)
+            Name = "Elizabeth", LastName = "Blanco", Email = "admin@example.com",
+            Password = "SecurePass123", RoleId = 1
+        },
+        new User
         {
-            _kreitekfyContext.Users.Add(user);
+            Name = "Ángel", LastName = "Hernández", Email = "user@example.com",
+            Password = "SecurePass123", RoleId = 2
         }
+    };
 
-        _kreitekfyContext.SaveChanges();
-
-        var allSongIds = _kreitekfyContext.Songs.Select(s => s.Id).ToList();
-
-        foreach (User user in users)
-        {
-            var randomSongIds = allSongIds.OrderBy(x => Guid.NewGuid()).Take(39).ToList();
-
-            foreach (var songId in randomSongIds)
-            {
-                var userSong = new UserSongs
-                {
-                    UserId = user.Id,
-                    SongId = songId,
-                    LastPlayedAt = DateTime.UtcNow.AddDays(-new Random().Next(1, 30)),
-                    TotalStreams = new Random().Next(1, 50)
-                };
-                _kreitekfyContext.UserSongs.Add(userSong);
-            }
-        }
-
-        _kreitekfyContext.SaveChanges();
+    foreach (User user in users)
+    {
+        _kreitekfyContext.Users.Add(user);
     }
+
+    _kreitekfyContext.SaveChanges();
+    
+    var allSongIds = _kreitekfyContext.Songs.Select(s => s.Id).ToList();
+    
+    foreach (User user in users)
+    {
+        int numberOfSongsToPlay = new Random().Next(10, 50);
+        var randomSongIds = allSongIds.OrderBy(x => Guid.NewGuid()).Take(numberOfSongsToPlay).ToList();
+
+        foreach (var songId in randomSongIds)
+        {
+            int totalStreams = new Random().Next(1, 100);
+            
+            var userSong = new UserSongs
+            {
+                UserId = user.Id,
+                SongId = songId,
+                LastPlayedAt = DateTime.UtcNow.AddDays(-new Random().Next(1, 30)),
+                TotalStreams = totalStreams
+            };
+
+            _kreitekfyContext.UserSongs.Add(userSong);
+        }
+    }
+    _kreitekfyContext.SaveChanges();
+}
+
 
     public void LoadGenres()
     {

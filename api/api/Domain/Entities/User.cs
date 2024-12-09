@@ -14,6 +14,6 @@ public class User
     public required long RoleId { get; set; }
     public Role Role { get; set; }
     public ICollection<Rating> Ratings { get; set; }
-    public ICollection<UserSongs> UserSongs { get; set; } = new List<UserSongs>();
+    public ICollection<UserSongs> UserSongs { get; set; }
   
 }

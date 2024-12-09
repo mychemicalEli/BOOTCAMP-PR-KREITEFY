@@ -6,6 +6,7 @@ using AutoMapper;
 using framework.Application.Services;
 using System.Linq;
 using System.Collections.Generic;
+using framework.Application;
 
 namespace api.Application.Services.Implementations
 {
@@ -13,13 +14,15 @@ namespace api.Application.Services.Implementations
     {
         private IUserSongsRepository _userSongsRepository;
         private ISongRepository _songRepository;
+        private IDateHumanizer _dateHumanizer;
 
         public UserSongsService(IUserSongsRepository userSongsRepository, ISongRepository songRepository,
-            IMapper mapper)
+            IMapper mapper, IDateHumanizer dateHumanizer)
             : base(userSongsRepository, mapper)
         {
             _userSongsRepository = userSongsRepository;
             _songRepository = songRepository;
+            _dateHumanizer = dateHumanizer;
         }
 
         public void IncrementStreams(long userId, long songId)
@@ -58,5 +61,18 @@ namespace api.Application.Services.Implementations
         {
             return _userSongsRepository.GetSongsForYou(userId);
         }
+        
+        public PagedList<HistorySongsDto> GetHistorySongs(long userId, PaginationParameters paginationParameters)
+        {
+            var userSongsHistory = _userSongsRepository.GetHistorySongs(userId, paginationParameters);
+            
+            foreach (var song in userSongsHistory)
+            {
+                song.HumanizedPlayedAt = _dateHumanizer.HumanizeDate(song.LastPlayedAt);
+            }
+
+            return userSongsHistory;
+        }
+
     }
 }

@@ -83,9 +83,9 @@ export class SongService {
     return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
 
-  public getAlbums(): Observable<{ id: number; name: string }[]> {
+  public getAlbums(): Observable<{ id: number; title: string }[]> {
     const urlEndPoint = `${this.apiUrl}/albums`;
-    return this.http.get<{ id: number; name: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+    return this.http.get<{ id: number; title: string }[]>(urlEndPoint, { headers: this.getAuthHeaders() });
   }
 
   public getArtists(): Observable<{ id: number; name: string }[]> {

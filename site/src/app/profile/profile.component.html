@@ -1,0 +1,131 @@
+<div class="container-fluid">
+    <div class="profile-container">
+        <!-- Contenedor de "Mi perfil" -->
+        <div class="profile-section">
+            <h2>Mi Perfil</h2>
+
+            <form *ngIf="!errorMessage" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                <div class="profile-info">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="id" formControlName="id" class="form-control" placeholder="Id" />
+                        <label for="id" class="form-label">Id</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="name" formControlName="name" class="form-control"
+                            placeholder="Ingrese su nombre" />
+                        <label for="name" class="form-label">Nombre</label>
+                        <div *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.invalid"
+                            class="text-danger">
+                            <small *ngIf="profileForm.get('name')?.errors?.['required']">El nombre es
+                                obligatorio.</small>
+                            <small *ngIf="profileForm.get('name')?.errors?.['minlength']">Debe tener al menos 2
+                                caracteres.</small>
+                            <small *ngIf="profileForm.get('name')?.errors?.['maxlength']">No puede tener más de 50
+                                caracteres.</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="lastName" formControlName="lastName" class="form-control"
+                            placeholder="Ingrese sus apellidos" />
+                        <label for="lastName" class="form-label">Apellidos</label>
+                        <div *ngIf="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid"
+                            class="text-danger">
+                            <small *ngIf="profileForm.get('lastName')?.errors?.['required']">Los apellidos son
+                                obligatorios.</small>
+                            <small *ngIf="profileForm.get('lastName')?.errors?.['minlength']">Debe tener al menos 2
+                                caracteres.</small>
+                            <small *ngIf="profileForm.get('lastName')?.errors?.['maxlength']">No puede tener más de
+                                50 caracteres.</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="email" id="email" formControlName="email" class="form-control"
+                            placeholder="Ingrese su email" />
+                        <label for="email" class="form-label">Email</label>
+                        <div *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.invalid"
+                            class="text-danger">
+                            <small *ngIf="profileForm.get('email')?.errors?.['required']">El email es
+                                obligatorio.</small>
+                            <small *ngIf="profileForm.get('email')?.errors?.['email']">El email no es
+                                válido.</small>
+                            <small *ngIf="profileForm.get('email')?.errors?.['maxlength']">No puede tener más de
+                                50 caracteres.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" id="password" formControlName="password" class="form-control"
+                            placeholder="Ingrese su contraseña" />
+                        <label for="password" class="form-label">Cambia tu contraseña</label>
+                        <div *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.invalid"
+                            class="text-danger">
+                            <small *ngIf="profileForm.get('password')?.errors?.['required']">La contraseña es
+                                obligatoria.</small>
+                            <small *ngIf="profileForm.get('password')?.errors?.['minlength']">Debe tener al menos 8
+                                caracteres.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" id="repeatPassword" formControlName="repeatPassword" class="form-control"
+                            placeholder="Repita su contraseña" />
+                        <label for="repeatPassword" class="form-label">Repetir Contraseña</label>
+                        <div *ngIf="profileForm.get('repeatPassword')?.touched && !passwordsMatch" class="text-danger">
+                            <small>Las contraseñas no coinciden.</small>
+                        </div>
+                    </div>
+
+                    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+
+            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessage }}
+            </div>
+        </div>
+
+        <!-- "Mi historial" -->
+        <div class="history-section">
+            <h2>Mi Historial</h2>
+            <table *ngIf="!historyLoadingError && history.length > 0" class="history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Canción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let song of history">
+                        <td>{{ song.humanizedPlayedAt }}</td>
+                        <td><strong>{{ song.title }}</strong> - {{ song.artist }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="!historyLoadingError && history.length === 0" class="alert alert-danger">
+                No se pudo cargar el historial de canciones.
+            </div>
+
+            <!-- Paginación -->
+            <div class="paginationButtons text-center" *ngIf="history.length > 0">
+                <button [disabled]="currentPage === 1" class="btn btn-secondary btnPagination" (click)="previousPage()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span *ngIf="currentPage && totalPages" class="paginationText">
+                    Página {{ currentPage }} de {{ totalPages }} - Canciones reproducidas: {{ totalCount }}
+                </span>
+                <button [disabled]="currentPage === totalPages" class="btn btn-secondary btnPagination"
+                    (click)="nextPage()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>

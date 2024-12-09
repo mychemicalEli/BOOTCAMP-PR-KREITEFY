@@ -13,6 +13,7 @@ import { DetailComponent } from './songs/detail/detail.component';
 import { ForYouComponent } from './songs/for-you/for-you.component';
 import { MostPlayedComponent } from './songs/most-played/most-played.component';
 import { SongListComponent } from './songs/song-list/song-list.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SongListComponent } from './songs/song-list/song-list.component';
     DetailComponent,
     ForYouComponent,
     MostPlayedComponent,
-    SongListComponent
+    SongListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
