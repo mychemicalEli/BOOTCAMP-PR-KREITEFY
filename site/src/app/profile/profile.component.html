@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="profile-container">
+        <!-- Contenedor de "Mi perfil" -->
+        <div class="profile-section">
+            <h2>Mi Perfil</h2>
+            <div class="profile-info">
+                <div class="info-item">
+                    <strong>ID:</strong> <span>{{ userId }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Nombre:</strong> <span>nombre</span>
+                </div>
+                <div class="info-item">
+                    <strong>Apellidos:</strong> <span>apellido</span>
+                </div>
+                <div class="info-item">
+                    <strong>Email:</strong> <span>email</span>
+                </div>
+                <div class="info-item">
+                    <strong>Contraseña:</strong> <span>******</span>
+                </div>
+            </div>
+        </div>
+
+        <!--"Mi historial" -->
+        <div class="history-section">
+            <h2>Mi Historial</h2>
+            <table *ngIf="history" class="history-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Canción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let song of history">
+                        <td>{{ song.humanizedPlayedAt}}</td>
+                        <td><strong>{{ song.title }}</strong> - {{ song.artist }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="paginationButtons text-center" *ngIf="history.length > 0">
+                <button [disabled]="currentPage === 1" class="btn btn-secondary btnPagination" (click)="previousPage()"><i
+                        class="fa-solid fa-chevron-left"></i></button>
+                <span *ngIf="currentPage && totalPages" class="paginationText">Página {{currentPage}} de {{totalPages}} -
+                    Canciones reproducidas: {{totalCount}}</span>
+                <button [disabled]="currentPage === totalPages" class="btn btn-secondary btnPagination" (click)="nextPage()"><i
+                        class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

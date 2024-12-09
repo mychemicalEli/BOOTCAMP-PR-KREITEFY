@@ -34,6 +34,7 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
         {
             SongId = i.Song.Id,
             Title = i.Song.Title,
+            Artist = i.Song.Artist.Name,
             LastPlayedAt = i.LastPlayedAt.Value,
         });
         
