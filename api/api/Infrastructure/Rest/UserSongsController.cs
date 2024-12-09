@@ -1,4 +1,7 @@
+using api.Application.Dtos;
 using api.Application.Services.Interfaces;
+using framework.Application;
+using framework.Infrastructure.Rest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,4 +51,29 @@ public class UserSongsController:ControllerBase
             return BadRequest(new { Message = ex.Message });
         }
     }
+    
+    [HttpGet("user/{userId}/history")]
+    [Produces("application/json")]
+    [AllowAnonymous]
+    public ActionResult<PagedResponse<HistorySongsDto>> GetHistorySongs([FromRoute] long userId, [FromQuery] PaginationParameters paginationParameters)
+    {
+        try
+        {
+            PagedList<HistorySongsDto> page = _userSongsService.GetHistorySongs(userId, paginationParameters);
+            var response = new PagedResponse<HistorySongsDto>
+            {
+                CurrentPage = page.CurrentPage,
+                TotalPages = page.TotalPages,
+                PageSize = page.PageSize,
+                TotalCount = page.TotalCount,
+                Data = page
+            };
+            return Ok(response);
+        }
+        catch (MalformedFilterException)
+        {
+            return BadRequest();
+        }
+    }
+    
 }
