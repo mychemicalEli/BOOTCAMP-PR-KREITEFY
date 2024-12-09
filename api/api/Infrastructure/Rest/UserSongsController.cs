@@ -54,7 +54,7 @@ public class UserSongsController:ControllerBase
     
     [HttpGet("user/{userId}/history")]
     [Produces("application/json")]
-    [AllowAnonymous]
+    [Authorize]
     public ActionResult<PagedResponse<HistorySongsDto>> GetHistorySongs([FromRoute] long userId, [FromQuery] PaginationParameters paginationParameters)
     {
         try
