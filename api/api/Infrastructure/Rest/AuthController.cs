@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using api.Application.Dtos;
 using api.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -68,5 +67,4 @@ public class AuthController : ControllerBase
             return Unauthorized(ex.Message);
         }
     }
-
 }

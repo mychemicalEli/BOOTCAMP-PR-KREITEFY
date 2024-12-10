@@ -1,6 +1,8 @@
+using framework.Application.Dtos;
+
 namespace api.Application.Dtos;
 
-public class UserDtoResponse
+public class UserDtoResponse: IDto
 {
     public long Id { get; set; }
     public string Name { get; set; }

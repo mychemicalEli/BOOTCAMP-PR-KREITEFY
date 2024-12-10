@@ -19,7 +19,9 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    
 }).AddJwtBearer(options =>
+
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -68,6 +70,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+
 //Services
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -98,6 +101,7 @@ builder.Services.AddAutoMapper(typeof(GenreMapperProfile));
 builder.Services.AddAutoMapper(typeof(AlbumMapperProfile));
 builder.Services.AddAutoMapper(typeof(SongMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserSongsMapperProfile));
+builder.Services.AddAutoMapper(typeof(RatingMapperProfile));
 builder.Services.AddAutoMapper(typeof(UserSelectedSongsMapperProfile));
 
 builder.Services.AddScoped<IImageVerifier, ImageVerifier>();
@@ -113,6 +117,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDbContext<KreitekfyContext>(options =>
@@ -120,8 +125,11 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddAuthorization();
+
 var app = builder.Build();
+
 ConfigureExceptionhandler(app);
+
 app.UseCors("AllowFrontEnd");
 
 if (builder.Environment.IsDevelopment())
@@ -141,13 +149,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers().RequireAuthorization();
-
 app.Run();
-
 static void ConfigureExceptionhandler(WebApplication app)
 {
     app.UseExceptionHandler(errorApp =>

@@ -1,4 +1,3 @@
-using api.Application.Dtos;
 using api.Domain.Entities;
 using framework.Domain.Persistence;
 

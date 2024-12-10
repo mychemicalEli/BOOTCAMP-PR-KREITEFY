@@ -1,9 +1,6 @@
-using api.Application.Dtos;
 using api.Domain.Entities;
 using api.Domain.Persistence;
-using framework.Domain.Persistence;
 using framework.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence;
 

@@ -7,5 +7,9 @@ namespace api.Domain.Entities;
 public class Role
 {
     public long Id { get; set; }
-    [MinLength(3)] public required string Name { get; set; }
+
+    [Column(TypeName = "varchar(20)")]
+    [MinLength(3)]
+    [MaxLength(20)]
+    public required string Name { get; set; }
 }

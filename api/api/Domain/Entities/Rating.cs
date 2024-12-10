@@ -7,9 +7,9 @@ namespace api.Domain.Entities;
 public class Rating
 {
     public long Id { get; set; }
-    public required long UserId { get; set; }
+    [Required] public required long UserId { get; set; }
     public User User { get; set; }
-    public required long SongId { get; set; }
+    [Required] public required long SongId { get; set; }
     public Song Song { get; set; }
-    [Range(1, 4)] public required int Stars { get; set; }
+    [Range(1, 4)] [Required] public required int Stars { get; set; }
 }

@@ -69,7 +69,6 @@ public class AuthService : IAuthService
         {
             throw new UnauthorizedAccessException("Invalid or expired token.");
         }
-
         return user;
     }
 }
