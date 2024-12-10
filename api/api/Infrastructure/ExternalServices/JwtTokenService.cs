@@ -6,7 +6,7 @@ using api.Application.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using JwtSecurityToken = System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
 
-namespace api.Infrastructure.Services;
+namespace api.Infrastructure.ExternalServices;
 public class JwtTokenService : IJwtTokenService
 {
     private readonly IConfiguration _configuration;

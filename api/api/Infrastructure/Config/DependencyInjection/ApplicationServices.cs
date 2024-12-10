@@ -1,6 +1,5 @@
 using api.Application.Services.Implementations;
 using api.Application.Services.Interfaces;
-using api.Infrastructure.Services;
 
 public static class ApplicationService
 {
@@ -13,7 +12,6 @@ public static class ApplicationService
         services.AddScoped<IAlbumService, AlbumService>();
         services.AddScoped<ISongService, SongService>();
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IUserSongsService, UserSongsService>();
         services.AddScoped<IRatingService, RatingService>();
         return services;

@@ -3,7 +3,7 @@ using api.Application.Dtos;
 using api.Application.Services.Interfaces;
 using api.Domain.Persistence;
 
-namespace api.Infrastructure.Services
+namespace api.Infrastructure.ExternalServices
 {
     public class CurrentUserService : ICurrentUserService
     {

@@ -1,12 +1,5 @@
-using api.Application.Mappers;
-using api.Application.Services.Implementations;
-using api.Application.Services.Interfaces;
-using api.Domain.Persistence;
-using api.Infrastructure.Middleware;
+using api.Infrastructure.Config.Middleware;
 using api.Infrastructure.Persistence;
-using api.Infrastructure.Services;
-using framework.Domain.Persistence;
-using framework.Infrastructure.Specs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

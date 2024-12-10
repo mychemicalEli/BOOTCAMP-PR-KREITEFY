@@ -1,4 +1,4 @@
-namespace api.Infrastructure.Middleware;
+namespace api.Infrastructure.Config.Middleware;
 
 public class ExceptionHandlingMiddleware
 {
