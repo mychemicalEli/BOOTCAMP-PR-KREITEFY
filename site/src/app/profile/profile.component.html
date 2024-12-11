@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<app-forbidden *ngIf="!isLoggedIn"></app-forbidden>
+<div *ngIf="isLoggedIn" class="container-fluid">
     <div class="profile-container">
         <!-- Contenedor de "Mi perfil" -->
         <div class="profile-section">
@@ -62,7 +63,7 @@
                         <input type="password" id="password" formControlName="password" class="form-control"
                             placeholder="Ingrese su contraseña" />
                         <label for="password" class="form-label">Cambia tu contraseña</label>
-                    </div>                    
+                    </div>
 
                     <div class="form-floating mb-3">
                         <input type="password" id="repeatPassword" formControlName="repeatPassword" class="form-control"

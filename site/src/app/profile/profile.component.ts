@@ -11,6 +11,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  data: any = null;
+
   userId: number | null = null;
   userProfile?: UserProfileDto;
   profileForm!: FormGroup;
@@ -34,15 +37,22 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getMe().subscribe({
-      next: (user) => {
-        this.userId = user.id;
-        this.loadUserProfile();
-        this.getHistory();
-      },
-      error: (err) => {
-        console.error("Error al obtener el usuario loggeado", err);
-        this.errorMessage = "No se pudo cargar la información del usuario.";
+    this.authService.getLoggedInStatus().subscribe(status => {
+      this.isLoggedIn = status;
+      if (this.isLoggedIn) {
+        this.authService.getMe().subscribe({
+          next: (user) => {
+            this.userId = user.id;
+            this.loadUserProfile();
+            this.getHistory();
+          },
+          error: (err) => {
+            console.error("Error al obtener el usuario loggeado", err);
+            this.errorMessage = "No se pudo cargar la información del usuario.";
+          }
+        });
+      } else {
+        this.data = null;
       }
     });
   }

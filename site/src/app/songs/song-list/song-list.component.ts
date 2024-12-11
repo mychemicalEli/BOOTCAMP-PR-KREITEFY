@@ -1,6 +1,7 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { SongService } from '../services/song.service';
 import { PaginatedResponse, SongListDto } from '../models/all-songs.model';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-song-list',
@@ -8,6 +9,9 @@ import { PaginatedResponse, SongListDto } from '../models/all-songs.model';
   styleUrl: './song-list.component.scss'
 })
 export class SongListComponent {
+  isLoggedIn: boolean = false;
+  data: any = null;
+
   currentPage: number = 1;
   totalPages: number = 0;
   pageSize: number = 8;
@@ -24,12 +28,21 @@ export class SongListComponent {
   genres: { id: number; name: string }[] = [];
   albums: { id: number; title: string }[] = [];
   artists: { id: number; name: string }[] = [];
-  constructor(private songsService: SongService) { }
+
+  constructor(private songsService: SongService, private authService: AuthService) { }
+  
   ngOnInit(): void {
-    this.getAllSongs();
-    this.fetchGenres();
-    this.fetchAlbums();
-    this.fetchArtists();
+    this.authService.getLoggedInStatus().subscribe(status => {
+      this.isLoggedIn = status;
+      if (this.isLoggedIn) {
+        this.getAllSongs();
+        this.fetchGenres();
+        this.fetchAlbums();
+        this.fetchArtists();
+      } else {
+        this.data = null;
+      }
+    });
   }
 
   private getAllSongs(): void {
@@ -44,7 +57,7 @@ export class SongListComponent {
         this.noResultsFound = this.songs.length === 0;
       },
       error: (err) => {
-        this.loadError = true; 
+        this.loadError = true;
         this.handleError(err);
       }
     });
@@ -107,7 +120,7 @@ export class SongListComponent {
     this.titleFilter = '';
     this.artistFilter = '';
     this.albumFilter = '';
-    this.genreFilter = '' ;
+    this.genreFilter = '';
     this.searchByFilters();
   }
 

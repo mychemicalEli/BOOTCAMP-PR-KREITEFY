@@ -1,0 +1,11 @@
+.container-fluid {
+    background-color: #121212;
+    min-height: 100vh;
+    padding: 100px;
+    margin: 0;
+
+    .login {
+        color: darkred;
+        font-weight: bold;
+    }
+}

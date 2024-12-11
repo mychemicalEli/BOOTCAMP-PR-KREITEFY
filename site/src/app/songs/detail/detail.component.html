@@ -1,4 +1,5 @@
-<div class="card-container">
+<app-forbidden *ngIf="!isLoggedIn"></app-forbidden>
+<div *ngIf="isLoggedIn" class="card-container">
     <div class="card" *ngIf="song">
         <div class="image">
             <img [src]="'data:image/jpeg;base64,' + song.albumCover" alt="Album Cover" />
