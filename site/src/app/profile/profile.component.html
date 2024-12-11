@@ -63,6 +63,10 @@
                         <input type="password" id="password" formControlName="password" class="form-control"
                             placeholder="Ingrese su contraseña" />
                         <label for="password" class="form-label">Cambia tu contraseña</label>
+                        <small *ngIf="profileForm.get('password')?.errors?.['passwordStrength']" class="text-danger">
+                            La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, un número y
+                            un carácter especial.
+                        </small>
                     </div>
 
                     <div class="form-floating mb-3">

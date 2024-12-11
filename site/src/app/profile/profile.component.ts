@@ -4,6 +4,7 @@ import { AuthService } from '../auth/services/auth.service';
 import { UserProfileDto } from './models/user.model';
 import { HistorySongsDto, PaginatedResponse } from './models/history.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator } from '../shared/validator/password.validator';
 
 @Component({
   selector: 'app-profile',
@@ -63,7 +64,7 @@ export class ProfileComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-      password: [''],
+      password: ['',[passwordValidator()]],
       repeatPassword: [''],
       roleId: [''],
       roleName: ['']
