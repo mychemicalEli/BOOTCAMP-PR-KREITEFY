@@ -10,6 +10,7 @@ public static class ExternalServices
         services.AddScoped<IDateHumanizer, DateHumanizer>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
         return services;
     }
 }

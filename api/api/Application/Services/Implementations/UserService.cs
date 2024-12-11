@@ -9,28 +9,28 @@ namespace api.Application.Services.Implementations;
 
 public class UserService : GenericService<User, UserDto>, IUserService
 {
-    private readonly IUserRepository _songRepository;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(IUserRepository songRepository, IMapper mapper) : base(songRepository, mapper)
+    public UserService(IUserRepository userRepository, IMapper mapper) : base(userRepository, mapper)
     {
-        _songRepository = songRepository;
+        _userRepository = userRepository;
     }
 
     public List<UserDto> GetAllUsersWithRoleName()
     {
-        return _songRepository.GetAllUsersWithRoleName();
+        return _userRepository.GetAllUsersWithRoleName();
     }
 
     public UserDto RegisterUser(UserDto userDto)
     {
         var user = _mapper.Map<User>(userDto);
-        var newUser = _songRepository.Insert(user);
+        var newUser = _userRepository.Insert(user);
         return _mapper.Map<UserDto>(newUser);
     }
     
     public UserDto GetUserByEmail(string email)
     {
-        var user = _songRepository.GetUserByEmail(email);  
+        var user = _userRepository.GetUserByEmail(email);  
         return _mapper.Map<UserDto>(user); 
     }
 }

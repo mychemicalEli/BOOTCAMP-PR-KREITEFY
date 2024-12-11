@@ -1,4 +1,5 @@
 using api.Application.Dtos;
+using api.Application.Services.Interfaces;
 using api.Domain.Entities;
 using api.Domain.Persistence;
 using framework.Domain.Persistence;
@@ -10,10 +11,12 @@ namespace api.Infrastructure.Persistence;
 public class UserRepository : GenericRepository<User>, IUserRepository
 {
     private KreitekfyContext _context;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public UserRepository(KreitekfyContext context) : base(context)
+    public UserRepository(KreitekfyContext context, IPasswordHasher passwordHasher) : base(context)
     {
         _context = context;
+        _passwordHasher = passwordHasher;
     }
 
     public List<UserDto> GetAllUsersWithRoleName()
@@ -46,6 +49,7 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public override User Insert(User user)
     {
+        user.Password = _passwordHasher.HashPassword(user.Password);
         _context.Users.Add(user);
         _context.SaveChanges();
         _context.Entry(user).Reference(i => i.Role).Load();
@@ -54,12 +58,32 @@ public class UserRepository : GenericRepository<User>, IUserRepository
 
     public override User Update(User user)
     {
+        user.Password = HandlePasswordUpdate(user);
+
         _context.Users.Update(user);
         _context.SaveChanges();
         _context.Entry(user).Reference(i => i.Role).Load();
+
         return user;
     }
-    
+
+    private string HandlePasswordUpdate(User user)
+    {
+        if (!string.IsNullOrEmpty(user.Password))
+        {
+            return _passwordHasher.HashPassword(user.Password);
+        }
+
+        var existingUserPassword = _context.Users
+            .AsNoTracking()
+            .Where(u => u.Id == user.Id)
+            .Select(u => u.Password)
+            .FirstOrDefault();
+
+        return existingUserPassword ?? throw new Exception("Existing user not found or missing password.");
+    }
+
+
     public User? GetUserByEmail(string email)
     {
         return _context.Users
@@ -75,6 +99,4 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             })
             .FirstOrDefault();
     }
-
-
 }
