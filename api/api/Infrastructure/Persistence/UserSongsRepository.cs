@@ -21,25 +21,18 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
     public PagedList<HistorySongsDto> GetHistorySongs(long userId, PaginationParameters paginationParameters)
     {
         var userSongsHistory = _context.UserSongs
-            .Where(us => us.UserId == userId) 
-            .OrderByDescending(us => us.TotalStreams) 
-            .AsQueryable();
-        
-        if (string.IsNullOrEmpty(paginationParameters.Sort))
-        {
-            userSongsHistory = userSongsHistory.OrderByDescending(us => us.LastPlayedAt);
-        }
-        
-        var userSongsHistoryDto = userSongsHistory.Select(i => new HistorySongsDto()
-        {
-            SongId = i.Song.Id,
-            Title = i.Song.Title,
-            Artist = i.Song.Artist.Name,
-            LastPlayedAt = i.LastPlayedAt.Value,
-        });
-        
+            .Where(us => us.UserId == userId)
+            .OrderByDescending(us => us.LastPlayedAt)
+            .Select(i => new HistorySongsDto
+            {
+                SongId = i.Song.Id,
+                Title = i.Song.Title,
+                Artist = i.Song.Artist.Name,
+                LastPlayedAt = i.LastPlayedAt.Value,
+            });
+    
         return PagedList<HistorySongsDto>.ToPagedList(
-            userSongsHistoryDto,
+            userSongsHistory,
             paginationParameters.PageNumber,
             paginationParameters.PageSize
         );
