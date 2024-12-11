@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  historyLoadingError: boolean = false; 
+  historyLoadingError: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -53,9 +53,10 @@ export class ProfileComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      repeatPassword: ['', Validators.required],
-      roleId: ['']
+      password: [''],
+      repeatPassword: [''],
+      roleId: [''],
+      roleName: ['']
     });
   }
 
@@ -85,9 +86,9 @@ export class ProfileComponent implements OnInit {
       name,
       lastName,
       email,
-      password,
+      password: password ? password : '',
       roleId: this.userProfile?.roleId,
-      roleName: this.userProfile?.roleName 
+      roleName: this.userProfile?.roleName
     };
   }
 
@@ -105,7 +106,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadUserProfile(): void {
-    this.profileService.getUserById().subscribe({
+    this.authService.getMe().subscribe({
       next: (userProfile) => {
         this.userProfile = userProfile;
         this.profileForm.patchValue({
@@ -113,8 +114,10 @@ export class ProfileComponent implements OnInit {
           name: userProfile.name,
           lastName: userProfile.lastName,
           email: userProfile.email,
-          password: userProfile.password,
-          repeatPassword: userProfile.password
+          password: '',
+          repeatPassword: '',
+          roleId: userProfile.roleId,
+          roleName: userProfile.roleName
         });
       },
       error: (err) => {
