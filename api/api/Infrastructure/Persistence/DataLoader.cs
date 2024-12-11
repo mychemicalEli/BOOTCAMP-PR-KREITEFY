@@ -152,12 +152,12 @@ public class DataLoader
         new User
         {
             Name = "Elizabeth", LastName = "Blanco", Email = "admin@example.com",
-            Password = passwordHasher.HashPassword("SecurePass123"), RoleId = 1
+            Password = passwordHasher.HashPassword("SecurePass-123"), RoleId = 1
         },
         new User
         {
             Name = "Ángel", LastName = "Hernández", Email = "user@example.com",
-            Password = passwordHasher.HashPassword("SecurePass123"), RoleId = 2
+            Password = passwordHasher.HashPassword("SecurePass-123"), RoleId = 2
         }
     };
 
