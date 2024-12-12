@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<app-forbidden *ngIf="!isLoggedIn"></app-forbidden>
+<div *ngIf="isLoggedIn" class="container-fluid">
     <form class="d-flex flex-wrap align-items-center gap-3 w-100" (ngSubmit)="searchByFilters()">
         <!-- Title -->
         <div class="form-floating flex-fill">
@@ -9,12 +10,12 @@
         <!-- Artist -->
         <div class="form-floating flex-fill">
             <select class="form-select" id="floatingArtist" name="artist" [(ngModel)]="artistFilter"
-            (change)="searchByFilters()">
-            <option value="" selected>Seleccione un artista</option>
-            <option *ngFor="let artist of artists" [value]="artist.name">
-                {{ artist.name }}
-            </option>
-        </select>
+                (change)="searchByFilters()">
+                <option value="" selected>Seleccione un artista</option>
+                <option *ngFor="let artist of artists" [value]="artist.name">
+                    {{ artist.name }}
+                </option>
+            </select>
             <label for="floatingArtist"><i class="fa-solid fa-user icon"></i>Artista</label>
         </div>
         <!-- Album -->

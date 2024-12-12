@@ -79,19 +79,6 @@ export class AuthService {
     return this.userSubject.asObservable();
   }
 
-  updateUser(user: any): Observable<UserDtoResponse> {
-    const token = this.getToken();
-    if (!token) throw new Error('No token found');
-
-    return this.http.put<UserDtoResponse>(`${this.apiUrl}/auth/me`, user, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      tap(updatedUser => {
-        this.userSubject.next(updatedUser);
-      })
-    );
-  }
-
   // Método para verificar si está ejecutándose en un entorno de navegador
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';

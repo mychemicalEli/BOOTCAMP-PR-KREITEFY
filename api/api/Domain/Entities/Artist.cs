@@ -7,5 +7,10 @@ namespace api.Domain.Entities;
 public class Artist
 {
     public long Id { get; set; }
-    [MinLength(1)] [MaxLength(100)] public required string Name { get; set; }
+
+    [Column(TypeName = "varchar(100)")]
+    [Required]
+    [MinLength(1)]
+    [MaxLength(100)]
+    public required string Name { get; set; }
 }

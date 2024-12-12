@@ -14,6 +14,7 @@ import { ForYouComponent } from './songs/for-you/for-you.component';
 import { MostPlayedComponent } from './songs/most-played/most-played.component';
 import { SongListComponent } from './songs/song-list/song-list.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ForbiddenComponent } from './shared/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
     ForYouComponent,
     MostPlayedComponent,
     SongListComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

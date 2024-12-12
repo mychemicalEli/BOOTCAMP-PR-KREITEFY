@@ -19,7 +19,6 @@ public class AlbumsController : GenericCrudController<AlbumDto>
         _logger = logger;
     }
 
-
     public override ActionResult<AlbumDto> Insert(AlbumDto dto)
     {
         try

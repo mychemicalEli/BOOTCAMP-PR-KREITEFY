@@ -1,5 +1,6 @@
 using api.Application.Services.Interfaces;
 using api.Domain.Entities;
+using api.Infrastructure.ExternalServices;
 
 namespace api.Infrastructure.Persistence;
 
@@ -145,17 +146,18 @@ public class DataLoader
 
    public void LoadUsers()
 {
+    var passwordHasher = new PasswordHasher();
     var users = new User[]
     {
         new User
         {
             Name = "Elizabeth", LastName = "Blanco", Email = "admin@example.com",
-            Password = "SecurePass123", RoleId = 1
+            Password = passwordHasher.HashPassword("SecurePass-123"), RoleId = 1
         },
         new User
         {
             Name = "Ángel", LastName = "Hernández", Email = "user@example.com",
-            Password = "SecurePass123", RoleId = 2
+            Password = passwordHasher.HashPassword("SecurePass-123"), RoleId = 2
         }
     };
 

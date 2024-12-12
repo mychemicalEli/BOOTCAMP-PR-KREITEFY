@@ -4,6 +4,7 @@ import { AuthService } from '../auth/services/auth.service';
 import { UserProfileDto } from './models/user.model';
 import { HistorySongsDto, PaginatedResponse } from './models/history.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator } from '../shared/validator/password.validator';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  data: any = null;
+
   userId: number | null = null;
   userProfile?: UserProfileDto;
   profileForm!: FormGroup;
@@ -23,7 +27,7 @@ export class ProfileComponent implements OnInit {
 
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  historyLoadingError: boolean = false; 
+  historyLoadingError: boolean = false;
 
   constructor(
     private profileService: ProfileService,
@@ -34,15 +38,22 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getMe().subscribe({
-      next: (user) => {
-        this.userId = user.id;
-        this.loadUserProfile();
-        this.getHistory();
-      },
-      error: (err) => {
-        console.error("Error al obtener el usuario loggeado", err);
-        this.errorMessage = "No se pudo cargar la información del usuario.";
+    this.authService.getLoggedInStatus().subscribe(status => {
+      this.isLoggedIn = status;
+      if (this.isLoggedIn) {
+        this.authService.getMe().subscribe({
+          next: (user) => {
+            this.userId = user.id;
+            this.loadUserProfile();
+            this.getHistory();
+          },
+          error: (err) => {
+            console.error("Error al obtener el usuario loggeado", err);
+            this.errorMessage = "No se pudo cargar la información del usuario.";
+          }
+        });
+      } else {
+        this.data = null;
       }
     });
   }
@@ -53,9 +64,10 @@ export class ProfileComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      repeatPassword: ['', Validators.required],
-      roleId: ['']
+      password: ['',[passwordValidator()]],
+      repeatPassword: [''],
+      roleId: [''],
+      roleName: ['']
     });
   }
 
@@ -85,9 +97,9 @@ export class ProfileComponent implements OnInit {
       name,
       lastName,
       email,
-      password,
+      password: password ? password : '',
       roleId: this.userProfile?.roleId,
-      roleName: this.userProfile?.roleName 
+      roleName: this.userProfile?.roleName
     };
   }
 
@@ -105,7 +117,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadUserProfile(): void {
-    this.profileService.getUserById().subscribe({
+    this.authService.getMe().subscribe({
       next: (userProfile) => {
         this.userProfile = userProfile;
         this.profileForm.patchValue({
@@ -113,8 +125,10 @@ export class ProfileComponent implements OnInit {
           name: userProfile.name,
           lastName: userProfile.lastName,
           email: userProfile.email,
-          password: userProfile.password,
-          repeatPassword: userProfile.password
+          password: '',
+          repeatPassword: '',
+          roleId: userProfile.roleId,
+          roleName: userProfile.roleName
         });
       },
       error: (err) => {

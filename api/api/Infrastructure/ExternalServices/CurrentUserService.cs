@@ -3,7 +3,7 @@ using api.Application.Dtos;
 using api.Application.Services.Interfaces;
 using api.Domain.Persistence;
 
-namespace api.Infrastructure.Services
+namespace api.Infrastructure.ExternalServices
 {
     public class CurrentUserService : ICurrentUserService
     {
@@ -15,7 +15,7 @@ namespace api.Infrastructure.Services
             _httpContextAccessor = httpContextAccessor;
             _userRepository = userRepository;
         }
-        
+
         public UserDtoResponse GetUserFromToken()
         {
             var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -23,12 +23,18 @@ namespace api.Infrastructure.Services
                 return null;
 
             var user = _userRepository.GetById(userId);
-            return user == null ? null : new UserDtoResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
+            return user == null
+                ? null
+                : new UserDtoResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    RoleId = user.RoleId,
+                    RoleName = user.Role.Name
+                };
         }
     }
 }

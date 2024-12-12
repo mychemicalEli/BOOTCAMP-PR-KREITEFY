@@ -4,8 +4,6 @@ using api.Domain.Entities;
 using api.Domain.Persistence;
 using AutoMapper;
 using framework.Application.Services;
-using System.Linq;
-using System.Collections.Generic;
 using framework.Application;
 
 namespace api.Application.Services.Implementations

@@ -5,4 +5,5 @@ namespace api.Domain.Persistence;
 
 public interface IRoleRepository : IGenericRepository<Role>
 {
+    bool Exists(long roleId);
 }

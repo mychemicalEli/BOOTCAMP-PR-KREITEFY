@@ -31,23 +31,8 @@ export class ProfileService {
     );
   }
 
-  public getUserById(): Observable<UserProfileDto> {
-    return this.authService.getMe().pipe(
-      switchMap(user => {
-        const userId = user.id;
-        const urlEndPoint = `${this.apiUrl}/users/${userId}`;
-        return this.http.get<UserProfileDto>(urlEndPoint, { headers: this.getAuthHeaders() });
-      })
-    );
-  }
-
   public updateUserProfile(updatedProfile: UserProfileDto): Observable<UserProfileDto> {
-    return this.authService.getMe().pipe(
-      switchMap(user => {
-        const userId = user.id;
-        const urlEndPoint = `${this.apiUrl}/users`;
-        return this.http.put<UserProfileDto>(urlEndPoint, updatedProfile, { headers: this.getAuthHeaders() });
-      })
-    );
+    const urlEndPoint = `${this.apiUrl}/users`;
+    return this.http.put<UserProfileDto>(urlEndPoint, updatedProfile, { headers: this.getAuthHeaders() })
   }
 }

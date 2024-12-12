@@ -59,7 +59,18 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         _context.Entry(user).Reference(i => i.Role).Load();
         return user;
     }
-    
+
+    public string HandlePasswordUpdate(long userId)
+    {
+        var existingUserPassword = _context.Users
+            .AsNoTracking()
+            .Where(u => u.Id == userId)
+            .Select(u => u.Password)
+            .FirstOrDefault();
+
+        return existingUserPassword ?? throw new Exception("Existing user not found or missing password.");
+    }
+
     public User? GetUserByEmail(string email)
     {
         return _context.Users
@@ -75,6 +86,4 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             })
             .FirstOrDefault();
     }
-
-
 }

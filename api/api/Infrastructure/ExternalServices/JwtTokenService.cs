@@ -6,8 +6,7 @@ using api.Application.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using JwtSecurityToken = System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
 
-namespace api.Infrastructure.Services;
-
+namespace api.Infrastructure.ExternalServices;
 public class JwtTokenService : IJwtTokenService
 {
     private readonly IConfiguration _configuration;
@@ -16,7 +15,6 @@ public class JwtTokenService : IJwtTokenService
     {
         _configuration = configuration;
     }
-
     public string GenerateToken(UserDto user)
     {
         var claims = new[]
@@ -25,7 +23,6 @@ public class JwtTokenService : IJwtTokenService
             new Claim(ClaimTypes.Email, (user.Email)),
             new Claim(ClaimTypes.Name, Uri.EscapeDataString(user.Name)),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -38,7 +35,6 @@ public class JwtTokenService : IJwtTokenService
             expires: DateTime.Now.AddHours(1),
             signingCredentials: credentials
         );
-
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

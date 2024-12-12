@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
-
-
 public class UserSongsController:ControllerBase
 {
     private readonly IUserSongsService _userSongsService;
@@ -75,5 +73,4 @@ public class UserSongsController:ControllerBase
             return BadRequest();
         }
     }
-    
 }

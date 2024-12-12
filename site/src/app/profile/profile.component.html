@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<app-forbidden *ngIf="!isLoggedIn"></app-forbidden>
+<div *ngIf="isLoggedIn" class="container-fluid">
     <div class="profile-container">
         <!-- Contenedor de "Mi perfil" -->
         <div class="profile-section">
@@ -62,13 +63,10 @@
                         <input type="password" id="password" formControlName="password" class="form-control"
                             placeholder="Ingrese su contraseña" />
                         <label for="password" class="form-label">Cambia tu contraseña</label>
-                        <div *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.invalid"
-                            class="text-danger">
-                            <small *ngIf="profileForm.get('password')?.errors?.['required']">La contraseña es
-                                obligatoria.</small>
-                            <small *ngIf="profileForm.get('password')?.errors?.['minlength']">Debe tener al menos 8
-                                caracteres.</small>
-                        </div>
+                        <small *ngIf="profileForm.get('password')?.errors?.['passwordStrength']" class="text-danger">
+                            La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, un número y
+                            un carácter especial.
+                        </small>
                     </div>
 
                     <div class="form-floating mb-3">

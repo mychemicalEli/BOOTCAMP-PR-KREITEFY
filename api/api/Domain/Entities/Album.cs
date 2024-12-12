@@ -7,6 +7,12 @@ namespace api.Domain.Entities;
 public class Album
 {
     public long Id { get; set; }
-    [MaxLength(100)] [MinLength(1)] public required string Title { get; set; }
-    public required byte[] Cover { get; set; }
+
+    [Column(TypeName = "varchar(100)")]
+    [Required]
+    [MaxLength(100)]
+    [MinLength(1)]
+    public required string Title { get; set; }
+
+    [Required] public required byte[] Cover { get; set; }
 }

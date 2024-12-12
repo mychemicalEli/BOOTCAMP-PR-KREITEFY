@@ -39,7 +39,7 @@ public class RatingService : GenericService<Rating, RatingDto>, IRatingService
         UpdateSongMediaRating(rating.SongId);
     }
 
-    public void UpdateSongMediaRating(long songId)
+    private void UpdateSongMediaRating(long songId)
     {
         var song = _songRepository.GetById(songId);
         

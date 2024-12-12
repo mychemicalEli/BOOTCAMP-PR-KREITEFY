@@ -64,8 +64,10 @@
                                 class="text-error">
                                 <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es
                                     obligatoria.</small>
-                                <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Debe tener al menos 8
-                                    caracteres.</small>
+                                <small *ngIf="registerForm.get('password')?.errors?.['passwordStrength']">
+                                    La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, un número y
+                                    un carácter especial.
+                                </small>
                             </div>
                         </div>
 
