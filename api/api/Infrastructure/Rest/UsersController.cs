@@ -26,9 +26,36 @@ public class UsersController : GenericCrudController<UserDto>
 
     [HttpGet]
     [Produces("application/json")]
-    [Authorize]
     public ActionResult<UserDto> GetAllUsersWithRoleName()
     {
         return Ok(_service.GetAllUsersWithRoleName());
+    }
+
+    [HttpPost]
+    public override ActionResult<UserDto> Insert(UserDto userDto)
+    {
+        try
+        {
+            var response = _service.Insert(userDto);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpPut]
+    public override ActionResult<UserDto> Update(UserDto userDto)
+    {
+        try
+        {
+            var response = _service.Update(userDto);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

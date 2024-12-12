@@ -26,9 +26,7 @@ public class AuthService : IAuthService
         {
             throw new Exception("Email is already in use.");
         }
-
-        var hashedPassword = _passwordHasher.HashPassword(userDto.Password);
-        userDto.Password = hashedPassword;
+        
         var newUser = _userService.RegisterUser(userDto);
         var token = _tokenService.GenerateToken(newUser);
 
