@@ -5,7 +5,10 @@ namespace api.Application.Services.Interfaces;
 
 public interface IUserService : IGenericService<UserDto>
 {
-    List<UserDto> GetAllUsersWithRoleName();
-    UserDto RegisterUser(UserDto userDto);
-    UserDto GetUserByEmail(string email);
+    Task<List<UserDto>> GetAllUsersWithRoleNameAsync();
+    Task<UserDto> RegisterUserAsync(UserDto userDto);
+    Task<UserDto> GetUserByEmailAsync(string email);
+    Task<UserDto> InsertAsync(UserDto userDto);
+    Task<UserDto> UpdateAsync(UserDto userDto);
+    Task<UserDto> GetByIdAsync(long id);
 }

@@ -19,11 +19,11 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     [Produces("application/json")]
     [AllowAnonymous]
-    public ActionResult<AuthResponseDto> Register([FromBody] UserDto userDto)
+    public async Task<ActionResult<AuthResponseDto>> Register([FromBody] UserDto userDto)
     {
         try
         {
-            var response = _authService.Register(userDto);
+            var response = await _authService.RegisterAsync(userDto);
             return Ok(response);
         }
         catch (Exception ex)
@@ -35,11 +35,11 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     [Produces("application/json")]
     [AllowAnonymous]
-    public ActionResult<AuthResponseDto> Login([FromBody] LoginDto loginDto)
+    public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
     {
         try
         {
-            var response = _authService.Login(loginDto);
+            var response = await _authService.LoginAsync(loginDto);
             return Ok(response);
         }
         catch (UnauthorizedAccessException)
@@ -55,11 +55,11 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     [Produces("application/json")]
     [Authorize]
-    public ActionResult<UserDtoResponse> GetMe()
+    public async Task<ActionResult<UserDtoResponse>> GetMe()
     {
         try
         {
-            var user = _authService.GetMe();
+            var user = await _authService.GetMe(); 
             return Ok(user);
         }
         catch (UnauthorizedAccessException ex)
@@ -67,4 +67,5 @@ public class AuthController : ControllerBase
             return Unauthorized(ex.Message);
         }
     }
+
 }

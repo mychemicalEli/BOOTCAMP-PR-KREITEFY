@@ -4,7 +4,7 @@ namespace api.Application.Services.Interfaces;
 
 public interface IAuthService
 {
-    AuthResponseDto Register(UserDto userDto);
-    AuthResponseDto Login(LoginDto loginDto);
-    UserDtoResponse GetMe();
+    Task<AuthResponseDto> RegisterAsync(UserDto userDto);
+    Task<AuthResponseDto> LoginAsync(LoginDto loginDto);
+    Task<UserDtoResponse> GetMe();
 }

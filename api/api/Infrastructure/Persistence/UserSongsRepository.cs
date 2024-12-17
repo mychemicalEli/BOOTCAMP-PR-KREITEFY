@@ -3,6 +3,7 @@ using api.Domain.Entities;
 using api.Domain.Persistence;
 using framework.Application;
 using framework.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence;
 
@@ -15,7 +16,7 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
         _context = context;
     }
 
-    public PagedList<HistorySongsDto> GetHistorySongs(long userId, PaginationParameters paginationParameters)
+    public async Task<PagedList<HistorySongsDto>> GetHistorySongsAsync(long userId, PaginationParameters paginationParameters)
     {
         var userSongsHistory = _context.UserSongs
             .Where(us => us.UserId == userId)
@@ -35,17 +36,15 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
         );
     }
 
-
-    public UserSongs? GetByUserIdAndSongId(long userId, long songId)
+    public async Task<UserSongs?> GetByUserIdAndSongIdAsync(long userId, long songId)
     {
-        return _context.Set<UserSongs>()
-            .SingleOrDefault(us => us.UserId == userId && us.SongId == songId);
+        return await _context.Set<UserSongs>()
+            .SingleOrDefaultAsync(us => us.UserId == userId && us.SongId == songId);
     }
 
-    public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
+    public async Task<IEnumerable<SongsForYouDto>> GetSongsForYouAsync(long userId)
     {
-        // 1. Obtener los géneros más escuchados por el usuario
-        var topGenres = _context.UserSongs
+        var topGenres = await _context.UserSongs
             .Where(us => us.UserId == userId)
             .GroupBy(us => us.Song.Genre.Name)
             .Select(g => new
@@ -56,10 +55,9 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
             .OrderByDescending(g => g.TotalStreams)
             .Take(2)
             .Select(g => g.GenreName)
-            .ToList();
+            .ToListAsync();
 
-        // 2. Filtrar canciones por las más escuchadas con calificación >= 3
-        var filteredSongs = _context.UserSongs
+        var filteredSongs = await _context.UserSongs
             .Where(us => us.UserId == userId && topGenres.Contains(us.Song.Genre.Name) && us.Song.MediaRating >= 3)
             .OrderByDescending(us => us.Song.Streams)
             .Take(5)
@@ -73,8 +71,36 @@ public class UserSongsRepository : GenericRepository<UserSongs>, IUserSongsRepos
                 Streams = us.Song.Streams,
                 MediaRating = us.Song.MediaRating
             })
-            .ToList();
+            .ToListAsync();
 
         return filteredSongs;
     }
+    
+    public async Task InsertAsync(UserSongs userSong)
+    {
+        if (userSong == null)
+        {
+            throw new ArgumentNullException(nameof(userSong));
+        }
+        await _context.Set<UserSongs>().AddAsync(userSong);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task UpdateAsync(UserSongs userSong)
+    {
+        if (userSong == null)
+        {
+            throw new ArgumentNullException(nameof(userSong));
+        }
+        var existingUserSong = await _context.Set<UserSongs>()
+            .SingleOrDefaultAsync(us => us.Id == userSong.Id);
+
+        if (existingUserSong == null)
+        {
+            throw new InvalidOperationException("UserSong not found");
+        }
+        _context.Entry(existingUserSong).CurrentValues.SetValues(userSong);
+        await _context.SaveChangesAsync();
+    }
+
 }
