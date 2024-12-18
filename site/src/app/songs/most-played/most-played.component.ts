@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { MostPlayedSongsDto } from '../models/most-played.model';
 import { SongService } from '../services/song.service';
 
@@ -9,6 +9,7 @@ import { SongService } from '../services/song.service';
 })
 export class MostPlayedComponent {
   @Input() genreId: number | undefined = undefined;
+  @Output() loaded = new EventEmitter<boolean>(); 
   mostPlayedSongs: MostPlayedSongsDto[] = [];
   errorMessage: string | null = null;
 
@@ -26,10 +27,13 @@ export class MostPlayedComponent {
       next: (response: MostPlayedSongsDto[]) => {
         this.mostPlayedSongs = response;
         this.errorMessage = null;
+        this.loaded.emit(true);
+        console.log('Most played songs loaded');
       },
       error: (err) => {
         console.error('Error obteniendo canciones con más reproducciones.', err);
         this.errorMessage = 'No se pudieron cargar las canciones con más reproducciones.';
+        this.loaded.emit(true);
       }
     });
   }

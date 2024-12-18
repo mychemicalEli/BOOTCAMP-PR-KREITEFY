@@ -1,6 +1,7 @@
 <app-forbidden *ngIf="!isLoggedIn"></app-forbidden>
-<div *ngIf="isLoggedIn" class="container-fluid">
-    <form class="d-flex flex-wrap align-items-center gap-3 w-100" (ngSubmit)="searchByFilters()">
+<div  class="container-fluid">
+    <app-spinner *ngIf="loading"></app-spinner>
+    <form class="d-flex flex-wrap align-items-center gap-3 w-100" (ngSubmit)="searchByFilters()"  *ngIf="!loading && isLoggedIn">
         <!-- Title -->
         <div class="form-floating flex-fill">
             <input type="text" class="form-control" id="floatingTitle" name="title" placeholder="Título"
