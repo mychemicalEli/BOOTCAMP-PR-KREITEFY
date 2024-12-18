@@ -9,20 +9,24 @@ import { SongService } from '../songs/services/song.service';
 })
 export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isLoading: boolean = true;
   data: any = null;
   selectedGenre: number | undefined = undefined;
   genres: { id: number; name: string }[] = [];
+  loadedCount: number = 0;
+  loadingCount: number = 3;
 
   constructor(private authService: AuthService, private songService: SongService) { }
 
   ngOnInit(): void {
-    this.authService.getLoggedInStatus().subscribe(status => {
+    this.authService.getLoggedInStatus().subscribe((status) => {
       this.isLoggedIn = status;
       if (this.isLoggedIn) {
         this.fetchUserData();
         this.fetchGenres();
       } else {
         this.data = null;
+        this.isLoading = false;
       }
     });
   }
@@ -45,9 +49,19 @@ export class HomeComponent implements OnInit {
         this.genres = response;
       },
       error: (err) => {
-        console.error('Error al obtener géneros', err);
+        console.error('Error al obtener géneros:', err);
       }
     });
+  }
+
+  onComponentLoaded(componentName: string): void {
+    this.loadedCount++;
+
+    if (this.loadedCount === this.loadingCount) {
+      this.isLoading = false;
+    } else {
+      console.log(`Faltan componentes por cargar: ${this.loadingCount - this.loadedCount}`);
+    }
   }
 
   onGenreChange(event: Event): void {

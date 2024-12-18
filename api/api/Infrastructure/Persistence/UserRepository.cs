@@ -1,7 +1,6 @@
 using api.Application.Dtos;
 using api.Domain.Entities;
 using api.Domain.Persistence;
-using framework.Domain.Persistence;
 using framework.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +14,10 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         _context = context;
     }
-
-    public List<UserDto> GetAllUsersWithRoleName()
+    
+    public async Task<List<UserDto>> GetAllUsersWithRoleNameAsync()
     {
-        return _context.Users
+        return await _context.Users
             .Select(u => new UserDto
             {
                 Id = u.Id,
@@ -29,51 +28,47 @@ public class UserRepository : GenericRepository<User>, IUserRepository
                 RoleId = u.RoleId,
                 RoleName = u.Role.Name
             })
-            .ToList();
+            .ToListAsync();
     }
-
-
-    public override User GetById(long id)
+    
+    public async Task<User?> GetByIdAsync(long id)
     {
-        var user = _context.Users.Include(i => i.Role).SingleOrDefault(i => i.Id == id);
-        if (user == null)
-        {
-            throw new ElementNotFoundException();
-        }
+        return await _context.Users
+            .Include(i => i.Role) 
+            .SingleOrDefaultAsync(i => i.Id == id); 
+    }
+    
 
+    public async Task<User> InsertAsync(User user)
+    {
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+        await _context.Entry(user).Reference(i => i.Role).LoadAsync();
         return user;
     }
-
-    public override User Insert(User user)
-    {
-        _context.Users.Add(user);
-        _context.SaveChanges();
-        _context.Entry(user).Reference(i => i.Role).Load();
-        return user;
-    }
-
-    public override User Update(User user)
+    
+    public async Task<User> UpdateAsync(User user)
     {
         _context.Users.Update(user);
-        _context.SaveChanges();
-        _context.Entry(user).Reference(i => i.Role).Load();
+        await _context.SaveChangesAsync();
+        await _context.Entry(user).Reference(i => i.Role).LoadAsync();
         return user;
     }
-
-    public string HandlePasswordUpdate(long userId)
+    
+    public async Task<string> HandlePasswordUpdateAsync(long userId)
     {
-        var existingUserPassword = _context.Users
+        var existingUserPassword = await _context.Users
             .AsNoTracking()
             .Where(u => u.Id == userId)
             .Select(u => u.Password)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
 
         return existingUserPassword ?? throw new Exception("Existing user not found or missing password.");
     }
-
-    public User? GetUserByEmail(string email)
+    
+    public async Task<User?> GetUserByEmailAsync(string email)
     {
-        return _context.Users
+        return await _context.Users
             .Where(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase))
             .Select(u => new User
             {
@@ -82,8 +77,8 @@ public class UserRepository : GenericRepository<User>, IUserRepository
                 LastName = u.LastName,
                 Email = u.Email,
                 Password = u.Password,
-                RoleId = u.RoleId,
+                RoleId = u.RoleId
             })
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
     }
 }

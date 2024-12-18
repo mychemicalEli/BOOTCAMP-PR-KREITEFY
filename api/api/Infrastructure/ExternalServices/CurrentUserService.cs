@@ -16,13 +16,13 @@ namespace api.Infrastructure.ExternalServices
             _userRepository = userRepository;
         }
 
-        public UserDtoResponse GetUserFromToken()
+        public async Task<UserDtoResponse> GetUserFromTokenAsync()
         {
             var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !long.TryParse(userIdClaim, out long userId))
                 return null;
 
-            var user = _userRepository.GetById(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
             return user == null
                 ? null
                 : new UserDtoResponse
