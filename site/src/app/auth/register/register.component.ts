@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { RegisterRequest } from '../models/register.request.model';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../shared/validator/password.validator';
+import { LoadingService } from '../../shared/spinner/service/loading.service';
 
 @Component({
   selector: 'app-register',
@@ -13,13 +14,21 @@ import { passwordValidator } from '../../shared/validator/password.validator';
 export class RegisterComponent {
   registerForm!: FormGroup;
   errorMessage: string | null = null;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private route: Router
+    private route: Router,
+    private loadingService: LoadingService
   ) {
     this.initializeForm();
+  }
+
+  ngOnInit(): void {
+    this.loadingService.loading$.subscribe((isLoading) => {
+      this.loading = isLoading;
+    });
   }
 
   private initializeForm(): void {
@@ -36,6 +45,7 @@ export class RegisterComponent {
     this.markFormAsTouched();
     if (this.registerForm.valid && this.passwordsMatch) {
       this.saveUser(this.createFromForm());
+      this.loadingService.show();
     } else {
       console.error('Formulario inválido');
     }
@@ -70,6 +80,7 @@ export class RegisterComponent {
       this.errorMessage = error.error?.message || "Ya existe un usuario con este email. ¡Prueba con otro!";
     } else {
       this.errorMessage = "Ocurrió un error inesperado. Inténtalo de nuevo.";
+      this.loadingService.hide();
     }
   }
 
@@ -77,6 +88,7 @@ export class RegisterComponent {
     this.authService.register(userToSave).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
+        this.loadingService.hide();
         this.route.navigate(['/']);
       },
       error: (err) => {

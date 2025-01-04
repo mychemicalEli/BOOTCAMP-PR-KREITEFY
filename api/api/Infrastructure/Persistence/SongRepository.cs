@@ -21,13 +21,14 @@ namespace api.Infrastructure.Persistence
             _specificationParser = specificationParser;
         }
 
-        public override Song GetById(long id)
+        public async Task<Song> GetByIdAsync(long id)
         {
-            var song = _context.Songs
+            var song = await _context.Songs
                 .Include(i => i.Album)
                 .Include(i => i.Artist)
                 .Include(i => i.Genre)
-                .SingleOrDefault(i => i.Id == id);
+                .SingleOrDefaultAsync(i => i.Id == id);
+
             if (song == null)
             {
                 throw new ElementNotFoundException();
@@ -36,7 +37,8 @@ namespace api.Infrastructure.Persistence
             return song;
         }
 
-        public PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters)
+        public async Task<PagedList<SongDto>> GetSongsByCriteriaPagedAsync(string? filter,
+            PaginationParameters paginationParameters)
         {
             var songs = _context.Songs.AsQueryable();
             if (!string.IsNullOrEmpty(filter))
@@ -67,35 +69,40 @@ namespace api.Infrastructure.Persistence
                 AddedAt = i.AddedAt
             });
 
-            return PagedList<SongDto>.ToPagedList(songsDto, paginationParameters.PageNumber,
+            var pagedSongs = PagedList<SongDto>.ToPagedList(songsDto, paginationParameters.PageNumber,
                 paginationParameters.PageSize);
+            return pagedSongs;
         }
 
 
-        public override Song Insert(Song song)
+        public async Task<Song> InsertAsync(Song song)
         {
-            _context.Songs.Add(song);
-            _context.SaveChanges();
-            _context.Entry(song).Reference(i => i.Genre).Load();
-            _context.Entry(song).Reference(i => i.Album).Load();
-            _context.Entry(song).Reference(i => i.Artist).Load();
+            await _context.Songs.AddAsync(song);
+            await _context.SaveChangesAsync();
+            await _context.Entry(song).Reference(i => i.Genre).LoadAsync();
+            await _context.Entry(song).Reference(i => i.Album).LoadAsync();
+            await _context.Entry(song).Reference(i => i.Artist).LoadAsync();
             return song;
         }
 
-        public override Song Update(Song song)
+
+        public async Task<Song> UpdateAsync(Song song)
         {
+            if (song == null)
+            {
+                throw new ArgumentNullException(nameof(song));
+            }
             _context.Songs.Update(song);
-            _context.SaveChanges();
-            _context.Entry(song).Reference(i => i.Genre).Load();
-            _context.Entry(song).Reference(i => i.Album).Load();
-            _context.Entry(song).Reference(i => i.Artist).Load();
+            await _context.SaveChangesAsync();
+            await _context.Entry(song).Reference(i => i.Genre).LoadAsync();
+            await _context.Entry(song).Reference(i => i.Album).LoadAsync();
+            await _context.Entry(song).Reference(i => i.Artist).LoadAsync();
             return song;
         }
-
-
-        public IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5, long? genreId = null)
+        
+        public async Task<IEnumerable<LatestSongsResponse>> GetLatestSongsAsync(int count = 5, long? genreId = null)
         {
-            var songs = _context.Songs
+            var songs = await _context.Songs
                 .Where(song => !genreId.HasValue || song.GenreId == genreId)
                 .OrderByDescending(song => song.AddedAt)
                 .Take(count)
@@ -106,14 +113,15 @@ namespace api.Infrastructure.Persistence
                     AlbumCover = Convert.ToBase64String(i.Album.Cover),
                     ArtistName = i.Artist.Name,
                     AddedAt = i.AddedAt
-                });
+                })
+                .ToListAsync();
 
             return songs;
         }
 
-        public IEnumerable<MostPlayedSongsDto> GetMostPlayedSongs(int count = 5, long? genreId = null)
+        public async Task<IEnumerable<MostPlayedSongsDto>> GetMostPlayedSongsAsync(int count = 5, long? genreId = null)
         {
-            var songs = _context.Songs
+            var songs = await _context.Songs
                 .Where(song => !genreId.HasValue || song.GenreId == genreId)
                 .OrderByDescending(song => song.Streams)
                 .Take(count)
@@ -124,10 +132,10 @@ namespace api.Infrastructure.Persistence
                     AlbumCover = Convert.ToBase64String(i.Album.Cover),
                     ArtistName = i.Artist.Name,
                     Streams = i.Streams
-                });
+                })
+                .ToListAsync();
 
             return songs;
         }
-
     }
 }

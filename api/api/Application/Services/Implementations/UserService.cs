@@ -7,6 +7,7 @@ using api.Domain.Persistence;
 using api.Domain.Validators;
 using AutoMapper;
 using framework.Application.Services;
+using framework.Domain.Persistence;
 
 namespace api.Application.Services.Implementations;
 
@@ -25,23 +26,35 @@ public class UserService : GenericService<User, UserDto>, IUserService
         _roleRepository = roleRepository;
     }
 
-    public List<UserDto> GetAllUsersWithRoleName()
+    public async Task<List<UserDto>> GetAllUsersWithRoleNameAsync()
     {
-        return _userRepository.GetAllUsersWithRoleName();
+        return await _userRepository.GetAllUsersWithRoleNameAsync();
     }
 
-    public UserDto RegisterUser(UserDto userDto)
+    public async Task<UserDto> RegisterUserAsync(UserDto userDto)
     {
         ValidateEmailAndPassword(userDto);
         ValidateRole(userDto);
 
         userDto.Password = _passwordHasher.HashPassword(userDto.Password);
         var user = _mapper.Map<User>(userDto);
-        var newUser = _userRepository.Insert(user);
+        var newUser = await _userRepository.InsertAsync(user);
         return _mapper.Map<UserDto>(newUser);
     }
 
-    public override UserDto Update(UserDto userDto)
+    public async Task<UserDto> GetByIdAsync(long id)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+
+        if (user == null)
+        {
+            throw new ElementNotFoundException("User not found."); 
+        }
+
+        return _mapper.Map<UserDto>(user);
+    }
+    
+    public async Task<UserDto> UpdateAsync(UserDto userDto)
     {
        
         ValidateRole(userDto);
@@ -53,17 +66,16 @@ public class UserService : GenericService<User, UserDto>, IUserService
         }
         else
         {
-            // Si no se pasa una nueva contraseña, mantener la contraseña existente
-            var existingPassword = _userRepository.HandlePasswordUpdate(userDto.Id);
+            var existingPassword = await _userRepository.HandlePasswordUpdateAsync(userDto.Id);
             userDto.Password = existingPassword;
         }
         
         var user = _mapper.Map<User>(userDto);
-        var updatedUser = _userRepository.Update(user);
+        var updatedUser = await _userRepository.UpdateAsync(user);
         return _mapper.Map<UserDto>(updatedUser);
     }
 
-    public override UserDto Insert(UserDto userDto)
+    public async Task<UserDto> InsertAsync(UserDto userDto)
     {
         ValidateEmailAndPassword(userDto);
         ValidateRole(userDto);
@@ -74,15 +86,17 @@ public class UserService : GenericService<User, UserDto>, IUserService
         }
 
         var user = _mapper.Map<User>(userDto);
-        var newUser = _userRepository.Insert(user);
+        var newUser = await _userRepository.InsertAsync(user); 
         return _mapper.Map<UserDto>(newUser);
     }
 
-    public UserDto GetUserByEmail(string email)
+
+    public async Task<UserDto> GetUserByEmailAsync(string email)
     {
-        var user = _userRepository.GetUserByEmail(email);
+        var user = await _userRepository.GetUserByEmailAsync(email);
         return _mapper.Map<UserDto>(user);
     }
+
 
     private void ValidateEmailAndPassword(UserDto userDto)
     {
@@ -96,10 +110,10 @@ public class UserService : GenericService<User, UserDto>, IUserService
             throw new InvalidEmailOrPasswordException("The password does not meet the security requirements.");
         }
     }
-
-    private void ValidateRole(UserDto userDto)
+    
+    private async Task ValidateRole(UserDto userDto)
     {
-        if (!_roleRepository.Exists(userDto.RoleId))
+        if (!await _roleRepository.ExistsAsync(userDto.RoleId))
         {
             throw new InvalidRoleException("Invalid role ID.");
         }

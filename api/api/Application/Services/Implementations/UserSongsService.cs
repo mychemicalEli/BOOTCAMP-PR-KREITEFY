@@ -23,9 +23,9 @@ namespace api.Application.Services.Implementations
             _dateHumanizer = dateHumanizer;
         }
 
-        public void IncrementStreams(long userId, long songId)
+        public async Task IncrementStreamsAsync(long userId, long songId)
         {
-            var song = _songRepository.GetById(songId);
+            var song = await _songRepository.GetByIdAsync(songId);
 
             if (song == null)
             {
@@ -33,14 +33,14 @@ namespace api.Application.Services.Implementations
             }
 
             song.Streams += 1;
-            _songRepository.Update(song);
+            await _songRepository.UpdateAsync(song);
 
-            var userSong = _userSongsRepository.GetByUserIdAndSongId(userId, songId);
+            var userSong = await _userSongsRepository.GetByUserIdAndSongIdAsync(userId, songId);
             if (userSong != null)
             {
                 userSong.TotalStreams += 1;
                 userSong.LastPlayedAt = DateTime.Now;
-                _userSongsRepository.Update(userSong);
+                await _userSongsRepository.UpdateAsync(userSong);
             }
             else
             {
@@ -51,19 +51,19 @@ namespace api.Application.Services.Implementations
                     TotalStreams = 1,
                     LastPlayedAt = DateTime.Now
                 };
-                _userSongsRepository.Insert(newUserSong);
+                await _userSongsRepository.InsertAsync(newUserSong);
             }
         }
 
-        public IEnumerable<SongsForYouDto> GetSongsForYou(long userId)
+        public async Task<IEnumerable<SongsForYouDto>> GetSongsForYouAsync(long userId)
         {
-            return _userSongsRepository.GetSongsForYou(userId);
+            return await _userSongsRepository.GetSongsForYouAsync(userId);
         }
-        
-        public PagedList<HistorySongsDto> GetHistorySongs(long userId, PaginationParameters paginationParameters)
+
+        public async Task<PagedList<HistorySongsDto>> GetHistorySongsAsync(long userId, PaginationParameters paginationParameters)
         {
-            var userSongsHistory = _userSongsRepository.GetHistorySongs(userId, paginationParameters);
-            
+            var userSongsHistory = await _userSongsRepository.GetHistorySongsAsync(userId, paginationParameters);
+
             foreach (var song in userSongsHistory)
             {
                 song.HumanizedPlayedAt = _dateHumanizer.HumanizeDate(song.LastPlayedAt);
@@ -71,6 +71,5 @@ namespace api.Application.Services.Implementations
 
             return userSongsHistory;
         }
-
     }
 }

@@ -4,6 +4,7 @@ import { SongService } from '../services/song.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import { UserDtoResponse } from '../../auth/models/userdto.response';
+import { LoadingService } from '../../shared/spinner/service/loading.service';
 
 @Component({
   selector: 'app-detail',
@@ -13,6 +14,7 @@ import { UserDtoResponse } from '../../auth/models/userdto.response';
 export class DetailComponent implements OnInit {
   isLoggedIn: boolean = false;
   data: any = null;
+  loading: boolean = false;
 
   songId?: number;
   song?: SongDetailDto;
@@ -22,9 +24,13 @@ export class DetailComponent implements OnInit {
   constructor(
     private songsService: SongService,
     private route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private loadingService: LoadingService) { }
 
   ngOnInit(): void {
+    this.loadingService.loading$.subscribe((isLoading) => {
+      this.loading = isLoading;
+    });
     this.authService.getLoggedInStatus().subscribe(status => {
       this.isLoggedIn = status;
       if (this.isLoggedIn) {
@@ -49,13 +55,16 @@ export class DetailComponent implements OnInit {
   }
 
   private getSongById(songId: number) {
+    this.loadingService.show();
     this.songsService.getSongById(songId).subscribe({
       next: (songRequest) => {
         this.song = songRequest;
+        this.loadingService.hide();
       },
       error: (err) => {
         console.error('Error obteniendo el detalle de la canción', err);
         this.errorMessage = 'No se pudo cargar el detalle de esta canción. Por favor, inténtelo de nuevo.';
+        this.loadingService.hide();
       }
     });
   }

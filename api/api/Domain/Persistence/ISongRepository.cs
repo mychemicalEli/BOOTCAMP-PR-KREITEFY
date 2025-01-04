@@ -7,7 +7,10 @@ namespace api.Domain.Persistence;
 
 public interface ISongRepository : IGenericRepository<Song>
 {
-    PagedList<SongDto> GetSongsByCriteriaPaged(string? filter, PaginationParameters paginationParameters);
-    IEnumerable<LatestSongsResponse> GetLatestSongs(int count = 5, long? genreId = null);
-    IEnumerable<MostPlayedSongsDto> GetMostPlayedSongs(int count = 5, long? genreId = null);
+    Task<Song> GetByIdAsync(long id);
+    Task<Song> UpdateAsync(Song song);
+    Task<Song> InsertAsync(Song song);
+    Task<PagedList<SongDto>> GetSongsByCriteriaPagedAsync(string? filter, PaginationParameters paginationParameters);
+    Task<IEnumerable<LatestSongsResponse>> GetLatestSongsAsync(int count = 5, long? genreId = null);
+    Task<IEnumerable<MostPlayedSongsDto>> GetMostPlayedSongsAsync(int count = 5, long? genreId = null);
 }

@@ -6,7 +6,7 @@ namespace api.Application.Services.Interfaces;
 
 public interface IUserSongsService: IGenericService<UserSongsDto>
 {
-    void IncrementStreams(long userId, long songId);
-    IEnumerable<SongsForYouDto> GetSongsForYou(long userId);
-    PagedList<HistorySongsDto> GetHistorySongs(long userId, PaginationParameters paginationParameters);
+    Task IncrementStreamsAsync(long userId, long songId);
+    Task<IEnumerable<SongsForYouDto>> GetSongsForYouAsync(long userId);
+    Task<PagedList<HistorySongsDto>> GetHistorySongsAsync(long userId, PaginationParameters paginationParameters);
 }

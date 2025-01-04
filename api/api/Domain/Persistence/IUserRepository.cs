@@ -6,7 +6,10 @@ namespace api.Domain.Persistence;
 
 public interface IUserRepository : IGenericRepository<User>
 {
-    List<UserDto> GetAllUsersWithRoleName();
-    User? GetUserByEmail(string email);
-    string HandlePasswordUpdate(long userId);
+    Task<string> HandlePasswordUpdateAsync(long userId);
+    Task<User?> GetUserByEmailAsync(string email);
+    Task<User> InsertAsync(User user);
+    Task<User> UpdateAsync(User user);
+    Task<User> GetByIdAsync(long id);
+    Task<List<UserDto>> GetAllUsersWithRoleNameAsync();
 }

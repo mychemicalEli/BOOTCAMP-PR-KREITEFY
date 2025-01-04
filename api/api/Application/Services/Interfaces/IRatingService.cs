@@ -5,5 +5,5 @@ namespace api.Application.Services.Interfaces;
 
 public interface IRatingService : IGenericService<RatingDto>
 {
-    void AddRating(RatingDto ratingDto);
+    Task AddRatingAsync(RatingDto ratingDto);
 }

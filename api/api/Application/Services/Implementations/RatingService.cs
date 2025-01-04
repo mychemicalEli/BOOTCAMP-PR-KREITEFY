@@ -19,15 +19,15 @@ public class RatingService : GenericService<Rating, RatingDto>, IRatingService
         _songRepository = songRepository;
     }
     
-    public void AddRating(RatingDto ratingDto)
+    public async Task AddRatingAsync(RatingDto ratingDto)
     {
-        var existingRating = _ratingRepository.GetAll()
+        var existingRating = (await _ratingRepository.GetAllAsync())
             .FirstOrDefault(r => r.UserId == ratingDto.UserId && r.SongId == ratingDto.SongId);
         if (existingRating != null)
         {
             throw new InvalidOperationException("User already rated this song.");
         }
-        
+
         var rating = new Rating
         {
             UserId = ratingDto.UserId,
@@ -35,22 +35,23 @@ public class RatingService : GenericService<Rating, RatingDto>, IRatingService
             Stars = ratingDto.Stars
         };
 
-        _ratingRepository.Insert(rating);
-        UpdateSongMediaRating(rating.SongId);
+        await _ratingRepository.InsertAsync(rating);
+        await UpdateSongMediaRatingAsync(rating.SongId);
     }
 
-    private void UpdateSongMediaRating(long songId)
+    private async Task UpdateSongMediaRatingAsync(long songId)
     {
-        var song = _songRepository.GetById(songId);
-        
+        var song = await _songRepository.GetByIdAsync(songId);
+        if (song == null) return;
+
         var totalRatings = song.Ratings.Count;
         if (totalRatings == 0) return;
 
         var totalStars = song.Ratings.Sum(r => r.Stars);
         var newMediaRating = totalStars / totalRatings;
-        
+
         song.MediaRating = newMediaRating;
-        _songRepository.Update(song);
+        await _songRepository.UpdateAsync(song);
     }
     
 }

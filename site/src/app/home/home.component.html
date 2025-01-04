@@ -7,19 +7,22 @@
 
 <ng-template #loggedIn>
   <div class="container-fluid logged">
-    <div class="filter-container" *ngIf="data">
-      <select
-        id="genreFilter"
-        (change)="onGenreChange($event)"
-        class="form-select genre-select"
-        [value]="selectedGenre"
-      >
-        <option value="">Género</option>
-        <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
-      </select>
+    <div *ngIf="isLoading">
+      <app-spinner></app-spinner>
     </div>
-    <app-latest [genreId]="selectedGenre"></app-latest>
-    <app-for-you></app-for-you>
-    <app-most-played [genreId]="selectedGenre"></app-most-played>
+
+    <div *ngIf="data">
+      <!-- Ocultar el select mientras isLoading es true -->
+      <div *ngIf="!isLoading" class="filter-container">
+        <select id="genreFilter" (change)="onGenreChange($event)" class="form-select genre-select" [value]="selectedGenre">
+          <option value="">Género</option>
+          <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
+        </select>
+      </div>
+      
+      <app-latest [genreId]="selectedGenre" (loaded)="onComponentLoaded('Latest')"></app-latest>
+      <app-for-you (loaded)="onComponentLoaded('ForYou')"></app-for-you>
+      <app-most-played [genreId]="selectedGenre" (loaded)="onComponentLoaded('MostPlayed')"></app-most-played>
+    </div>
   </div>
 </ng-template>

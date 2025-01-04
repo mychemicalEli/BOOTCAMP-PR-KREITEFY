@@ -19,15 +19,15 @@ public class AuthService : IAuthService
         _passwordHasher = passwordHasher;
     }
 
-    public AuthResponseDto Register(UserDto userDto)
+    public async Task<AuthResponseDto> RegisterAsync(UserDto userDto)
     {
-        var existingUser = _userService.GetUserByEmail(userDto.Email);
+        var existingUser = await _userService.GetUserByEmailAsync(userDto.Email);
         if (existingUser != null)
         {
             throw new Exception("Email is already in use.");
         }
-        
-        var newUser = _userService.RegisterUser(userDto);
+
+        var newUser = await _userService.RegisterUserAsync(userDto);
         var token = _tokenService.GenerateToken(newUser);
 
         return new AuthResponseDto
@@ -36,11 +36,11 @@ public class AuthService : IAuthService
         };
     }
 
-    public AuthResponseDto Login(LoginDto loginDto)
+    public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
     {
         ValidateLoginInput(loginDto);
 
-        var user = _userService.GetUserByEmail(loginDto.Email) ?? 
+        var user = await _userService.GetUserByEmailAsync(loginDto.Email) ??
                    throw new UnauthorizedAccessException("Invalid email or password.");
 
         CheckPassword(user.Password, loginDto.Password);
@@ -59,7 +59,7 @@ public class AuthService : IAuthService
             Token = token
         };
     }
-    
+
     private void ValidateLoginInput(LoginDto loginDto)
     {
         if (string.IsNullOrEmpty(loginDto.Email) || string.IsNullOrEmpty(loginDto.Password))
@@ -67,7 +67,7 @@ public class AuthService : IAuthService
             throw new ArgumentException("Email and Password are required.");
         }
     }
-    
+
     private void CheckPassword(string storedPassword, string inputPassword)
     {
         if (!_passwordHasher.CheckPassword(storedPassword, inputPassword))
@@ -76,9 +76,9 @@ public class AuthService : IAuthService
         }
     }
 
-    public UserDtoResponse GetMe()
+    public async Task<UserDtoResponse> GetMe()
     {
-        var user = _currentUserService.GetUserFromToken();
+        var user = await _currentUserService.GetUserFromTokenAsync();
         if (user == null)
         {
             throw new UnauthorizedAccessException("Invalid or expired token.");
