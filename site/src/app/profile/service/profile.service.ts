@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
 import { HistorySongsDto, PaginatedResponse } from '../models/history.model';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, delay } from 'rxjs';
 import { UserProfileDto } from '../models/user.model';
 
 @Injectable({
@@ -33,6 +33,6 @@ export class ProfileService {
 
   public updateUserProfile(updatedProfile: UserProfileDto): Observable<UserProfileDto> {
     const urlEndPoint = `${this.apiUrl}/users`;
-    return this.http.put<UserProfileDto>(urlEndPoint, updatedProfile, { headers: this.getAuthHeaders() })
+    return this.http.put<UserProfileDto>(urlEndPoint, updatedProfile, { headers: this.getAuthHeaders()});
   }
 }

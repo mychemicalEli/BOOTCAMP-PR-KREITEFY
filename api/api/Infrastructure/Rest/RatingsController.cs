@@ -20,12 +20,12 @@ public class RatingController : ControllerBase
     [HttpPost]
     [Produces("application/json")]
     [Authorize]
-    public IActionResult AddRating([FromBody] RatingDto ratingDto)
+    public async Task<IActionResult> AddRating([FromBody] RatingDto ratingDto)
     {
         try
         {
-            _ratingService.AddRating(ratingDto);
-            return Ok(new { message = "Rating added succesfuly." });
+            await _ratingService.AddRatingAsync(ratingDto);
+            return Ok(new { message = "Rating added successfully." });
         }
         catch (InvalidOperationException ex)
         {

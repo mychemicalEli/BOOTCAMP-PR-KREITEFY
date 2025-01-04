@@ -1,13 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, delay } from 'rxjs';
 import { LatestSongsDto } from '../models/lastest.model';
 import { SongDetailDto } from '../models/song-detail.model';
 import { RatingDto } from '../models/rating.model';
 import { AuthService } from '../../auth/services/auth.service';
 import { YourSongsDto } from '../models/yourSongs.model';
 import { MostPlayedSongsDto } from '../models/most-played.model';
-import { SongListComponent } from '../song-list/song-list.component';
 import { PaginatedResponse, SongListDto } from '../models/all-songs.model';
 
 @Injectable({
@@ -31,7 +30,7 @@ export class SongService {
     if (genreId !== undefined) {
       urlEndPoint += `?genreId=${genreId}`;
     }
-    return this.http.get<LatestSongsDto[]>(urlEndPoint, { headers: this.getAuthHeaders() });
+    return this.http.get<LatestSongsDto[]>(urlEndPoint, { headers: this.getAuthHeaders() }); 
   }
 
   public getMostPlayedSongs(genreId?: number): Observable<MostPlayedSongsDto[]> {
@@ -53,7 +52,7 @@ export class SongService {
 
   public getSongById(songId: number): Observable<SongDetailDto> {
     const urlEndPoint = `${this.apiUrl}/songs/${songId}`;
-    return this.http.get<SongDetailDto>(urlEndPoint, { headers: this.getAuthHeaders() });
+    return this.http.get<SongDetailDto>(urlEndPoint, { headers: this.getAuthHeaders()});
   }
 
   public incrementStreams(songId: number, userId: number): Observable<any> {

@@ -1,6 +1,7 @@
 using api.Domain.Entities;
 using api.Domain.Persistence;
 using framework.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure.Persistence;
 
@@ -12,8 +13,10 @@ public class RoleRepository : GenericRepository<Role>, IRoleRepository
     {
         _context = context;
     }
-    public bool Exists(long roleId)
+
+    public async Task<bool> ExistsAsync(long roleId)
     {
-        return _context.Roles.Any(r => r.Id == roleId);
+        return await _context.Roles
+            .AnyAsync(r => r.Id == roleId);
     }
 }

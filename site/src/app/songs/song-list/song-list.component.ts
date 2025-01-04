@@ -2,6 +2,7 @@ import { Component, SimpleChanges } from '@angular/core';
 import { SongService } from '../services/song.service';
 import { PaginatedResponse, SongListDto } from '../models/all-songs.model';
 import { AuthService } from '../../auth/services/auth.service';
+import { LoadingService } from '../../shared/spinner/service/loading.service';
 
 @Component({
   selector: 'app-song-list',
@@ -11,6 +12,7 @@ import { AuthService } from '../../auth/services/auth.service';
 export class SongListComponent {
   isLoggedIn: boolean = false;
   data: any = null;
+  loading: boolean = false;
 
   currentPage: number = 1;
   totalPages: number = 0;
@@ -29,9 +31,12 @@ export class SongListComponent {
   albums: { id: number; title: string }[] = [];
   artists: { id: number; name: string }[] = [];
 
-  constructor(private songsService: SongService, private authService: AuthService) { }
+  constructor(private songsService: SongService, private authService: AuthService, private loadingService: LoadingService) { }
   
   ngOnInit(): void {
+    this.loadingService.loading$.subscribe((isLoading) => {
+      this.loading = isLoading;
+    });
     this.authService.getLoggedInStatus().subscribe(status => {
       this.isLoggedIn = status;
       if (this.isLoggedIn) {
@@ -47,6 +52,7 @@ export class SongListComponent {
 
   private getAllSongs(): void {
     const filters: string | undefined = this.buildFilters();
+    this.loadingService.show();
     this.songsService.getAllSongs(this.currentPage, this.pageSize, filters).subscribe({
       next: (response: PaginatedResponse<SongListDto>) => {
         this.songs = response.data;
@@ -55,10 +61,12 @@ export class SongListComponent {
         this.pageSize = response.pageSize;
         this.totalCount = response.totalCount;
         this.noResultsFound = this.songs.length === 0;
+        this.loadingService.hide();
       },
       error: (err) => {
         this.loadError = true;
         this.handleError(err);
+        this.loadingService.hide();
       }
     });
   }

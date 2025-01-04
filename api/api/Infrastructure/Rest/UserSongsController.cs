@@ -6,21 +6,24 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Infrastructure.Rest;
-public class UserSongsController:ControllerBase
+
+public class UserSongsController : ControllerBase
 {
     private readonly IUserSongsService _userSongsService;
+
     public UserSongsController(IUserSongsService userSongsService)
     {
         _userSongsService = userSongsService;
     }
+
     [HttpPost("play")]
     [Produces("application/json")]
     [Authorize]
-    public IActionResult IncrementStreams([FromQuery] long userId, [FromQuery] long songId)
+    public async Task<IActionResult> IncrementStreamsAsync([FromQuery] long userId, [FromQuery] long songId)
     {
         try
         {
-            _userSongsService.IncrementStreams(userId, songId);
+            await _userSongsService.IncrementStreamsAsync(userId, songId);
             return Ok(new { Message = "Stream count updated successfully." });
         }
         catch (Exception ex)
@@ -32,11 +35,11 @@ public class UserSongsController:ControllerBase
     [HttpGet("user/{userId}/songsforyou")]
     [Produces("application/json")]
     [Authorize]
-    public IActionResult GetSongsForYou([FromRoute] long userId)
+    public async Task<IActionResult> GetSongsForYouAsync([FromRoute] long userId)
     {
         try
         {
-            var songsForYou = _userSongsService.GetSongsForYou(userId);
+            var songsForYou = await _userSongsService.GetSongsForYouAsync(userId);
             if (songsForYou == null || !songsForYou.Any())
             {
                 return NotFound(new { Message = "No personalized songs found for this user." });
@@ -49,15 +52,16 @@ public class UserSongsController:ControllerBase
             return BadRequest(new { Message = ex.Message });
         }
     }
-    
+
     [HttpGet("user/{userId}/history")]
     [Produces("application/json")]
     [Authorize]
-    public ActionResult<PagedResponse<HistorySongsDto>> GetHistorySongs([FromRoute] long userId, [FromQuery] PaginationParameters paginationParameters)
+    public async Task<ActionResult<PagedResponse<HistorySongsDto>>> GetHistorySongsAsync([FromRoute] long userId,
+        [FromQuery] PaginationParameters paginationParameters)
     {
         try
         {
-            PagedList<HistorySongsDto> page = _userSongsService.GetHistorySongs(userId, paginationParameters);
+            var page = await _userSongsService.GetHistorySongsAsync(userId, paginationParameters);
             var response = new PagedResponse<HistorySongsDto>
             {
                 CurrentPage = page.CurrentPage,

@@ -52,6 +52,7 @@
                                 <a [routerLink]="['/auth/register']" class="register-link">Regístrate aquí</a>.
                             </p>
                         </div>
+                        <app-spinner *ngIf="loading"></app-spinner>
                     </form>
                 </div>
             </div>
